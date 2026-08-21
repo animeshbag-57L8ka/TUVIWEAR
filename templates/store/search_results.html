@@ -1,0 +1,1535 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% if query %}
+            {{ query }} - TuviWear
+        {% else %}
+            Search - TuviWear
+        {% endif %}
+    </title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f3f6;
+            color: #212121;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            height: 68px;
+            background: #111;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 5%;
+            gap: 35px;
+
+            position: sticky;
+            top: 0;
+
+            z-index: 1000;
+        }
+
+
+        .logo {
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+
+            letter-spacing: .5px;
+            white-space: nowrap;
+        }
+
+
+        .search-box {
+            flex: 1;
+            max-width: 650px;
+        }
+
+
+        .search-form {
+            display: flex;
+            height: 43px;
+        }
+
+
+        .search-form input {
+            flex: 1;
+
+            border: none;
+            outline: none;
+
+            padding: 0 16px;
+
+            font-size: 14px;
+
+            border-radius: 4px 0 0 4px;
+        }
+
+
+        .search-form button {
+            width: 55px;
+
+            border: none;
+
+            background: white;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+            border-radius: 0 4px 4px 0;
+        }
+
+
+        .search-form button:hover {
+            background: #eeeeee;
+        }
+
+
+        .nav-links {
+            margin-left: auto;
+
+            display: flex;
+            gap: 22px;
+
+            align-items: center;
+        }
+
+
+        .nav-links a {
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            white-space: nowrap;
+        }
+
+
+        .nav-links a:hover {
+            opacity: .7;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            width: 94%;
+            max-width: 1400px;
+
+            margin: 22px auto;
+        }
+
+
+        .search-header {
+            background: white;
+
+            padding: 22px 25px;
+
+            border-radius: 3px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .search-header h1 {
+            font-size: 20px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .search-count {
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           LAYOUT
+        ========================= */
+
+        .layout {
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 14px;
+        }
+
+
+        /* =========================
+           FILTER SIDEBAR
+        ========================= */
+
+        .filters {
+            width: 250px;
+
+            background: white;
+
+            flex-shrink: 0;
+
+            border-radius: 4px;
+
+            overflow: hidden;
+        }
+
+
+        .filter-heading {
+            padding: 20px;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            border-bottom: 1px solid #eee;
+        }
+
+
+        .filter-section {
+            border-bottom: 1px solid #eee;
+        }
+
+
+        .filter-section:last-of-type {
+            border-bottom: none;
+        }
+
+
+        /* DROPDOWN */
+
+        .filter-dropdown {
+            width: 100%;
+        }
+
+
+        .filter-dropdown summary {
+            list-style: none;
+
+            cursor: pointer;
+
+            padding: 17px 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            transition: .2s ease;
+        }
+
+
+        .filter-dropdown summary::-webkit-details-marker {
+            display: none;
+        }
+
+
+        .filter-dropdown summary::after {
+            content: "+";
+
+            font-size: 18px;
+
+            font-weight: normal;
+
+            color: #777;
+        }
+
+
+        .filter-dropdown[open] summary::after {
+            content: "−";
+        }
+
+
+        .filter-dropdown summary:hover {
+            background: #f8f8f8;
+        }
+
+
+        .filter-content {
+            padding: 0 20px 18px;
+        }
+
+
+        /* =========================
+           FILTER OPTIONS
+        ========================= */
+
+        .filter-option {
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            margin-bottom: 13px;
+
+            font-size: 14px;
+
+            color: #555;
+
+            cursor: pointer;
+        }
+
+
+        .filter-option:last-child {
+            margin-bottom: 0;
+        }
+
+
+        .filter-option input {
+            width: 15px;
+            height: 15px;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           SORT
+        ========================= */
+
+        .sort-select {
+            width: 100%;
+
+            border: 1px solid #ddd;
+
+            padding: 10px;
+
+            background: white;
+
+            border-radius: 3px;
+
+            outline: none;
+
+            cursor: pointer;
+
+            font-size: 13px;
+        }
+
+
+        .sort-select:focus {
+            border-color: #111;
+        }
+
+
+        /* =========================
+           FILTER BUTTON
+        ========================= */
+
+        .filter-actions {
+            padding: 18px 20px;
+        }
+
+
+        .apply-btn {
+            width: 100%;
+
+            padding: 11px;
+
+            border: none;
+
+            background: #111;
+
+            color: white;
+
+            font-weight: bold;
+
+            border-radius: 3px;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+
+        .apply-btn:hover {
+            background: #333;
+
+            transform: translateY(-1px);
+        }
+
+
+        .clear-filter {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 12px;
+
+            color: #2874f0;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+
+        .clear-filter:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================
+           PRODUCTS AREA
+        ========================= */
+
+        .products-area {
+            flex: 1;
+
+            min-width: 0;
+        }
+
+
+        /* =========================
+           SHOWING BAR
+        ========================= */
+
+        .showing-bar {
+            background: white;
+
+            padding: 14px 18px;
+
+            border-radius: 3px;
+
+            margin-bottom: 10px;
+
+            color: #666;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           PRODUCT GRID
+        ========================= */
+
+        .product-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 10px;
+        }
+
+
+        .product-card {
+            background: white;
+
+            overflow: hidden;
+
+            border-radius: 3px;
+
+            transition: .25s ease;
+        }
+
+
+        .product-card:hover {
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 7px 20px rgba(0, 0, 0, .12);
+        }
+
+
+        .product-image {
+            width: 100%;
+
+            height: 280px;
+
+            overflow: hidden;
+
+            background: #f7f7f7;
+
+            position: relative;
+        }
+
+
+        .product-image img {
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            transition: .35s ease;
+        }
+
+
+        .product-card:hover
+        .product-image img {
+            transform: scale(1.05);
+        }
+
+
+        .product-info {
+            padding: 14px;
+        }
+
+
+        .product-name {
+            color: #212121;
+
+            font-size: 15px;
+
+            font-weight: 500;
+
+            margin-bottom: 6px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .brand {
+            color: #878787;
+
+            font-size: 12px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .price-line {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .current-price {
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: #212121;
+        }
+
+
+        .old-price {
+            font-size: 12px;
+
+            color: #999;
+
+            text-decoration: line-through;
+        }
+
+
+        .offer {
+            font-size: 12px;
+
+            color: #008c45;
+
+            font-weight: bold;
+        }
+
+
+        .view-product {
+            display: block;
+
+            text-align: center;
+
+            background: #111;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 10px;
+
+            margin-top: 13px;
+
+            border-radius: 3px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            transition: .2s;
+        }
+
+
+        .view-product:hover {
+            background: #333;
+        }
+
+
+        /* =========================
+           NO RESULTS
+        ========================= */
+
+        .no-results {
+            background: white;
+
+            padding: 80px 20px;
+
+            text-align: center;
+        }
+
+
+        .no-results-icon {
+            font-size: 55px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .no-results h2 {
+            margin-bottom: 8px;
+        }
+
+
+        .no-results p {
+            color: #777;
+
+            margin-bottom: 20px;
+        }
+
+
+        .continue-btn {
+            display: inline-block;
+
+            background: #111;
+
+            color: white;
+
+            padding: 11px 25px;
+
+            text-decoration: none;
+
+            border-radius: 3px;
+        }
+
+
+        .continue-btn:hover {
+            background: #333;
+        }
+
+
+        /* =========================
+           PAGINATION
+        ========================= */
+
+        .pagination {
+            margin-top: 20px;
+
+            background: white;
+
+            padding: 18px;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 7px;
+        }
+
+
+        .pagination a,
+        .pagination span {
+            min-width: 35px;
+
+            height: 35px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border: 1px solid #ddd;
+
+            text-decoration: none;
+
+            color: #333;
+
+            font-size: 13px;
+
+            border-radius: 3px;
+        }
+
+
+        .pagination .active {
+            background: #111;
+
+            color: white;
+
+            border-color: #111;
+        }
+
+
+        .pagination a:hover {
+            background: #eee;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            margin-top: 40px;
+
+            background: #111;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .product-grid {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .navbar {
+                height: auto;
+
+                padding: 15px 20px;
+
+                flex-wrap: wrap;
+            }
+
+
+            .search-box {
+                order: 3;
+
+                flex-basis: 100%;
+
+                max-width: none;
+            }
+
+
+            .layout {
+                display: block;
+            }
+
+
+            .filters {
+                width: 100%;
+
+                margin-bottom: 14px;
+            }
+
+
+            .product-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .container {
+                width: 96%;
+            }
+
+
+            .navbar {
+                gap: 15px;
+            }
+
+
+            .nav-links {
+                gap: 12px;
+            }
+
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+
+            .product-grid {
+                gap: 7px;
+            }
+
+
+            .product-image {
+                height: 220px;
+            }
+
+
+            .product-info {
+                padding: 10px;
+            }
+
+
+            .current-price {
+                font-size: 16px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            TuviWear
+        </div>
+
+
+        <div class="search-box">
+
+            <form
+                method="GET"
+                action="{% url 'search_products' %}"
+                class="search-form"
+            >
+
+                <input
+                    type="text"
+                    name="q"
+                    value="{{ query }}"
+                    placeholder="Search for products, brands and more..."
+                >
+
+                <button type="submit">
+                    🔍
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+
+            <a href="{% url 'cart' %}">
+                🛒 Cart
+            </a>
+
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'my_orders' %}">
+                    My Orders
+                </a>
+
+
+                <a href="{% url 'logout' %}">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    Login
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </nav>
+
+
+
+    <main class="container">
+
+
+        <!-- =========================
+             SEARCH HEADER
+        ========================= -->
+
+        <div class="search-header">
+
+            {% if query %}
+
+                <h1>
+                    Search results for "{{ query }}"
+                </h1>
+
+            {% else %}
+
+                <h1>
+                    All Products
+                </h1>
+
+            {% endif %}
+
+
+            <div class="search-count">
+
+                {{ page_obj.paginator.count }}
+
+                product{{ page_obj.paginator.count|pluralize }}
+
+                found
+
+            </div>
+
+        </div>
+
+
+
+        {% if products %}
+
+
+            <div class="layout">
+
+
+                <!-- =========================
+                     FILTER SIDEBAR
+                ========================= -->
+
+                <aside class="filters">
+
+
+                    <div class="filter-heading">
+                        Filters
+                    </div>
+
+
+                    <form
+                        method="GET"
+                        action="{% url 'search_products' %}"
+                    >
+
+
+                        <!-- SEARCH QUERY -->
+
+                        <input
+                            type="hidden"
+                            name="q"
+                            value="{{ query }}"
+                        >
+
+
+
+                        <!-- =====================
+                             CATEGORY DROPDOWN
+                        ===================== -->
+
+                        <div class="filter-section">
+
+                            <details
+                                class="filter-dropdown"
+                                open
+                            >
+
+                                <summary>
+                                    Category
+                                </summary>
+
+
+                                <div class="filter-content">
+
+
+                                    <label class="filter-option">
+
+                                        <input
+                                            type="checkbox"
+                                            name="category"
+                                            value="Men"
+
+                                            {% if "Men" in selected_categories %}
+                                                checked
+                                            {% endif %}
+                                        >
+
+                                        Men
+
+                                    </label>
+
+
+                                    <label class="filter-option">
+
+                                        <input
+                                            type="checkbox"
+                                            name="category"
+                                            value="Women"
+
+                                            {% if "Women" in selected_categories %}
+                                                checked
+                                            {% endif %}
+                                        >
+
+                                        Women
+
+                                    </label>
+
+
+                                    <label class="filter-option">
+
+                                        <input
+                                            type="checkbox"
+                                            name="category"
+                                            value="Kids"
+
+                                            {% if "Kids" in selected_categories %}
+                                                checked
+                                            {% endif %}
+                                        >
+
+                                        Kids
+
+                                    </label>
+
+
+                                </div>
+
+                            </details>
+
+                        </div>
+
+
+
+                        <!-- =====================
+                             PRICE DROPDOWN
+                        ===================== -->
+
+                        <div class="filter-section">
+
+                            <details
+                                class="filter-dropdown"
+                                open
+                            >
+
+                                <summary>
+                                    Price
+                                </summary>
+
+
+                                <div class="filter-content">
+
+
+                                    <label class="filter-option">
+
+                                        <input
+                                            type="radio"
+                                            name="price"
+                                            value="under_1000"
+
+                                            {% if selected_min_price == "0" %}
+                                                checked
+                                            {% endif %}
+                                        >
+
+                                        Under ₹1,000
+
+                                    </label>
+
+
+                                    <label class="filter-option">
+
+                                        <input
+                                            type="radio"
+                                            name="price"
+                                            value="1000_2000"
+
+                                            {% if selected_min_price == "1000" %}
+                                                checked
+                                            {% endif %}
+                                        >
+
+                                        ₹1,000 - ₹2,000
+
+                                    </label>
+
+
+                                    <label class="filter-option">
+
+                                        <input
+                                            type="radio"
+                                            name="price"
+                                            value="above_2000"
+
+                                            {% if selected_min_price == "2000" %}
+                                                checked
+                                            {% endif %}
+                                        >
+
+                                        Above ₹2,000
+
+                                    </label>
+
+
+                                </div>
+
+                            </details>
+
+                        </div>
+
+
+
+                        <!-- =====================
+                             SORT BY DROPDOWN
+                        ===================== -->
+
+                        <div class="filter-section">
+
+                            <details
+                                class="filter-dropdown"
+                                open
+                            >
+
+                                <summary>
+                                    Sort By
+                                </summary>
+
+
+                                <div class="filter-content">
+
+
+                                    <select
+                                        name="sort"
+                                        class="sort-select"
+                                    >
+
+                                        <option
+                                            value="newest"
+
+                                            {% if selected_sort == "newest" %}
+                                                selected
+                                            {% endif %}
+                                        >
+                                            Newest First
+                                        </option>
+
+
+                                        <option
+                                            value="price_low"
+
+                                            {% if selected_sort == "price_low" %}
+                                                selected
+                                            {% endif %}
+                                        >
+                                            Price: Low to High
+                                        </option>
+
+
+                                        <option
+                                            value="price_high"
+
+                                            {% if selected_sort == "price_high" %}
+                                                selected
+                                            {% endif %}
+                                        >
+                                            Price: High to Low
+                                        </option>
+
+
+                                    </select>
+
+
+                                </div>
+
+                            </details>
+
+                        </div>
+
+
+
+                        <!-- =====================
+                             FILTER ACTIONS
+                        ===================== -->
+
+                        <div class="filter-actions">
+
+
+                            <button
+                                type="submit"
+                                class="apply-btn"
+                            >
+                                Apply Filters
+                            </button>
+
+
+                            <a
+                                href="{% url 'search_products' %}?q={{ query|urlencode }}"
+                                class="clear-filter"
+                            >
+                                Clear All Filters
+                            </a>
+
+
+                        </div>
+
+
+                    </form>
+
+
+                </aside>
+
+
+
+                <!-- =========================
+                     PRODUCTS
+                ========================= -->
+
+                <section class="products-area">
+
+
+                    <!-- SHOWING -->
+
+                    <div class="showing-bar">
+
+                        Showing
+
+                        {{ page_obj.start_index }}
+
+                        -
+
+                        {{ page_obj.end_index }}
+
+                        of
+
+                        {{ page_obj.paginator.count }}
+
+                    </div>
+
+
+
+                    <!-- PRODUCT GRID -->
+
+                    <div class="product-grid">
+
+
+                        {% for product in products %}
+
+
+                            <div class="product-card">
+
+
+                                <!-- PRODUCT IMAGE -->
+
+                                <a
+                                    href="{% url 'product_detail' product.slug %}"
+                                >
+
+                                    <div class="product-image">
+
+
+                                        {% with product.images.all|first as image %}
+
+
+                                            {% if image %}
+
+                                                <img
+                                                    src="{{ image.image.url }}"
+                                                    alt="{{ product.name }}"
+                                                    loading="lazy"
+                                                >
+
+                                            {% else %}
+
+                                                <div class="no-results-icon">
+                                                    👕
+                                                </div>
+
+                                            {% endif %}
+
+
+                                        {% endwith %}
+
+
+                                    </div>
+
+                                </a>
+
+
+
+                                <!-- PRODUCT INFO -->
+
+                                <div class="product-info">
+
+
+                                    <div class="product-name">
+
+                                        {{ product.name }}
+
+                                    </div>
+
+
+
+                                    {% if product.brand %}
+
+                                        <div class="brand">
+
+                                            {{ product.brand.name }}
+
+                                        </div>
+
+                                    {% endif %}
+
+
+
+                                    <div class="price-line">
+
+
+                                        {% if product.discount_price %}
+
+                                            <span class="current-price">
+
+                                                ₹{{ product.discount_price }}
+
+                                            </span>
+
+
+                                            <span class="old-price">
+
+                                                ₹{{ product.base_price }}
+
+                                            </span>
+
+
+                                            <span class="offer">
+
+                                                OFFER
+
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="current-price">
+
+                                                ₹{{ product.base_price }}
+
+                                            </span>
+
+                                        {% endif %}
+
+
+                                    </div>
+
+
+
+                                    <a
+                                        href="{% url 'product_detail' product.slug %}"
+                                        class="view-product"
+                                    >
+                                        View Product
+                                    </a>
+
+
+                                </div>
+
+
+                            </div>
+
+
+                        {% endfor %}
+
+
+                    </div>
+
+
+
+                    <!-- =========================
+                         PAGINATION
+                    ========================= -->
+
+                    {% if page_obj.has_other_pages %}
+
+
+                        <div class="pagination">
+
+
+                            {% if page_obj.has_previous %}
+
+                                <a
+                                    href="?q={{ query|urlencode }}{% for category in selected_categories %}&category={{ category|urlencode }}{% endfor %}{% if selected_min_price %}&price={{ selected_min_price }}{% endif %}&sort={{ selected_sort }}&page={{ page_obj.previous_page_number }}"
+                                >
+                                    ‹
+                                </a>
+
+                            {% endif %}
+
+
+
+                            {% for number in page_obj.paginator.page_range %}
+
+
+                                {% if page_obj.number == number %}
+
+                                    <span class="active">
+                                        {{ number }}
+                                    </span>
+
+                                {% else %}
+
+                                    <a
+                                        href="?q={{ query|urlencode }}{% for category in selected_categories %}&category={{ category|urlencode }}{% endfor %}{% if selected_min_price %}&price={{ selected_min_price }}{% endif %}&sort={{ selected_sort }}&page={{ number }}"
+                                    >
+                                        {{ number }}
+                                    </a>
+
+                                {% endif %}
+
+
+                            {% endfor %}
+
+
+
+                            {% if page_obj.has_next %}
+
+                                <a
+                                    href="?q={{ query|urlencode }}{% for category in selected_categories %}&category={{ category|urlencode }}{% endfor %}{% if selected_min_price %}&price={{ selected_min_price }}{% endif %}&sort={{ selected_sort }}&page={{ page_obj.next_page_number }}"
+                                >
+                                    ›
+                                </a>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                    {% endif %}
+
+
+                </section>
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- =========================
+                 NO RESULTS
+            ========================= -->
+
+            <div class="no-results">
+
+
+                <div class="no-results-icon">
+                    🔍
+                </div>
+
+
+                <h2>
+                    No products found
+                </h2>
+
+
+                <p>
+
+                    {% if query %}
+
+                        We couldn't find any products matching
+                        "{{ query }}".
+
+                    {% else %}
+
+                        No products are available right now.
+
+                    {% endif %}
+
+                </p>
+
+
+                <a
+                    href="{% url 'home' %}"
+                    class="continue-btn"
+                >
+                    Continue Shopping
+                </a>
+
+
+            </div>
+
+
+        {% endif %}
+
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        © 2026 TuviWear. All Rights Reserved.
+
+    </footer>
+
+
+</body>
+
+</html>
+

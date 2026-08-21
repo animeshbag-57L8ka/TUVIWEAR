@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Order Successful - TuviWear</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f6f6;
+            color: #222;
+        }
+
+        .navbar {
+            background: #111;
+            color: white;
+            padding: 18px 7%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .success-box {
+            background: white;
+            padding: 45px 35px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .message {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .order-info {
+            text-align: left;
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .order-info p {
+            margin: 10px 0;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 14px 25px;
+            background: #111;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .button:hover {
+            background: #333;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        TuviWear
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <div class="success-box">
+
+        <div class="icon">
+            ✅
+        </div>
+
+        <h1>
+            Order Placed Successfully!
+        </h1>
+
+        <p class="message">
+            Thank you for shopping with TuviWear.
+            Your order has been received successfully.
+        </p>
+
+
+        <div class="order-info">
+
+            <p>
+                <strong>Order ID:</strong>
+                #{{ order.id }}
+            </p>
+
+            <p>
+                <strong>Name:</strong>
+                {{ order.customer_name }}
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                {{ order.email }}
+            </p>
+
+            <p>
+                <strong>Phone:</strong>
+                {{ order.phone }}
+            </p>
+
+            <p>
+                <strong>Status:</strong>
+                {{ order.get_status_display }}
+            </p>
+
+            <p class="total">
+                Total Amount:
+                ₹{{ order.total_amount }}
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'home' %}"
+            class="button"
+        >
+            Continue Shopping
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
+

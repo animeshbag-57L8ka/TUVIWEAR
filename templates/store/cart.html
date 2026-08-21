@@ -1,0 +1,579 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Shopping Cart - TuviWear</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f6f6;
+            color: #222;
+        }
+
+
+        /* NAVBAR */
+
+        .navbar {
+            background: #111;
+            color: white;
+
+            padding: 18px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+
+        .back {
+            color: white;
+            text-decoration: none;
+        }
+
+
+        /* CONTAINER */
+
+        .container {
+            max-width: 1100px;
+
+            margin: 40px auto;
+
+            padding: 0 20px;
+        }
+
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+
+        /* CART */
+
+        .cart-box {
+            background: white;
+
+            border-radius: 14px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 5px 25px rgba(0, 0, 0, 0.08);
+        }
+
+
+        .cart-item {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 20px 0;
+
+            border-bottom: 1px solid #eee;
+        }
+
+
+        .item-info h3 {
+            margin: 0 0 10px;
+        }
+
+
+        .item-info p {
+            margin: 5px 0;
+
+            color: #666;
+        }
+
+
+        .item-price {
+            font-weight: bold;
+
+            font-size: 18px;
+
+            white-space: nowrap;
+        }
+
+
+        /* QUANTITY */
+
+        .quantity-controls {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 12px;
+        }
+
+
+        .quantity-form {
+            display: inline;
+        }
+
+
+        .quantity-btn {
+
+            width: 32px;
+            height: 32px;
+
+            border: 1px solid #ccc;
+
+            background: white;
+
+            border-radius: 6px;
+
+            font-size: 18px;
+
+            cursor: pointer;
+        }
+
+
+        .quantity-btn:hover {
+            background: #f0f0f0;
+        }
+
+
+        .quantity-number {
+
+            min-width: 30px;
+
+            text-align: center;
+
+            font-weight: bold;
+        }
+
+
+        /* REMOVE */
+
+        .remove-btn {
+
+            margin-top: 10px;
+
+            border: none;
+
+            background: none;
+
+            color: #d00;
+
+            cursor: pointer;
+
+            padding: 0;
+
+            font-size: 14px;
+        }
+
+
+        .remove-btn:hover {
+            text-decoration: underline;
+        }
+
+
+        /* TOTAL */
+
+        .total {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            margin-top: 25px;
+        }
+
+
+        /* BUTTONS */
+
+        .button-row {
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            margin-top: 25px;
+        }
+
+
+        .continue {
+
+            display: inline-block;
+
+            background: #111;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 14px 22px;
+
+            border-radius: 8px;
+        }
+
+
+        .checkout {
+
+            display: inline-block;
+
+            background: #111;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 14px 22px;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+        }
+
+
+        .continue:hover,
+        .checkout:hover {
+            background: #333;
+        }
+
+
+        /* EMPTY */
+
+        .empty {
+
+            text-align: center;
+
+            padding: 50px 20px;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            .cart-item {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .item-price {
+
+                align-self: flex-end;
+            }
+
+
+            .button-row {
+
+                flex-direction: column;
+            }
+
+
+            .continue,
+            .checkout {
+
+                text-align: center;
+
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        TuviWear
+    </div>
+
+
+    <a
+        href="{% url 'home' %}"
+        class="back"
+    >
+        ← Continue Shopping
+    </a>
+
+</nav>
+
+
+
+<div class="container">
+
+
+    <h1>
+        Your Cart
+    </h1>
+
+
+
+    {% if items %}
+
+
+        <div class="cart-box">
+
+
+            <!-- CART ITEMS -->
+
+            {% for item in items %}
+
+
+                <div class="cart-item">
+
+
+                    <div class="item-info">
+
+
+                        <h3>
+                            {{ item.variant.product.name }}
+                        </h3>
+
+
+                        {% if item.variant.size %}
+
+                            <p>
+                                Size:
+                                {{ item.variant.size.name }}
+                            </p>
+
+                        {% endif %}
+
+
+                        {% if item.variant.color %}
+
+                            <p>
+                                Color:
+                                {{ item.variant.color.name }}
+                            </p>
+
+                        {% endif %}
+
+
+                        <p>
+                            Price:
+                            ₹{{ item.variant.price }}
+                        </p>
+
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="quantity-controls">
+
+
+                            <!-- DECREASE -->
+
+                            <form
+                                method="POST"
+                                action="{% url 'decrease_cart_quantity' item.id %}"
+                                class="quantity-form"
+                            >
+
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="quantity-btn"
+                                >
+                                    −
+                                </button>
+
+                            </form>
+
+
+
+                            <span class="quantity-number">
+                                {{ item.quantity }}
+                            </span>
+
+
+
+                            <!-- INCREASE -->
+
+                            <form
+                                method="POST"
+                                action="{% url 'increase_cart_quantity' item.id %}"
+                                class="quantity-form"
+                            >
+
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="quantity-btn"
+                                >
+                                    +
+                                </button>
+
+                            </form>
+
+
+                        </div>
+
+
+
+                        <!-- REMOVE -->
+
+                        <form
+                            method="POST"
+                            action="{% url 'remove_from_cart' item.id %}"
+                        >
+
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="remove-btn"
+                            >
+                                Remove
+                            </button>
+
+                        </form>
+
+
+                    </div>
+
+
+
+                    <!-- ITEM TOTAL -->
+
+                    <div class="item-price">
+
+                        ₹{% widthratio item.variant.price 1 item.quantity %}
+
+                    </div>
+
+
+                </div>
+
+
+            {% endfor %}
+
+
+
+            <!-- TOTAL -->
+
+            <div class="total">
+
+                <span>
+                    Total
+                </span>
+
+
+                <span>
+                    ₹{{ total }}
+                </span>
+
+            </div>
+
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-row">
+
+
+                <a
+                    href="{% url 'home' %}"
+                    class="continue"
+                >
+                    Continue Shopping
+                </a>
+
+
+                <a
+                    href="{% url 'checkout' %}"
+                    class="checkout"
+                >
+                    Proceed to Checkout
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+    {% else %}
+
+
+        <!-- EMPTY CART -->
+
+        <div class="cart-box empty">
+
+
+            <h2>
+                Your cart is empty 🛒
+            </h2>
+
+
+            <p>
+                Add some products to your cart.
+            </p>
+
+
+            <a
+                href="{% url 'home' %}"
+                class="continue"
+            >
+                Start Shopping
+            </a>
+
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+</html>
+

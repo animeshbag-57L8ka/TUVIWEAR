@@ -1,0 +1,1032 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Men's Collection - TuviWear</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #111;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            height: 68px;
+            background: #111;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 5%;
+            gap: 35px;
+
+            position: sticky;
+            top: 0;
+
+            z-index: 1000;
+        }
+
+
+        .logo {
+            color: white;
+
+            font-size: 25px;
+            font-weight: bold;
+
+            letter-spacing: .5px;
+
+            white-space: nowrap;
+        }
+
+
+        .search-box {
+            flex: 1;
+            max-width: 650px;
+        }
+
+
+        .search-form {
+            display: flex;
+            height: 43px;
+        }
+
+
+        .search-form input {
+            flex: 1;
+
+            border: none;
+            outline: none;
+
+            padding: 0 16px;
+
+            font-size: 14px;
+
+            border-radius: 4px 0 0 4px;
+        }
+
+
+        .search-form button {
+            width: 55px;
+
+            border: none;
+
+            background: white;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+            border-radius: 0 4px 4px 0;
+
+            transition: .2s;
+        }
+
+
+        .search-form button:hover {
+            background: #eeeeee;
+        }
+
+
+        .nav-links {
+            margin-left: auto;
+
+            display: flex;
+
+            gap: 22px;
+
+            align-items: center;
+        }
+
+
+        .nav-links a {
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            white-space: nowrap;
+
+            transition: .2s;
+        }
+
+
+        .nav-links a:hover {
+            color: #ccc;
+        }
+
+
+        .nav-links .active {
+            color: white;
+
+            font-weight: bold;
+
+            border-bottom: 2px solid white;
+
+            padding-bottom: 5px;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 390px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(0,0,0,.82),
+                    rgba(0,0,0,.35),
+                    rgba(0,0,0,.05)
+                ),
+                url("https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1600&q=80");
+
+            background-size: cover;
+
+            background-position: center;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 50px 8%;
+
+            color: white;
+        }
+
+
+        .hero-content {
+            max-width: 550px;
+        }
+
+
+        .hero-small {
+            font-size: 13px;
+
+            letter-spacing: 3px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 15px;
+
+            opacity: .85;
+        }
+
+
+        .hero h1 {
+            font-size: 52px;
+
+            line-height: 1.05;
+
+            margin-bottom: 18px;
+        }
+
+
+        .hero p {
+            font-size: 16px;
+
+            line-height: 1.6;
+
+            color: #e5e5e5;
+
+            margin-bottom: 25px;
+        }
+
+
+        .hero-btn {
+            display: inline-block;
+
+            background: white;
+
+            color: #111;
+
+            padding: 13px 28px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            border-radius: 3px;
+
+            transition: .25s;
+        }
+
+
+        .hero-btn:hover {
+            background: #111;
+
+            color: white;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            width: 94%;
+
+            max-width: 1400px;
+
+            margin: 35px auto 60px;
+        }
+
+
+        /* =========================
+           SECTION HEADER
+        ========================= */
+
+        .section-heading {
+            display: flex;
+
+            align-items: end;
+
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+
+        .section-heading h2 {
+            font-size: 25px;
+        }
+
+
+        .section-heading p {
+            color: #777;
+
+            font-size: 13px;
+
+            margin-top: 5px;
+        }
+
+
+        .product-count {
+            color: #777;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           PRODUCT GRID
+        ========================= */
+
+        .product-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 16px;
+        }
+
+
+        .product-card {
+            background: white;
+
+            border-radius: 5px;
+
+            overflow: hidden;
+
+            position: relative;
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
+
+
+        .product-card:hover {
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 12px 30px rgba(0,0,0,.13);
+        }
+
+
+        /* =========================
+           IMAGE
+        ========================= */
+
+        .product-image {
+            width: 100%;
+
+            height: 330px;
+
+            overflow: hidden;
+
+            background: #eee;
+
+            position: relative;
+        }
+
+
+        .product-image img {
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+            transition:
+                transform .5s ease;
+        }
+
+
+        .product-card:hover
+        .product-image img {
+            transform: scale(1.07);
+        }
+
+
+        /* =========================
+           OFFER BADGE
+        ========================= */
+
+        .offer-badge {
+            position: absolute;
+
+            top: 12px;
+            left: 12px;
+
+            background: #111;
+
+            color: white;
+
+            padding: 6px 9px;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            letter-spacing: .5px;
+
+            border-radius: 2px;
+
+            z-index: 2;
+        }
+
+
+        /* =========================
+           PRODUCT INFO
+        ========================= */
+
+        .product-info {
+            padding: 17px;
+        }
+
+
+        .product-name {
+            font-size: 15px;
+
+            font-weight: 600;
+
+            margin-bottom: 6px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+
+        .brand {
+            color: #888;
+
+            font-size: 12px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .price-line {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .current-price {
+            font-size: 18px;
+
+            font-weight: bold;
+        }
+
+
+        .old-price {
+            color: #999;
+
+            font-size: 12px;
+
+            text-decoration: line-through;
+        }
+
+
+        .offer {
+            color: #008c45;
+
+            font-size: 11px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           VIEW BUTTON
+        ========================= */
+
+        .view-product {
+            display: block;
+
+            text-align: center;
+
+            background: #111;
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 11px;
+
+            margin-top: 15px;
+
+            border-radius: 3px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            transition: .2s;
+        }
+
+
+        .view-product:hover {
+            background: #333;
+        }
+
+
+        /* =========================
+           NO PRODUCTS
+        ========================= */
+
+        .no-products {
+            background: white;
+
+            padding: 90px 20px;
+
+            text-align: center;
+
+            border-radius: 5px;
+        }
+
+
+        .no-products-icon {
+            font-size: 55px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .no-products h2 {
+            margin-bottom: 8px;
+        }
+
+
+        .no-products p {
+            color: #777;
+
+            margin-bottom: 20px;
+        }
+
+
+        .home-btn {
+            display: inline-block;
+
+            background: #111;
+
+            color: white;
+
+            padding: 12px 26px;
+
+            text-decoration: none;
+
+            border-radius: 3px;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #111;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 27px;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .product-grid {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+
+            .hero h1 {
+                font-size: 45px;
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .navbar {
+                height: auto;
+
+                padding: 15px 20px;
+
+                flex-wrap: wrap;
+            }
+
+
+            .search-box {
+                order: 3;
+
+                flex-basis: 100%;
+
+                max-width: none;
+            }
+
+
+            .product-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+
+            .hero {
+                min-height: 330px;
+            }
+
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .container {
+                width: 96%;
+            }
+
+
+            .product-grid {
+                gap: 8px;
+            }
+
+
+            .product-image {
+                height: 240px;
+            }
+
+
+            .product-info {
+                padding: 11px;
+            }
+
+
+            .current-price {
+                font-size: 16px;
+            }
+
+
+            .hero {
+                min-height: 300px;
+
+                padding: 35px 6%;
+            }
+
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+
+            .hero p {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav class="navbar">
+
+
+        <div class="logo">
+            TuviWear
+        </div>
+
+
+        <div class="search-box">
+
+            <form
+                method="GET"
+                action="{% url 'search_products' %}"
+                class="search-form"
+            >
+
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Search for products, brands and more..."
+                >
+
+                <button type="submit">
+                    🔍
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="nav-links">
+
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+
+            <a
+                href="{% url 'men_products' %}"
+                class="active"
+            >
+                Men
+            </a>
+
+
+            <a href="#">
+                Women
+            </a>
+
+
+            <a href="#">
+                Kids
+            </a>
+
+
+            <a href="{% url 'cart' %}">
+                🛒 Cart
+            </a>
+
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'my_orders' %}">
+                    My Orders
+                </a>
+
+
+                <a href="{% url 'logout' %}">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    Login
+                </a>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </nav>
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+
+        <div class="hero-content">
+
+
+            <div class="hero-small">
+                TuviWear Men's Collection
+            </div>
+
+
+            <h1>
+                Style That<br>
+                Defines You.
+            </h1>
+
+
+            <p>
+                Discover premium men's fashion,
+                from everyday essentials to
+                statement pieces made for your style.
+            </p>
+
+
+            <a
+                href="#products"
+                class="hero-btn"
+            >
+                SHOP MEN
+            </a>
+
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================
+         PRODUCTS
+    ========================= -->
+
+    <main
+        class="container"
+        id="products"
+    >
+
+
+        <div class="section-heading">
+
+
+            <div>
+
+                <h2>
+                    Men's Collection
+                </h2>
+
+                <p>
+                    Explore our latest men's fashion.
+                </p>
+
+            </div>
+
+
+            <div class="product-count">
+
+                {{ products|length }}
+                product{{ products|length|pluralize }}
+
+            </div>
+
+
+        </div>
+
+
+        {% if products %}
+
+
+            <div class="product-grid">
+
+
+                {% for product in products %}
+
+
+                    <div class="product-card">
+
+
+                        {% if product.discount_price %}
+
+                            <div class="offer-badge">
+                                SALE
+                            </div>
+
+                        {% endif %}
+
+
+                        <a
+                            href="{% url 'product_detail' product.slug %}"
+                        >
+
+                            <div class="product-image">
+
+
+                                {% with product.images.all|first as image %}
+
+
+                                    {% if image %}
+
+                                        <img
+                                            src="{{ image.image.url }}"
+                                            alt="{{ product.name }}"
+                                            loading="lazy"
+                                        >
+
+                                    {% else %}
+
+                                        <div
+                                            class="no-products-icon"
+                                            style="
+                                                display:flex;
+                                                align-items:center;
+                                                justify-content:center;
+                                                height:100%;
+                                            "
+                                        >
+                                            👕
+                                        </div>
+
+                                    {% endif %}
+
+
+                                {% endwith %}
+
+
+                            </div>
+
+                        </a>
+
+
+                        <div class="product-info">
+
+
+                            <div class="product-name">
+                                {{ product.name }}
+                            </div>
+
+
+                            {% if product.brand %}
+
+                                <div class="brand">
+                                    {{ product.brand.name }}
+                                </div>
+
+                            {% endif %}
+
+
+                            <div class="price-line">
+
+
+                                {% if product.discount_price %}
+
+                                    <span class="current-price">
+                                        ₹{{ product.discount_price }}
+                                    </span>
+
+
+                                    <span class="old-price">
+                                        ₹{{ product.base_price }}
+                                    </span>
+
+
+                                    <span class="offer">
+                                        OFFER
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="current-price">
+                                        ₹{{ product.base_price }}
+                                    </span>
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                            <a
+                                href="{% url 'product_detail' product.slug %}"
+                                class="view-product"
+                            >
+                                View Product
+                            </a>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="no-products">
+
+                <div class="no-products-icon">
+                    👕
+                </div>
+
+                <h2>
+                    No Men's Products Found
+                </h2>
+
+                <p>
+                    Men's products will appear here
+                    once they are added.
+                </p>
+
+                <a
+                    href="{% url 'home' %}"
+                    class="home-btn"
+                >
+                    Continue Shopping
+                </a>
+
+            </div>
+
+
+        {% endif %}
+
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        © 2026 TuviWear. All Rights Reserved.
+
+    </footer>
+
+
+</body>
+
+</html>
+
