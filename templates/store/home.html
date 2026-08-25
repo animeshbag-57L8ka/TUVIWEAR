@@ -1,14 +1,16 @@
+{% load static %}
 
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>TuviWear - Online Fashion Store</title>
+
 
     <style>
 
@@ -18,21 +20,28 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f8f8f8;
-            color: #222;
+
+        html {
+            scroll-behavior: smooth;
         }
 
 
-        /* =========================
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #111;
+        }
+
+
+        /* =====================================================
            NAVBAR
-        ========================= */
+        ===================================================== */
 
         .navbar {
             background: #111;
             color: white;
-            padding: 18px 60px;
+            min-height: 76px;
+            padding: 16px 55px;
 
             display: flex;
             align-items: center;
@@ -42,24 +51,22 @@
 
             position: sticky;
             top: 0;
+
             z-index: 1000;
         }
 
 
-        /* Logo */
-
         .logo {
-            font-size: 28px;
+            font-size: 29px;
             font-weight: bold;
             letter-spacing: 0.5px;
-
             white-space: nowrap;
         }
 
 
-        /* =========================
-           SEARCH BAR
-        ========================= */
+        /* =====================================================
+           SEARCH
+        ===================================================== */
 
         .search-form {
             display: flex;
@@ -69,8 +76,8 @@
             height: 42px;
 
             background: white;
-            border-radius: 7px;
 
+            border-radius: 6px;
             overflow: hidden;
 
             border: 1px solid #ddd;
@@ -100,7 +107,6 @@
             font-size: 14px;
 
             color: #222;
-
             background: white;
         }
 
@@ -136,15 +142,15 @@
         }
 
 
-        /* =========================
+        /* =====================================================
            NAV LINKS
-        ========================= */
+        ===================================================== */
 
         .nav-links {
             display: flex;
             align-items: center;
 
-            gap: 28px;
+            gap: 25px;
 
             white-space: nowrap;
         }
@@ -155,7 +161,7 @@
 
             text-decoration: none;
 
-            font-size: 15px;
+            font-size: 14px;
 
             position: relative;
 
@@ -165,10 +171,10 @@
 
         .nav-links a:hover {
             color: #ccc;
+
+            transform: translateY(-1px);
         }
 
-
-        /* Underline hover effect */
 
         .nav-links a::after {
             content: "";
@@ -192,177 +198,694 @@
         }
 
 
-        /* =========================
-           HERO
-        ========================= */
+        /* =====================================================
+           BENEFITS
+        ===================================================== */
 
-        .hero {
-            min-height: 500px;
+        .benefits {
+            background: #fff;
 
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            border-bottom: 1px solid #eee;
+
+            padding: 18px 70px;
+        }
+
+
+        .benefit {
             display: flex;
+
             align-items: center;
             justify-content: center;
 
-            text-align: center;
+            gap: 14px;
 
-            background: #e9e9e9;
+            min-height: 58px;
 
-            padding: 60px 20px;
+            border-right: 1px solid #ddd;
+
+            position: relative;
+
+            overflow: hidden;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.35s ease,
+                background 0.35s ease,
+                box-shadow 0.35s ease;
         }
 
 
-        .hero-content h1 {
-            font-size: 55px;
-
-            margin-bottom: 20px;
+        .benefit:last-child {
+            border-right: none;
         }
 
 
-        .hero-content p {
-            font-size: 20px;
+        /* PREMIUM HOVER EFFECT */
 
-            margin-bottom: 30px;
+        .benefit:hover {
+            background: #f8f8f8;
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.08);
         }
 
 
-        .shop-btn {
-            display: inline-block;
+        /* ANIMATED BOTTOM LINE */
+
+        .benefit::after {
+            content: "";
+
+            position: absolute;
+
+            left: 50%;
+            bottom: 0;
+
+            width: 0;
+            height: 2px;
 
             background: #111;
-            color: white;
 
-            padding: 14px 32px;
+            transform: translateX(-50%);
+
+            transition: width 0.35s ease;
+        }
+
+
+        .benefit:hover::after {
+            width: 70%;
+        }
+
+
+        /* BENEFIT ICON */
+
+        .benefit-icon {
+            font-size: 27px;
+
+            transition:
+                transform 0.35s ease,
+                filter 0.35s ease;
+        }
+
+
+        .benefit:hover .benefit-icon {
+            transform:
+                scale(1.15)
+                translateY(-2px);
+
+            filter: grayscale(0.2);
+        }
+
+
+        .benefit-text strong {
+            display: block;
+
+            font-size: 13px;
+
+            margin-bottom: 5px;
+
+            letter-spacing: 0.4px;
+
+            transition: letter-spacing 0.35s ease;
+        }
+
+
+        .benefit:hover .benefit-text strong {
+            letter-spacing: 0.8px;
+        }
+
+
+        .benefit-text span {
+            color: #777;
+
+            font-size: 12px;
+
+            transition: color 0.35s ease;
+        }
+
+
+        .benefit:hover .benefit-text span {
+            color: #444;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .tuvi-hero {
+            min-height: 590px;
+
+            background: #f1f0ee;
+
+            display: grid;
+
+            grid-template-columns: 44% 56%;
+
+            align-items: center;
+
+            overflow: hidden;
+
+            position: relative;
+        }
+
+
+        /* =====================================================
+           HERO CONTENT
+        ===================================================== */
+
+        .tuvi-hero-content {
+            padding: 70px 20px 70px 8vw;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .tuvi-hero-small {
+            font-size: 14px;
+
+            color: #555;
+
+            letter-spacing: 2.5px;
+
+            margin-bottom: 20px;
+
+            font-weight: 600;
+        }
+
+
+        .tuvi-hero-content h1 {
+            font-size: clamp(48px, 5vw, 76px);
+
+            line-height: 0.95;
+
+            font-weight: 800;
+
+            letter-spacing: -3px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .tuvi-hero-content h1 span {
+            display: block;
+        }
+
+
+        .tuvi-hero-text {
+            max-width: 430px;
+
+            color: #555;
+
+            font-size: 17px;
+
+            line-height: 1.6;
+
+            margin-bottom: 32px;
+        }
+
+
+        .tuvi-hero-text strong {
+            color: #111;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           HERO BUTTONS
+        ===================================================== */
+
+        .tuvi-hero-buttons {
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .tuvi-hero-btn {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-width: 150px;
+
+            padding: 14px 25px;
 
             text-decoration: none;
 
-            border-radius: 5px;
+            font-size: 13px;
+
+            font-weight: bold;
+
+            letter-spacing: 0.5px;
+
+            border-radius: 3px;
 
             transition: 0.25s ease;
         }
 
 
-        .shop-btn:hover {
-            background: #333;
+        .tuvi-hero-btn.primary {
+            background: #111;
 
-            transform: translateY(-2px);
+            color: white;
         }
 
 
-        /* =========================
+        .tuvi-hero-btn.secondary {
+            background: transparent;
+
+            color: #111;
+
+            border: 1px solid #111;
+        }
+
+
+        .tuvi-hero-btn:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+
+        .tuvi-hero-btn.primary:hover {
+            background: #333;
+        }
+
+
+        .tuvi-hero-btn.secondary:hover {
+            background: #111;
+
+            color: white;
+        }
+
+
+        /* =====================================================
+           HERO IMAGE
+        ===================================================== */
+
+        .tuvi-hero-visual {
+            height: 100%;
+
+            min-height: 590px;
+
+            position: relative;
+
+            display: flex;
+
+            align-items: stretch;
+            justify-content: center;
+
+            overflow: hidden;
+
+            background: #e9e8e6;
+        }
+
+
+        .tuvi-hero-image-wrapper {
+            width: 100%;
+            height: 100%;
+
+            overflow: hidden;
+
+            background: #e9e8e6;
+
+            position: relative;
+        }
+
+
+        .tuvi-hero-image {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            object-position: center;
+
+            display: block;
+
+            transition: transform 0.7s ease;
+        }
+
+
+        .tuvi-hero:hover .tuvi-hero-image {
+            transform: scale(1.02);
+        }
+
+
+        /* =====================================================
+           HERO BADGE
+        ===================================================== */
+
+        .tuvi-hero-badge {
+            position: absolute;
+
+            right: 30px;
+            bottom: 30px;
+
+            width: 105px;
+            height: 105px;
+
+            border-radius: 50%;
+
+            background: #111;
+
+            color: white;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.2);
+
+            animation:
+                floatingBadge 3s ease-in-out infinite;
+        }
+
+
+        .tuvi-hero-badge strong {
+            font-size: 17px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .tuvi-hero-badge span {
+            font-size: 9px;
+
+            letter-spacing: 1px;
+        }
+
+
+        @keyframes floatingBadge {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+
+        /* =====================================================
            CATEGORIES
-        ========================= */
+        ===================================================== */
 
         .categories {
-            padding: 60px;
+            padding: 70px 60px 60px;
+
+            background: white;
 
             text-align: center;
         }
 
 
-        .categories h2 {
-            font-size: 32px;
+        .section-heading {
+            text-align: center;
 
-            margin-bottom: 35px;
+            margin-bottom: 40px;
+        }
+
+
+        .section-heading h2 {
+            font-size: 31px;
+
+            margin-bottom: 10px;
+
+            letter-spacing: -0.5px;
+        }
+
+
+        .section-line {
+            width: 42px;
+
+            height: 3px;
+
+            background: #111;
+
+            margin: 0 auto;
         }
 
 
         .category-container {
-            display: flex;
+            max-width: 1250px;
 
-            justify-content: center;
+            margin: auto;
 
-            gap: 25px;
+            display: grid;
 
-            flex-wrap: wrap;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 22px;
         }
 
 
+        /* =====================================================
+           PREMIUM CATEGORY CARD
+        ===================================================== */
+
         .category-card {
-            background: white;
+            min-height: 350px;
 
-            width: 250px;
+            border-radius: 8px;
 
-            padding: 45px 20px;
+            padding: 0;
 
-            border-radius: 10px;
+            text-align: left;
 
-            box-shadow:
-                0 3px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+
+            overflow: hidden;
 
             cursor: pointer;
 
+            background: #eee;
+
             transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease;
+                transform 0.35s ease,
+                box-shadow 0.35s ease;
         }
 
 
         .category-card:hover {
-            transform: translateY(-7px);
+            transform: translateY(-8px);
 
             box-shadow:
-                0 10px 25px rgba(0, 0, 0, 0.15);
+                0 18px 40px rgba(0, 0, 0, 0.18);
+        }
+
+
+        /* CATEGORY IMAGE */
+
+        .category-image {
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transition:
+                transform 0.6s ease,
+                filter 0.6s ease;
+        }
+
+
+        .category-card:hover .category-image {
+            transform: scale(1.08);
+
+            filter: brightness(0.82);
+        }
+
+
+        /* DARK PREMIUM OVERLAY */
+
+        .category-card::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 0.78) 0%,
+                    rgba(0, 0, 0, 0.35) 45%,
+                    rgba(0, 0, 0, 0.05) 100%
+                );
+
+            z-index: 1;
+
+            transition:
+                background 0.4s ease;
+        }
+
+
+        .category-card:hover::before {
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 0.85) 0%,
+                    rgba(0, 0, 0, 0.42) 50%,
+                    rgba(0, 0, 0, 0.12) 100%
+                );
+        }
+
+
+        /* CATEGORY CONTENT */
+
+        .category-content {
+            position: absolute;
+
+            left: 30px;
+            right: 30px;
+            bottom: 28px;
+
+            z-index: 2;
+
+            color: white;
+
+            transform: translateY(5px);
+
+            transition:
+                transform 0.35s ease;
+        }
+
+
+        .category-card:hover .category-content {
+            transform: translateY(0);
         }
 
 
         .category-card h3 {
-            margin-bottom: 10px;
+            font-size: 29px;
 
-            font-size: 22px;
+            margin-bottom: 9px;
+
+            letter-spacing: 1px;
+
+            color: white;
         }
 
 
         .category-card p {
-            color: #555;
+            color: rgba(255, 255, 255, 0.88);
+
+            font-size: 14px;
+
+            margin-bottom: 18px;
         }
 
 
-        /* =========================
+        .category-arrow {
+            display: inline-block;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: white;
+
+            letter-spacing: 0.4px;
+
+            position: relative;
+        }
+
+
+        .category-arrow::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            bottom: -5px;
+
+            width: 0;
+            height: 2px;
+
+            background: white;
+
+            transition:
+                width 0.35s ease;
+        }
+
+
+        .category-card:hover .category-arrow::after {
+            width: 100%;
+        }
+
+
+        /* =====================================================
            PRODUCTS
-        ========================= */
+        ===================================================== */
 
         .products {
-            padding: 60px;
+            padding: 70px 60px;
+
+            background: #fafafa;
 
             text-align: center;
         }
 
 
-        .products h2 {
-            font-size: 32px;
-
-            margin-bottom: 35px;
-        }
-
-
         .product-container {
-            display: flex;
+            max-width: 1250px;
 
-            justify-content: center;
+            margin: auto;
 
-            flex-wrap: wrap;
+            display: grid;
 
-            gap: 25px;
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 24px;
         }
 
 
         .product-card {
             background: white;
 
-            width: 260px;
-
-            border-radius: 10px;
+            border-radius: 8px;
 
             overflow: hidden;
 
-            box-shadow:
-                0 3px 12px rgba(0, 0, 0, 0.1);
-
             text-align: left;
 
+            position: relative;
+
+            box-shadow:
+                0 3px 14px rgba(0, 0, 0, 0.07);
+
             transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease;
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
         }
 
 
@@ -370,44 +893,40 @@
             transform: translateY(-7px);
 
             box-shadow:
-                0 12px 28px rgba(0, 0, 0, 0.15);
+                0 15px 30px rgba(0, 0, 0, 0.13);
         }
 
-
-        /* =========================
-           PRODUCT IMAGE
-        ========================= */
 
         .product-image {
             width: 100%;
 
-            height: 300px;
+            height: 330px;
 
-            background: #eeeeee;
+            background: #eee;
 
             display: flex;
 
             align-items: center;
-
             justify-content: center;
 
             overflow: hidden;
+
+            position: relative;
         }
 
 
         .product-image img {
             width: 100%;
-
             height: 100%;
 
             object-fit: cover;
 
-            transition: transform 0.35s ease;
+            transition: transform 0.45s ease;
         }
 
 
         .product-card:hover .product-image img {
-            transform: scale(1.05);
+            transform: scale(1.07);
         }
 
 
@@ -416,24 +935,22 @@
         }
 
 
-        /* =========================
-           PRODUCT INFO
-        ========================= */
-
         .product-info {
-            padding: 20px;
+            padding: 19px;
         }
 
 
         .product-info h3 {
-            margin-bottom: 8px;
+            font-size: 17px;
 
-            font-size: 20px;
+            margin-bottom: 8px;
         }
 
 
         .product-info p {
             color: #777;
+
+            font-size: 14px;
 
             margin-bottom: 10px;
         }
@@ -444,7 +961,7 @@
 
             font-weight: bold;
 
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
 
@@ -453,9 +970,11 @@
 
             text-decoration: line-through;
 
+            font-size: 14px;
+
             font-weight: bold;
 
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
 
@@ -466,13 +985,13 @@
 
             color: white;
 
-            padding: 10px 18px;
+            padding: 10px 17px;
 
             text-decoration: none;
 
-            border-radius: 5px;
+            border-radius: 4px;
 
-            margin-top: 10px;
+            font-size: 13px;
 
             transition: 0.25s ease;
         }
@@ -485,10 +1004,6 @@
         }
 
 
-        /* =========================
-           PRODUCT LINK
-        ========================= */
-
         .product-link {
             text-decoration: none;
 
@@ -496,14 +1011,9 @@
         }
 
 
-        .product-link:hover {
-            opacity: 0.95;
-        }
-
-
-        /* =========================
+        /* =====================================================
            FOOTER
-        ========================= */
+        ===================================================== */
 
         footer {
             background: #111;
@@ -512,42 +1022,56 @@
 
             text-align: center;
 
-            padding: 25px;
+            padding: 30px;
 
-            margin-top: 30px;
+            margin-top: 0;
         }
 
 
-        /* =========================
-           RESPONSIVE DESIGN
-        ========================= */
+        footer p {
+            font-size: 13px;
 
-        @media (max-width: 1100px) {
+            color: #bbb;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE DESIGN
+        ===================================================== */
+
+        @media (max-width: 1200px) {
 
             .navbar {
-                padding: 18px 30px;
-
-                flex-wrap: wrap;
+                padding: 16px 30px;
             }
+
 
             .search-form {
-                width: 320px;
+                width: 300px;
             }
 
+
             .nav-links {
-                gap: 20px;
+                gap: 17px;
+            }
+
+
+            .product-container {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
             }
 
         }
 
 
-        @media (max-width: 850px) {
+        @media (max-width: 950px) {
 
             .navbar {
-                justify-content: center;
+                flex-wrap: wrap;
 
-                padding: 18px 20px;
+                justify-content: center;
             }
+
 
             .logo {
                 width: 100%;
@@ -555,11 +1079,13 @@
                 text-align: center;
             }
 
+
             .search-form {
                 width: 100%;
 
-                max-width: 450px;
+                max-width: 500px;
             }
+
 
             .nav-links {
                 width: 100%;
@@ -569,63 +1095,148 @@
                 flex-wrap: wrap;
             }
 
-            .hero-content h1 {
-                font-size: 45px;
+
+            .tuvi-hero {
+                grid-template-columns: 1fr;
+            }
+
+
+            .tuvi-hero-content {
+                padding:
+                    65px 30px
+                    45px;
+
+                text-align: center;
+            }
+
+
+            .tuvi-hero-text {
+                margin-left: auto;
+
+                margin-right: auto;
+            }
+
+
+            .tuvi-hero-buttons {
+                justify-content: center;
+            }
+
+
+            .tuvi-hero-visual {
+                min-height: 450px;
+
+                height: 450px;
+            }
+
+
+            .category-container {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .product-container {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
             }
 
         }
 
 
-        @media (max-width: 600px) {
+        @media (max-width: 650px) {
 
             .navbar {
+                padding: 15px 15px;
+
                 gap: 15px;
             }
 
-            .logo {
-                font-size: 25px;
-            }
-
-            .search-form {
-                height: 40px;
-            }
 
             .nav-links {
-                gap: 16px;
+                gap: 14px;
             }
+
 
             .nav-links a {
-                font-size: 14px;
+                font-size: 13px;
             }
 
-            .hero {
-                min-height: 420px;
 
-                padding: 40px 20px;
+            .benefits {
+                grid-template-columns: 1fr;
+
+                padding: 10px 20px;
             }
 
-            .hero-content h1 {
-                font-size: 38px;
+
+            .benefit {
+                border-right: none;
+
+                border-bottom: 1px solid #eee;
+
+                padding: 12px;
             }
 
-            .hero-content p {
-                font-size: 17px;
+
+            .benefit:last-child {
+                border-bottom: none;
             }
+
+
+            .tuvi-hero-content h1 {
+                font-size: 48px;
+
+                letter-spacing: -2px;
+            }
+
+
+            .tuvi-hero-visual {
+                min-height: 350px;
+
+                height: 350px;
+            }
+
+
+            .tuvi-hero-badge {
+                width: 80px;
+
+                height: 80px;
+
+                right: 15px;
+
+                bottom: 15px;
+            }
+
 
             .categories,
             .products {
-                padding: 45px 20px;
+                padding:
+                    55px 20px;
             }
 
-            .categories h2,
-            .products h2 {
-                font-size: 28px;
+
+            .category-container {
+                grid-template-columns: 1fr;
             }
+
+
+            .category-card {
+                min-height: 360px;
+            }
+
+
+            .product-container {
+                grid-template-columns: 1fr;
+            }
+
 
             .product-card {
                 width: 100%;
+            }
 
-                max-width: 320px;
+
+            .product-image {
+                height: 350px;
             }
 
         }
@@ -638,44 +1249,42 @@
 <body>
 
 
-    <!-- =========================
+    <!-- =====================================================
          NAVBAR
-    ========================= -->
+    ===================================================== -->
 
     <nav class="navbar">
-
 
         <div class="logo">
             TuviWear
         </div>
 
 
-        <!-- Search -->
-
-        <form 
-            action="{% url 'search_products' %}" 
-            method="GET" 
+        <form
+            action="{% url 'search_products' %}"
+            method="GET"
             class="search-form"
         >
 
-            <input 
-                type="text" 
-                name="q" 
-                placeholder="Search products..." 
+            <input
+                type="text"
+                name="q"
+                placeholder="Search products..."
                 autocomplete="off"
             >
 
-            <button type="submit" aria-label="Search">
+
+            <button
+                type="submit"
+                aria-label="Search"
+            >
                 🔍
             </button>
 
         </form>
 
 
-        <!-- Navigation -->
-
         <div class="nav-links">
-
 
             <a href="{% url 'home' %}">
                 🏠 Home
@@ -704,7 +1313,6 @@
 
             {% if user.is_authenticated %}
 
-
                 <a href="{% url 'my_orders' %}">
                     📦 My Orders
                 </a>
@@ -714,9 +1322,7 @@
                     🚪 Logout
                 </a>
 
-
             {% else %}
-
 
                 <a href="{% url 'login' %}">
                     🔐 Login
@@ -727,126 +1333,375 @@
                     📝 Register
                 </a>
 
-
             {% endif %}
 
-
         </div>
-
 
     </nav>
 
 
 
-    <!-- =========================
-         HERO SECTION
-    ========================= -->
+    <!-- =====================================================
+         BENEFITS
+    ===================================================== -->
 
-    <section class="hero">
-
-
-        <div class="hero-content">
+    <section class="benefits">
 
 
-            <h1>
-                TuviWear
-            </h1>
+        <div class="benefit">
+
+            <div class="benefit-icon">
+                🚚
+            </div>
 
 
-            <p>
-                Discover Your Style. Wear Your Confidence.
-            </p>
+            <div class="benefit-text">
+
+                <strong>
+                    FREE DELIVERY WORLDWIDE
+                </strong>
 
 
-            <a 
-                href="#products" 
-                class="shop-btn"
-            >
-                Shop Now
-            </a>
+                <span>
+                    On orders over ₹999
+                </span>
 
+            </div>
 
         </div>
 
+
+
+        <div class="benefit">
+
+            <div class="benefit-icon">
+                🛡️
+            </div>
+
+
+            <div class="benefit-text">
+
+                <strong>
+                    SECURE PAYMENT
+                </strong>
+
+
+                <span>
+                    100% secure payment
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="benefit">
+
+            <div class="benefit-icon">
+                ↩️
+            </div>
+
+
+            <div class="benefit-text">
+
+                <strong>
+                    EASY RETURNS
+                </strong>
+
+
+                <span>
+                    30 days return policy
+                </span>
+
+            </div>
+
+        </div>
 
     </section>
 
 
 
-    <!-- =========================
+    <!-- =====================================================
+         HERO
+    ===================================================== -->
+
+    <section class="tuvi-hero">
+
+
+        <div class="tuvi-hero-content">
+
+            <p class="tuvi-hero-small">
+                ✦ TUVIWEAR — EST. 2026 ✦
+            </p>
+
+
+            <h1>
+                WEAR YOUR
+
+                <span>
+                    IDENTITY.
+                </span>
+
+            </h1>
+
+
+            <p class="tuvi-hero-text">
+
+                <strong>
+                    More than fashion.
+                </strong>
+
+                <br>
+
+                A statement of who you are.
+
+                Discover contemporary pieces,
+
+                refined essentials, and effortless style
+
+                curated for the modern you.
+
+            </p>
+
+
+            <div class="tuvi-hero-buttons">
+
+                <a
+                    href="{% url 'search_products' %}"
+                    class="tuvi-hero-btn primary"
+                >
+                    SHOP NOW
+                </a>
+
+
+                <a
+                    href="#categories"
+                    class="tuvi-hero-btn secondary"
+                >
+                    EXPLORE NOW
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             HERO IMAGE
+        ================================================= -->
+
+        <div class="tuvi-hero-visual">
+
+
+            <div class="tuvi-hero-image-wrapper">
+
+                <img
+                    src="{% static 'images/hero-banner.jpg.jpeg' %}"
+                    alt="TuviWear Family Fashion Collection"
+                    class="tuvi-hero-image"
+                >
+
+            </div>
+
+
+            <div class="tuvi-hero-badge">
+
+                <strong>
+                    NEW
+                </strong>
+
+
+                <span>
+                    COLLECTION
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
          CATEGORIES
-    ========================= -->
+    ===================================================== -->
 
-    <section class="categories">
+    <section
+        class="categories"
+        id="categories"
+    >
 
 
-        <h2>
-            Shop By Category
-        </h2>
+        <div class="section-heading">
+
+            <h2>
+                SHOP BY CATEGORY
+            </h2>
+
+
+            <div class="section-line"></div>
+
+        </div>
+
 
 
         <div class="category-container">
 
 
-            <div class="category-card">
+            <!-- =================================================
+                 MEN
+            ================================================= -->
 
-                <h3>
-                    Men
-                </h3>
+            <a
+                href="{% url 'search_products' %}?category=Men"
+                class="product-link"
+            >
 
-                <p>
-                    Explore men's fashion
-                </p>
+                <div class="category-card">
 
-            </div>
-
-
-            <div class="category-card">
-
-                <h3>
-                    Women
-                </h3>
-
-                <p>
-                    Explore women's fashion
-                </p>
-
-            </div>
+                    <img
+                        src="{% static 'images/men.jpg.jpeg' %}"
+                        alt="Men's Fashion"
+                        class="category-image"
+                    >
 
 
-            <div class="category-card">
+                    <div class="category-content">
 
-                <h3>
-                    Kids
-                </h3>
+                        <h3>
+                            MEN
+                        </h3>
 
-                <p>
-                    Explore kids' fashion
-                </p>
 
-            </div>
+                        <p>
+                            Explore men's fashion
+                        </p>
 
+
+                        <span class="category-arrow">
+                            Explore now →
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================================
+                 WOMEN
+            ================================================= -->
+
+            <a
+                href="{% url 'search_products' %}?category=Women"
+                class="product-link"
+            >
+
+                <div class="category-card">
+
+                    <img
+                        src="{% static 'images/women.jpg.jpeg' %}"
+                        alt="Women's Fashion"
+                        class="category-image"
+                    >
+
+
+                    <div class="category-content">
+
+                        <h3>
+                            WOMEN
+                        </h3>
+
+
+                        <p>
+                            Explore women's fashion
+                        </p>
+
+
+                        <span class="category-arrow">
+                            Explore now →
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- =================================================
+                 KIDS
+            ================================================= -->
+
+            <a
+                href="{% url 'search_products' %}?category=Kids"
+                class="product-link"
+            >
+
+                <div class="category-card">
+
+                    <img
+                        src="{% static 'images/kids.jpg.jpeg' %}"
+                        alt="Kids' Fashion"
+                        class="category-image"
+                    >
+
+
+                    <div class="category-content">
+
+                        <h3>
+                            KIDS
+                        </h3>
+
+
+                        <p>
+                            Explore kids' fashion
+                        </p>
+
+
+                        <span class="category-arrow">
+                            Explore now →
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </a>
 
         </div>
-
 
     </section>
 
 
 
-    <!-- =========================
+    <!-- =====================================================
          PRODUCTS
-    ========================= -->
+    ===================================================== -->
 
-    <section 
-        class="products" 
+    <section
+        class="products"
         id="products"
     >
 
 
-        <h2>
-            Latest Products
-        </h2>
+        <div class="section-heading">
+
+            <h2>
+                LATEST PRODUCTS
+            </h2>
+
+
+            <div class="section-line"></div>
+
+        </div>
+
 
 
         <div class="product-container">
@@ -858,10 +1713,10 @@
                 <div class="product-card">
 
 
-                    <!-- Product Image -->
+                    <!-- PRODUCT IMAGE -->
 
-                    <a 
-                        href="{% url 'product_detail' product.slug %}" 
+                    <a
+                        href="{% url 'product_detail' product.slug %}"
                         class="product-link"
                     >
 
@@ -873,20 +1728,16 @@
 
                                 {% if product_image %}
 
-
-                                    <img 
-                                        src="{{ product_image.image.url }}" 
+                                    <img
+                                        src="{{ product_image.image.url }}"
                                         alt="{{ product_image.alt_text|default:product.name }}"
                                     >
 
-
                                 {% else %}
-
 
                                     <span class="no-image">
                                         No Image
                                     </span>
-
 
                                 {% endif %}
 
@@ -900,13 +1751,13 @@
 
 
 
-                    <!-- Product Information -->
+                    <!-- PRODUCT INFO -->
 
                     <div class="product-info">
 
 
-                        <a 
-                            href="{% url 'product_detail' product.slug %}" 
+                        <a
+                            href="{% url 'product_detail' product.slug %}"
                             class="product-link"
                         >
 
@@ -930,7 +1781,6 @@
 
                         {% if product.discount_price %}
 
-
                             <div class="price">
                                 ₹{{ product.discount_price }}
                             </div>
@@ -940,23 +1790,18 @@
                                 ₹{{ product.base_price }}
                             </div>
 
-
                         {% else %}
-
 
                             <div class="price">
                                 ₹{{ product.base_price }}
                             </div>
 
-
                         {% endif %}
 
 
 
-                        <!-- View Product -->
-
-                        <a 
-                            href="{% url 'product_detail' product.slug %}" 
+                        <a
+                            href="{% url 'product_detail' product.slug %}"
                             class="view-btn"
                         >
                             View Product
@@ -964,7 +1809,6 @@
 
 
                     </div>
-
 
                 </div>
 
@@ -982,22 +1826,19 @@
 
         </div>
 
-
     </section>
 
 
 
-    <!-- =========================
+    <!-- =====================================================
          FOOTER
-    ========================= -->
+    ===================================================== -->
 
     <footer>
-
 
         <p>
             © 2026 TuviWear. All Rights Reserved.
         </p>
-
 
     </footer>
 
@@ -1005,4 +1846,3 @@
 </body>
 
 </html>
-
