@@ -7,12 +7,18 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
 
     <title>TuviWear - Online Fashion Store</title>
 
-
     <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
 
         * {
             margin: 0;
@@ -20,16 +26,33 @@
             box-sizing: border-box;
         }
 
-
         html {
             scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
         }
-
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background: #ffffff;
+            background: #fff;
             color: #111;
+            width: 100%;
+            min-width: 0;
+            overflow-x: hidden;
+            padding-bottom: 0;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        a,
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button,
+        input {
+            font-family: inherit;
         }
 
 
@@ -39,64 +62,64 @@
 
         .navbar {
             background: #111;
-            color: white;
+            color: #fff;
             min-height: 76px;
-            padding: 16px 55px;
+            padding: 16px clamp(18px, 4vw, 55px);
 
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            gap: 30px;
+            gap: 24px;
 
             position: sticky;
             top: 0;
-
-            z-index: 1000;
+            z-index: 2000;
         }
 
-
         .logo {
-            font-size: 29px;
+            font-size: clamp(24px, 2.2vw, 29px);
             font-weight: bold;
-            letter-spacing: 0.5px;
+            letter-spacing: .5px;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
 
         /* =====================================================
-           SEARCH
+           DESKTOP SEARCH
         ===================================================== */
 
         .search-form {
             display: flex;
             align-items: center;
 
-            width: 380px;
+            width: min(380px, 30vw);
+            min-width: 220px;
             height: 42px;
 
-            background: white;
-
+            background: #fff;
             border-radius: 6px;
             overflow: hidden;
 
             border: 1px solid #ddd;
 
-            transition: 0.25s ease;
-        }
+            position: relative;
 
+            transition:
+                border-color .25s ease,
+                box-shadow .25s ease;
+        }
 
         .search-form:focus-within {
             border-color: #777;
-
-            box-shadow:
-                0 0 0 3px rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 0 3px rgba(255,255,255,.12);
         }
-
 
         .search-form input {
             flex: 1;
-
+            width: 100%;
+            min-width: 0;
             height: 100%;
 
             border: none;
@@ -105,37 +128,32 @@
             padding: 0 15px;
 
             font-size: 14px;
-
             color: #222;
-            background: white;
+            background: #fff;
         }
-
 
         .search-form input::placeholder {
             color: #999;
         }
 
-
         .search-form button {
             width: 48px;
+            min-width: 48px;
             height: 100%;
 
             border: none;
-
             background: #111;
-            color: white;
+            color: #fff;
 
             font-size: 17px;
-
             cursor: pointer;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            transition: 0.25s ease;
+            transition: background .25s ease;
         }
-
 
         .search-form button:hover {
             background: #333;
@@ -143,38 +161,126 @@
 
 
         /* =====================================================
-           NAV LINKS
+           SEARCH SUGGESTIONS
+        ===================================================== */
+
+        .search-suggestions {
+            position: absolute;
+
+            top: calc(100% + 7px);
+            left: 0;
+            right: 0;
+
+            background: #fff;
+            color: #111;
+
+            border-radius: 7px;
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,.18);
+
+            overflow: hidden;
+
+            display: none;
+
+            z-index: 5000;
+        }
+
+        .search-suggestions.active {
+            display: block;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 11px 13px;
+
+            text-decoration: none;
+            color: #111;
+
+            border-bottom: 1px solid #eee;
+
+            cursor: pointer;
+
+            transition:
+                background .2s ease,
+                padding-left .2s ease;
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover,
+        .suggestion-item.touch-active {
+            background: #f5f5f5;
+            padding-left: 18px;
+        }
+
+        .suggestion-image {
+            width: 40px;
+            height: 45px;
+
+            border-radius: 4px;
+
+            object-fit: cover;
+
+            background: #eee;
+
+            flex-shrink: 0;
+        }
+
+        .suggestion-name {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .suggestion-brand {
+            display: block;
+
+            color: #777;
+
+            font-size: 11px;
+
+            margin-top: 3px;
+        }
+
+
+        /* =====================================================
+           DESKTOP NAV LINKS
         ===================================================== */
 
         .nav-links {
             display: flex;
-            align-items: center;
 
-            gap: 25px;
+            align-items: center;
+            justify-content: flex-end;
+
+            gap: clamp(12px, 1.7vw, 25px);
 
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
-
         .nav-links a {
-            color: white;
-
+            color: #fff;
             text-decoration: none;
 
             font-size: 14px;
 
             position: relative;
 
-            transition: 0.25s ease;
+            transition:
+                color .25s ease,
+                transform .25s ease;
         }
-
 
         .nav-links a:hover {
             color: #ccc;
-
             transform: translateY(-1px);
         }
-
 
         .nav-links a::after {
             content: "";
@@ -187,14 +293,27 @@
             width: 0;
             height: 2px;
 
-            background: white;
+            background: #fff;
 
-            transition: width 0.25s ease;
+            transition: width .25s ease;
         }
-
 
         .nav-links a:hover::after {
             width: 100%;
+        }
+
+
+        /* =====================================================
+           MOBILE ELEMENTS
+        ===================================================== */
+
+        .mobile-search-btn,
+        .mobile-menu-btn,
+        .mobile-bottom-nav,
+        .mobile-search-panel,
+        .mobile-menu-panel,
+        .mobile-menu-overlay {
+            display: none;
         }
 
 
@@ -206,18 +325,15 @@
             background: #fff;
 
             display: grid;
-
             grid-template-columns: repeat(3, 1fr);
 
             border-bottom: 1px solid #eee;
 
-            padding: 18px 70px;
+            padding: 18px clamp(20px, 5vw, 70px);
         }
-
 
         .benefit {
             display: flex;
-
             align-items: center;
             justify-content: center;
 
@@ -234,30 +350,24 @@
             cursor: pointer;
 
             transition:
-                transform 0.35s ease,
-                background 0.35s ease,
-                box-shadow 0.35s ease;
+                transform .35s ease,
+                background .35s ease,
+                box-shadow .35s ease;
         }
-
 
         .benefit:last-child {
             border-right: none;
         }
 
-
-        /* PREMIUM HOVER EFFECT */
-
-        .benefit:hover {
+        .benefit:hover,
+        .benefit.touch-active {
             background: #f8f8f8;
 
             transform: translateY(-4px);
 
             box-shadow:
-                0 10px 25px rgba(0, 0, 0, 0.08);
+                0 10px 25px rgba(0,0,0,.08);
         }
-
-
-        /* ANIMATED BOTTOM LINE */
 
         .benefit::after {
             content: "";
@@ -274,34 +384,27 @@
 
             transform: translateX(-50%);
 
-            transition: width 0.35s ease;
+            transition: width .35s ease;
         }
 
-
-        .benefit:hover::after {
+        .benefit:hover::after,
+        .benefit.touch-active::after {
             width: 70%;
         }
-
-
-        /* BENEFIT ICON */
 
         .benefit-icon {
             font-size: 27px;
 
             transition:
-                transform 0.35s ease,
-                filter 0.35s ease;
+                transform .35s ease;
         }
 
-
-        .benefit:hover .benefit-icon {
+        .benefit:hover .benefit-icon,
+        .benefit.touch-active .benefit-icon {
             transform:
                 scale(1.15)
                 translateY(-2px);
-
-            filter: grayscale(0.2);
         }
-
 
         .benefit-text strong {
             display: block;
@@ -310,28 +413,12 @@
 
             margin-bottom: 5px;
 
-            letter-spacing: 0.4px;
-
-            transition: letter-spacing 0.35s ease;
+            letter-spacing: .4px;
         }
-
-
-        .benefit:hover .benefit-text strong {
-            letter-spacing: 0.8px;
-        }
-
 
         .benefit-text span {
             color: #777;
-
             font-size: 12px;
-
-            transition: color 0.35s ease;
-        }
-
-
-        .benefit:hover .benefit-text span {
-            color: #444;
         }
 
 
@@ -346,31 +433,34 @@
 
             display: grid;
 
-            grid-template-columns: 44% 56%;
+            grid-template-columns:
+                minmax(0,44%)
+                minmax(0,56%);
 
-            align-items: center;
+            align-items: stretch;
 
             overflow: hidden;
 
             position: relative;
         }
 
-
-        /* =====================================================
-           HERO CONTENT
-        ===================================================== */
-
         .tuvi-hero-content {
-            padding: 70px 20px 70px 8vw;
+            padding:
+                clamp(45px,6vw,70px)
+                clamp(24px,3vw,40px)
+                clamp(45px,6vw,70px)
+                clamp(30px,8vw,8vw);
 
             position: relative;
-
             z-index: 2;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
-
         .tuvi-hero-small {
-            font-size: 14px;
+            font-size: clamp(12px,1.1vw,14px);
 
             color: #555;
 
@@ -381,11 +471,10 @@
             font-weight: 600;
         }
 
-
         .tuvi-hero-content h1 {
-            font-size: clamp(48px, 5vw, 76px);
+            font-size: clamp(48px,5vw,76px);
 
-            line-height: 0.95;
+            line-height: .95;
 
             font-weight: 800;
 
@@ -394,44 +483,31 @@
             margin-bottom: 25px;
         }
 
-
         .tuvi-hero-content h1 span {
             display: block;
         }
-
 
         .tuvi-hero-text {
             max-width: 430px;
 
             color: #555;
 
-            font-size: 17px;
+            font-size: clamp(15px,1.3vw,17px);
 
             line-height: 1.6;
 
             margin-bottom: 32px;
         }
 
-
         .tuvi-hero-text strong {
             color: #111;
-
-            font-weight: 700;
         }
-
-
-        /* =====================================================
-           HERO BUTTONS
-        ===================================================== */
 
         .tuvi-hero-buttons {
             display: flex;
-
             gap: 12px;
-
             flex-wrap: wrap;
         }
-
 
         .tuvi-hero-btn {
             display: inline-flex;
@@ -449,57 +525,52 @@
 
             font-weight: bold;
 
-            letter-spacing: 0.5px;
+            letter-spacing: .5px;
 
             border-radius: 3px;
 
-            transition: 0.25s ease;
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease,
+                background .25s ease,
+                color .25s ease;
         }
-
 
         .tuvi-hero-btn.primary {
             background: #111;
-
-            color: white;
+            color: #fff;
         }
-
 
         .tuvi-hero-btn.secondary {
             background: transparent;
-
             color: #111;
-
             border: 1px solid #111;
         }
 
-
-        .tuvi-hero-btn:hover {
+        .tuvi-hero-btn:hover,
+        .tuvi-hero-btn.touch-active {
             transform: translateY(-3px);
 
             box-shadow:
-                0 8px 20px rgba(0, 0, 0, 0.12);
+                0 8px 20px rgba(0,0,0,.12);
         }
 
-
-        .tuvi-hero-btn.primary:hover {
+        .tuvi-hero-btn.primary:hover,
+        .tuvi-hero-btn.primary.touch-active {
             background: #333;
         }
 
-
-        .tuvi-hero-btn.secondary:hover {
+        .tuvi-hero-btn.secondary:hover,
+        .tuvi-hero-btn.secondary.touch-active {
             background: #111;
-
-            color: white;
+            color: #fff;
         }
 
 
-        /* =====================================================
-           HERO IMAGE
-        ===================================================== */
+        /* HERO IMAGE */
 
         .tuvi-hero-visual {
             height: 100%;
-
             min-height: 590px;
 
             position: relative;
@@ -514,7 +585,6 @@
             background: #e9e8e6;
         }
 
-
         .tuvi-hero-image-wrapper {
             width: 100%;
             height: 100%;
@@ -526,35 +596,31 @@
             position: relative;
         }
 
-
         .tuvi-hero-image {
             width: 100%;
             height: 100%;
 
             object-fit: cover;
-
             object-position: center;
 
             display: block;
 
-            transition: transform 0.7s ease;
+            transition: transform .7s ease;
         }
 
-
-        .tuvi-hero:hover .tuvi-hero-image {
+        .tuvi-hero:hover .tuvi-hero-image,
+        .tuvi-hero.touch-active .tuvi-hero-image {
             transform: scale(1.02);
         }
 
 
-        /* =====================================================
-           HERO BADGE
-        ===================================================== */
+        /* HERO BADGE */
 
         .tuvi-hero-badge {
             position: absolute;
 
-            right: 30px;
-            bottom: 30px;
+            right: clamp(15px,3vw,30px);
+            bottom: clamp(15px,3vw,30px);
 
             width: 105px;
             height: 105px;
@@ -562,8 +628,7 @@
             border-radius: 50%;
 
             background: #111;
-
-            color: white;
+            color: #fff;
 
             display: flex;
 
@@ -575,26 +640,21 @@
             text-align: center;
 
             box-shadow:
-                0 10px 30px rgba(0, 0, 0, 0.2);
+                0 10px 30px rgba(0,0,0,.2);
 
             animation:
                 floatingBadge 3s ease-in-out infinite;
         }
 
-
         .tuvi-hero-badge strong {
             font-size: 17px;
-
             margin-bottom: 4px;
         }
 
-
         .tuvi-hero-badge span {
             font-size: 9px;
-
             letter-spacing: 1px;
         }
-
 
         @keyframes floatingBadge {
 
@@ -606,41 +666,49 @@
             50% {
                 transform: translateY(-8px);
             }
+
         }
 
 
         /* =====================================================
-           CATEGORIES
+           SECTIONS
         ===================================================== */
 
-        .categories {
-            padding: 70px 60px 60px;
-
-            background: white;
-
+        .categories,
+        .products {
             text-align: center;
         }
 
+        .categories {
+            padding:
+                clamp(55px,6vw,70px)
+                clamp(20px,5vw,60px)
+                clamp(50px,5vw,60px);
+
+            background: #fff;
+        }
+
+        .products {
+            padding:
+                clamp(55px,6vw,70px)
+                clamp(20px,5vw,60px);
+
+            background: #fafafa;
+        }
 
         .section-heading {
             text-align: center;
-
             margin-bottom: 40px;
         }
 
-
         .section-heading h2 {
-            font-size: 31px;
-
+            font-size: clamp(25px,2.5vw,31px);
             margin-bottom: 10px;
-
-            letter-spacing: -0.5px;
+            letter-spacing: -.5px;
         }
-
 
         .section-line {
             width: 42px;
-
             height: 3px;
 
             background: #111;
@@ -649,31 +717,28 @@
         }
 
 
+        /* =====================================================
+           CATEGORY
+        ===================================================== */
+
         .category-container {
+            width: 100%;
             max-width: 1250px;
 
             margin: auto;
 
             display: grid;
 
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns:
+                repeat(3,minmax(0,1fr));
 
             gap: 22px;
         }
-
-
-        /* =====================================================
-           PREMIUM CATEGORY CARD
-        ===================================================== */
 
         .category-card {
             min-height: 350px;
 
             border-radius: 8px;
-
-            padding: 0;
-
-            text-align: left;
 
             position: relative;
 
@@ -684,24 +749,20 @@
             background: #eee;
 
             transition:
-                transform 0.35s ease,
-                box-shadow 0.35s ease;
+                transform .35s ease,
+                box-shadow .35s ease;
         }
 
-
-        .category-card:hover {
+        .category-card:hover,
+        .category-card.touch-active {
             transform: translateY(-8px);
 
             box-shadow:
-                0 18px 40px rgba(0, 0, 0, 0.18);
+                0 18px 40px rgba(0,0,0,.18);
         }
-
-
-        /* CATEGORY IMAGE */
 
         .category-image {
             position: absolute;
-
             inset: 0;
 
             width: 100%;
@@ -712,54 +773,32 @@
             display: block;
 
             transition:
-                transform 0.6s ease,
-                filter 0.6s ease;
+                transform .6s ease,
+                filter .6s ease;
         }
 
-
-        .category-card:hover .category-image {
+        .category-card:hover .category-image,
+        .category-card.touch-active .category-image {
             transform: scale(1.08);
-
-            filter: brightness(0.82);
+            filter: brightness(.82);
         }
-
-
-        /* DARK PREMIUM OVERLAY */
 
         .category-card::before {
             content: "";
 
             position: absolute;
-
             inset: 0;
 
             background:
                 linear-gradient(
                     to top,
-                    rgba(0, 0, 0, 0.78) 0%,
-                    rgba(0, 0, 0, 0.35) 45%,
-                    rgba(0, 0, 0, 0.05) 100%
+                    rgba(0,0,0,.78) 0%,
+                    rgba(0,0,0,.35) 45%,
+                    rgba(0,0,0,.05) 100%
                 );
 
             z-index: 1;
-
-            transition:
-                background 0.4s ease;
         }
-
-
-        .category-card:hover::before {
-            background:
-                linear-gradient(
-                    to top,
-                    rgba(0, 0, 0, 0.85) 0%,
-                    rgba(0, 0, 0, 0.42) 50%,
-                    rgba(0, 0, 0, 0.12) 100%
-                );
-        }
-
-
-        /* CATEGORY CONTENT */
 
         .category-content {
             position: absolute;
@@ -770,19 +809,8 @@
 
             z-index: 2;
 
-            color: white;
-
-            transform: translateY(5px);
-
-            transition:
-                transform 0.35s ease;
+            color: #fff;
         }
-
-
-        .category-card:hover .category-content {
-            transform: translateY(0);
-        }
-
 
         .category-card h3 {
             font-size: 29px;
@@ -791,18 +819,16 @@
 
             letter-spacing: 1px;
 
-            color: white;
+            color: #fff;
         }
 
-
         .category-card p {
-            color: rgba(255, 255, 255, 0.88);
+            color: rgba(255,255,255,.88);
 
             font-size: 14px;
 
             margin-bottom: 18px;
         }
-
 
         .category-arrow {
             display: inline-block;
@@ -811,34 +837,9 @@
 
             font-weight: bold;
 
-            color: white;
+            color: #fff;
 
-            letter-spacing: 0.4px;
-
-            position: relative;
-        }
-
-
-        .category-arrow::after {
-            content: "";
-
-            position: absolute;
-
-            left: 0;
-            bottom: -5px;
-
-            width: 0;
-            height: 2px;
-
-            background: white;
-
-            transition:
-                width 0.35s ease;
-        }
-
-
-        .category-card:hover .category-arrow::after {
-            width: 100%;
+            letter-spacing: .4px;
         }
 
 
@@ -846,16 +847,9 @@
            PRODUCTS
         ===================================================== */
 
-        .products {
-            padding: 70px 60px;
-
-            background: #fafafa;
-
-            text-align: center;
-        }
-
-
         .product-container {
+            width: 100%;
+
             max-width: 1250px;
 
             margin: auto;
@@ -863,14 +857,13 @@
             display: grid;
 
             grid-template-columns:
-                repeat(4, minmax(0, 1fr));
+                repeat(4,minmax(0,1fr));
 
             gap: 24px;
         }
 
-
         .product-card {
-            background: white;
+            background: #fff;
 
             border-radius: 8px;
 
@@ -881,21 +874,20 @@
             position: relative;
 
             box-shadow:
-                0 3px 14px rgba(0, 0, 0, 0.07);
+                0 3px 14px rgba(0,0,0,.07);
 
             transition:
-                transform 0.3s ease,
-                box-shadow 0.3s ease;
+                transform .3s ease,
+                box-shadow .3s ease;
         }
 
-
-        .product-card:hover {
+        .product-card:hover,
+        .product-card.touch-active {
             transform: translateY(-7px);
 
             box-shadow:
-                0 15px 30px rgba(0, 0, 0, 0.13);
+                0 15px 30px rgba(0,0,0,.13);
         }
-
 
         .product-image {
             width: 100%;
@@ -914,38 +906,33 @@
             position: relative;
         }
 
-
         .product-image img {
             width: 100%;
             height: 100%;
 
             object-fit: cover;
 
-            transition: transform 0.45s ease;
+            transition:
+                transform .45s ease;
         }
 
-
-        .product-card:hover .product-image img {
+        .product-card:hover .product-image img,
+        .product-card.touch-active .product-image img {
             transform: scale(1.07);
         }
-
 
         .no-image {
             color: #777;
         }
 
-
         .product-info {
             padding: 19px;
         }
 
-
         .product-info h3 {
             font-size: 17px;
-
             margin-bottom: 8px;
         }
-
 
         .product-info p {
             color: #777;
@@ -955,7 +942,6 @@
             margin-bottom: 10px;
         }
 
-
         .price {
             font-size: 18px;
 
@@ -963,7 +949,6 @@
 
             margin-bottom: 4px;
         }
-
 
         .discount-price {
             color: #999;
@@ -977,13 +962,11 @@
             margin-bottom: 12px;
         }
 
-
         .view-btn {
             display: inline-block;
 
             background: #111;
-
-            color: white;
+            color: #fff;
 
             padding: 10px 17px;
 
@@ -993,20 +976,24 @@
 
             font-size: 13px;
 
-            transition: 0.25s ease;
+            transition:
+                background .25s ease,
+                transform .25s ease,
+                box-shadow .25s ease;
         }
 
-
-        .view-btn:hover {
+        .view-btn:hover,
+        .view-btn.touch-active {
             background: #333;
 
             transform: translateY(-2px);
-        }
 
+            box-shadow:
+                0 6px 14px rgba(0,0,0,.15);
+        }
 
         .product-link {
             text-decoration: none;
-
             color: inherit;
         }
 
@@ -1018,7 +1005,7 @@
         footer {
             background: #111;
 
-            color: white;
+            color: #fff;
 
             text-align: center;
 
@@ -1027,65 +1014,66 @@
             margin-top: 0;
         }
 
-
         footer p {
             font-size: 13px;
-
             color: #bbb;
         }
 
 
         /* =====================================================
-           RESPONSIVE DESIGN
+           LAPTOP
         ===================================================== */
 
-        @media (max-width: 1200px) {
+        @media (max-width:1200px) {
 
             .navbar {
-                padding: 16px 30px;
+                padding-left: 30px;
+                padding-right: 30px;
             }
-
 
             .search-form {
                 width: 300px;
+                min-width: 200px;
             }
-
 
             .nav-links {
                 gap: 17px;
             }
 
-
             .product-container {
                 grid-template-columns:
-                    repeat(3, minmax(0, 1fr));
+                    repeat(3,minmax(0,1fr));
             }
 
         }
 
 
-        @media (max-width: 950px) {
+        /* =====================================================
+           TABLET PORTRAIT
+        ===================================================== */
+
+        @media (max-width:950px) and (min-width:651px) {
 
             .navbar {
                 flex-wrap: wrap;
 
                 justify-content: center;
+
+                padding: 14px 24px;
+
+                gap: 14px;
             }
 
-
             .logo {
-                width: 100%;
-
+                width: auto;
                 text-align: center;
             }
 
-
             .search-form {
-                width: 100%;
-
-                max-width: 500px;
+                width: min(500px,100%);
+                min-width: 0;
+                order: 3;
             }
-
 
             .nav-links {
                 width: 100%;
@@ -1093,150 +1081,1178 @@
                 justify-content: center;
 
                 flex-wrap: wrap;
-            }
 
+                gap: 14px;
+
+                order: 2;
+            }
 
             .tuvi-hero {
                 grid-template-columns: 1fr;
             }
 
-
             .tuvi-hero-content {
                 padding:
-                    65px 30px
-                    45px;
+                    65px 30px 45px;
 
                 text-align: center;
+                align-items: center;
             }
-
 
             .tuvi-hero-text {
                 margin-left: auto;
-
                 margin-right: auto;
             }
-
 
             .tuvi-hero-buttons {
                 justify-content: center;
             }
 
-
             .tuvi-hero-visual {
                 min-height: 450px;
-
                 height: 450px;
             }
 
-
             .category-container {
                 grid-template-columns:
-                    repeat(2, 1fr);
+                    repeat(2,minmax(0,1fr));
             }
-
 
             .product-container {
                 grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
+                    repeat(2,minmax(0,1fr));
+            }
+
+            .product-image {
+                height: 320px;
             }
 
         }
 
 
-        @media (max-width: 650px) {
+        /* =====================================================
+           TABLET LANDSCAPE
+        ===================================================== */
+
+        @media (min-width:651px)
+        and (max-width:950px)
+        and (orientation:landscape) {
 
             .navbar {
-                padding: 15px 15px;
+                flex-wrap: nowrap;
 
-                gap: 15px;
+                justify-content: space-between;
+
+                padding:
+                    12px 22px;
+
+                gap: 16px;
             }
 
+            .logo {
+                width: auto;
+                flex-shrink: 0;
+            }
+
+            .search-form {
+                order: initial;
+
+                width: 270px;
+
+                flex-shrink: 1;
+            }
 
             .nav-links {
-                gap: 14px;
-            }
+                order: initial;
 
+                width: auto;
+
+                flex-wrap: nowrap;
+
+                justify-content: flex-end;
+
+                gap: 12px;
+
+                overflow: hidden;
+            }
 
             .nav-links a {
-                font-size: 13px;
+                font-size: 12px;
             }
 
+            .tuvi-hero {
+                grid-template-columns:
+                    45% 55%;
 
-            .benefits {
-                grid-template-columns: 1fr;
-
-                padding: 10px 20px;
+                min-height: 470px;
             }
 
+            .tuvi-hero-content {
+                padding:
+                    40px 25px 40px 35px;
 
-            .benefit {
-                border-right: none;
+                text-align: left;
 
-                border-bottom: 1px solid #eee;
-
-                padding: 12px;
+                align-items: flex-start;
             }
-
-
-            .benefit:last-child {
-                border-bottom: none;
-            }
-
 
             .tuvi-hero-content h1 {
-                font-size: 48px;
-
-                letter-spacing: -2px;
+                font-size:
+                    clamp(42px,5vw,60px);
             }
 
+            .tuvi-hero-text {
+                font-size: 14px;
+                max-width: 380px;
+            }
+
+            .tuvi-hero-buttons {
+                justify-content: flex-start;
+            }
 
             .tuvi-hero-visual {
-                min-height: 350px;
+                min-height: 470px;
+                height: 470px;
+            }
 
-                height: 350px;
+            .benefits {
+                padding:
+                    14px 25px;
+            }
+
+            .category-container {
+                grid-template-columns:
+                    repeat(3,minmax(0,1fr));
+            }
+
+            .category-card {
+                min-height: 280px;
+            }
+
+            .product-container {
+                grid-template-columns:
+                    repeat(3,minmax(0,1fr));
+            }
+
+            .product-image {
+                height: 280px;
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width:650px) {
+
+            body {
+                padding-bottom: 70px;
             }
 
 
-            .tuvi-hero-badge {
-                width: 80px;
+            /* =================================================
+               MOBILE NAVBAR
+            ================================================= */
 
-                height: 80px;
+            .navbar {
+                min-height: 62px;
+                height: 62px;
+
+                padding:
+                    10px 15px;
+
+                gap: 10px;
+
+                justify-content:
+                    space-between;
+
+                position: sticky;
+
+                top: 0;
+
+                z-index: 4000;
+            }
+
+            .logo {
+                width: auto;
+
+                font-size: 24px;
+
+                text-align: left;
+            }
+
+            .navbar > .search-form {
+                display: none;
+            }
+
+            .navbar > .nav-links {
+                display: none;
+            }
+
+
+            /* =================================================
+               MOBILE SEARCH ICON
+            ================================================= */
+
+            .mobile-search-btn {
+
+                display: flex;
+
+                width: 42px;
+                height: 42px;
+
+                flex-shrink: 0;
+
+                border: none;
+
+                border-radius: 50%;
+
+                background: #222;
+
+                color: #fff;
+
+                font-size: 19px;
+
+                align-items: center;
+
+                justify-content: center;
+
+                cursor: pointer;
+
+                margin-left: auto;
+
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            .mobile-search-btn:active {
+                transform: scale(.94);
+            }
+
+
+            /* =================================================
+               MOBILE SEARCH PANEL
+            ================================================= */
+
+            .mobile-search-panel {
+
+                display: block;
+
+                position: fixed;
+
+                top: 0;
+
+                left: 0;
+                right: 0;
+
+                width: 100%;
+
+                height: 62px;
+
+                background: #111;
+
+                padding:
+                    9px 10px;
+
+                z-index: 6000;
+
+                transform:
+                    translateY(-110%);
+
+                opacity: 0;
+
+                pointer-events: none;
+
+                transition:
+                    transform .25s ease,
+                    opacity .25s ease;
+            }
+
+            .mobile-search-panel.active {
+
+                transform:
+                    translateY(0);
+
+                opacity: 1;
+
+                pointer-events: auto;
+            }
+
+
+            /* =================================================
+               MOBILE SEARCH FORM
+            ================================================= */
+
+            .mobile-search-panel form {
+
+                position: relative;
+
+                width: 100%;
+
+                height: 44px;
+
+                display: flex;
+
+                align-items: center;
+
+                background: #fff;
+
+                border-radius: 7px;
+
+                overflow: visible;
+
+                box-shadow:
+                    0 3px 12px rgba(0,0,0,.25);
+            }
+
+
+            /* BACK BUTTON */
+
+            .mobile-search-back {
+
+                width: 42px;
+
+                height: 44px;
+
+                flex-shrink: 0;
+
+                border: none;
+
+                background: transparent;
+
+                color: #111;
+
+                font-size: 24px;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                cursor: pointer;
+            }
+
+
+            /* INPUT */
+
+            .mobile-search-panel input {
+
+                flex: 1;
+
+                width: 100%;
+
+                min-width: 0;
+
+                height: 44px;
+
+                border: none;
+
+                outline: none;
+
+                background: transparent;
+
+                padding:
+                    0 8px;
+
+                font-size: 15px;
+
+                color: #111;
+
+                -webkit-appearance: none;
+            }
+
+            .mobile-search-panel input::placeholder {
+                color: #888;
+            }
+
+            .mobile-search-panel input::-webkit-search-cancel-button {
+                -webkit-appearance: none;
+            }
+
+
+            /* SEARCH SUBMIT BUTTON */
+
+            .mobile-search-submit {
+
+                width: 50px;
+
+                height: 44px;
+
+                flex-shrink: 0;
+
+                border: none;
+
+                border-radius:
+                    0 7px 7px 0;
+
+                background: #111;
+
+                color: #fff;
+
+                font-size: 18px;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+                cursor: pointer;
+            }
+
+            .mobile-search-submit:active {
+
+                background: #333;
+
+                transform: scale(.96);
+            }
+
+
+            /* MOBILE SUGGESTIONS */
+
+            .mobile-search-panel .search-suggestions {
+
+                position: absolute;
+
+                top: 50px;
+
+                left: 0;
+                right: 0;
+
+                width: 100%;
+
+                background: #fff;
+
+                color: #111;
+
+                border-radius: 7px;
+
+                box-shadow:
+                    0 10px 30px rgba(0,0,0,.20);
+
+                overflow: hidden;
+
+                display: none;
+
+                z-index: 7000;
+            }
+
+            .mobile-search-panel
+            .search-suggestions.active {
+
+                display: block;
+            }
+
+
+            /* =================================================
+               MOBILE MENU BUTTON
+            ================================================= */
+
+            .mobile-menu-btn {
+
+                display: flex;
+
+                position: fixed;
+
+                top: 72px;
 
                 right: 15px;
 
-                bottom: 15px;
+                width: 42px;
+                height: 42px;
+
+                border-radius: 50%;
+
+                background: #111;
+
+                color: #fff;
+
+                border: none;
+
+                align-items: center;
+
+                justify-content: center;
+
+                font-size: 22px;
+
+                z-index: 1800;
+
+                cursor: pointer;
+
+                box-shadow:
+                    0 5px 15px rgba(0,0,0,.18);
             }
 
 
-            .categories,
-            .products {
+            /* =================================================
+               MOBILE SIDE MENU
+            ================================================= */
+
+            .mobile-menu-panel {
+
+                display: block;
+
+                position: fixed;
+
+                top: 0;
+                right: 0;
+
+                width:
+                    min(310px,85vw);
+
+                height: 100vh;
+
+                background: #fff;
+
+                z-index: 5000;
+
+                box-shadow:
+                    -8px 0 30px rgba(0,0,0,.2);
+
+                transform:
+                    translateX(110%);
+
+                transition:
+                    transform .3s ease;
+
+                overflow-y: auto;
+            }
+
+            .mobile-menu-panel.active {
+                transform:
+                    translateX(0);
+            }
+
+            .mobile-menu-header {
+
+                height: 70px;
+
+                background: #111;
+
+                color: #fff;
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: space-between;
+
                 padding:
-                    55px 20px;
+                    0 18px;
             }
 
+            .mobile-menu-header strong {
+                font-size: 22px;
+            }
+
+            .mobile-menu-close {
+
+                width: 36px;
+                height: 36px;
+
+                border: none;
+
+                border-radius: 50%;
+
+                background: #333;
+
+                color: #fff;
+
+                font-size: 20px;
+
+                cursor: pointer;
+            }
+
+            .mobile-menu-links {
+
+                display: flex;
+
+                flex-direction: column;
+            }
+
+            .mobile-menu-links a {
+
+                color: #111;
+
+                text-decoration: none;
+
+                padding:
+                    17px 20px;
+
+                border-bottom:
+                    1px solid #eee;
+
+                font-size: 15px;
+
+                transition:
+                    background .25s ease,
+                    padding-left .25s ease;
+            }
+
+            .mobile-menu-links a:hover,
+            .mobile-menu-links a.touch-active {
+
+                background: #f5f5f5;
+
+                padding-left: 27px;
+            }
+
+
+            /* =================================================
+               OVERLAY
+            ================================================= */
+
+            .mobile-menu-overlay {
+
+                display: block;
+
+                position: fixed;
+
+                inset: 0;
+
+                background:
+                    rgba(0,0,0,.45);
+
+                z-index: 4500;
+
+                opacity: 0;
+
+                pointer-events: none;
+
+                transition:
+                    opacity .3s ease;
+            }
+
+            .mobile-menu-overlay.active {
+
+                opacity: 1;
+
+                pointer-events: auto;
+            }
+
+
+            /* =================================================
+               BENEFITS
+            ================================================= */
+
+            .benefits {
+
+                grid-template-columns:
+                    repeat(3,1fr);
+
+                padding:
+                    10px 8px;
+
+                gap: 0;
+            }
+
+            .benefit {
+
+                border-right:
+                    1px solid #eee;
+
+                min-height: 75px;
+
+                padding:
+                    8px 5px;
+
+                flex-direction: column;
+
+                gap: 5px;
+
+                text-align: center;
+            }
+
+            .benefit:last-child {
+                border-right: none;
+            }
+
+            .benefit-icon {
+                font-size: 21px;
+            }
+
+            .benefit-text strong {
+                font-size: 9px;
+
+                margin-bottom: 3px;
+
+                letter-spacing: .2px;
+            }
+
+            .benefit-text span {
+                font-size: 8px;
+            }
+
+
+            /* =================================================
+               HERO
+            ================================================= */
+
+            .tuvi-hero {
+
+                grid-template-columns: 1fr;
+
+                min-height: auto;
+            }
+
+            .tuvi-hero-content {
+
+                padding:
+                    45px 20px 32px;
+
+                text-align: center;
+
+                align-items: center;
+            }
+
+            .tuvi-hero-small {
+
+                font-size: 10px;
+
+                letter-spacing: 1.6px;
+
+                margin-bottom: 15px;
+            }
+
+            .tuvi-hero-content h1 {
+
+                font-size:
+                    clamp(40px,12vw,54px);
+
+                letter-spacing:
+                    -2px;
+
+                margin-bottom: 19px;
+            }
+
+            .tuvi-hero-text {
+
+                font-size: 14px;
+
+                line-height: 1.55;
+
+                max-width: 400px;
+
+                margin-bottom: 23px;
+            }
+
+            .tuvi-hero-buttons {
+
+                width: 100%;
+
+                justify-content:
+                    center;
+            }
+
+            .tuvi-hero-btn {
+
+                min-width:
+                    135px;
+
+                padding:
+                    12px 15px;
+
+                font-size: 11px;
+            }
+
+            .tuvi-hero-visual {
+
+                min-height:
+                    350px;
+
+                height:
+                    350px;
+            }
+
+            .tuvi-hero-image {
+
+                object-position:
+                    center center;
+            }
+
+            .tuvi-hero-badge {
+
+                width: 76px;
+                height: 76px;
+
+                right: 13px;
+                bottom: 13px;
+            }
+
+            .tuvi-hero-badge strong {
+                font-size: 13px;
+            }
+
+            .tuvi-hero-badge span {
+                font-size: 7px;
+            }
+
+
+            /* =================================================
+               CATEGORY
+            ================================================= */
+
+            .categories {
+
+                padding:
+                    45px 12px 45px;
+            }
+
+            .section-heading {
+
+                margin-bottom:
+                    25px;
+            }
+
+            .section-heading h2 {
+
+                font-size:
+                    22px;
+            }
 
             .category-container {
-                grid-template-columns: 1fr;
-            }
 
+                grid-template-columns:
+                    repeat(2,minmax(0,1fr));
+
+                gap:
+                    10px;
+            }
 
             .category-card {
-                min-height: 360px;
+
+                min-height:
+                    210px;
+
+                border-radius:
+                    7px;
             }
 
+            .category-content {
+
+                left: 13px;
+                right: 10px;
+                bottom: 14px;
+            }
+
+            .category-card h3 {
+
+                font-size:
+                    20px;
+
+                margin-bottom:
+                    5px;
+            }
+
+            .category-card p {
+
+                font-size:
+                    10px;
+
+                margin-bottom:
+                    8px;
+            }
+
+            .category-arrow {
+
+                font-size:
+                    10px;
+            }
+
+
+            /* =================================================
+               PRODUCTS
+            ================================================= */
+
+            .products {
+
+                padding:
+                    45px 10px;
+            }
 
             .product-container {
-                grid-template-columns: 1fr;
-            }
 
+                grid-template-columns:
+                    repeat(2,minmax(0,1fr));
+
+                gap:
+                    10px;
+            }
 
             .product-card {
+
                 width: 100%;
+
+                border-radius: 7px;
+
+                box-shadow:
+                    0 2px 10px rgba(0,0,0,.07);
+            }
+
+            .product-image {
+
+                height:
+                    clamp(190px,52vw,250px);
+            }
+
+            .product-info {
+
+                padding:
+                    11px;
+            }
+
+            .product-info h3 {
+
+                font-size:
+                    13px;
+
+                line-height:
+                    1.3;
+
+                margin-bottom:
+                    5px;
+            }
+
+            .product-info p {
+
+                font-size:
+                    11px;
+
+                margin-bottom:
+                    7px;
+            }
+
+            .price {
+
+                font-size:
+                    15px;
+
+                margin-bottom:
+                    3px;
+            }
+
+            .discount-price {
+
+                font-size:
+                    11px;
+
+                margin-bottom:
+                    9px;
+            }
+
+            .view-btn {
+
+                display:
+                    block;
+
+                width:
+                    100%;
+
+                text-align:
+                    center;
+
+                padding:
+                    9px 5px;
+
+                font-size:
+                    11px;
             }
 
 
+            /* =================================================
+               BOTTOM NAV
+            ================================================= */
+
+            .mobile-bottom-nav {
+
+                position: fixed;
+
+                left: 0;
+                right: 0;
+
+                bottom: 0;
+
+                height:
+                    66px;
+
+                background:
+                    #fff;
+
+                border-top:
+                    1px solid #ddd;
+
+                z-index:
+                    4200;
+
+                display:
+                    grid;
+
+                grid-template-columns:
+                    repeat(4,1fr);
+
+                box-shadow:
+                    0 -4px 15px rgba(0,0,0,.08);
+
+                padding-bottom:
+                    env(safe-area-inset-bottom);
+            }
+
+            .mobile-bottom-nav a,
+            .mobile-bottom-nav button {
+
+                border: none;
+
+                background: transparent;
+
+                text-decoration: none;
+
+                color: #555;
+
+                display: flex;
+
+                flex-direction: column;
+
+                align-items: center;
+
+                justify-content: center;
+
+                gap: 3px;
+
+                font-size: 10px;
+
+                cursor: pointer;
+
+                transition:
+                    color .2s ease,
+                    transform .2s ease;
+            }
+
+            .mobile-bottom-nav .bottom-icon {
+
+                font-size:
+                    21px;
+
+                line-height:
+                    1;
+            }
+
+            .mobile-bottom-nav a:hover,
+            .mobile-bottom-nav button:hover,
+            .mobile-bottom-nav a.touch-active,
+            .mobile-bottom-nav button.touch-active {
+
+                color:
+                    #111;
+
+                transform:
+                    translateY(-2px);
+            }
+
+
+            /* =================================================
+               FOOTER
+            ================================================= */
+
+            footer {
+
+                padding:
+                    25px 15px;
+            }
+
+        }
+
+
+        /* =====================================================
+           VERY SMALL PHONES
+        ===================================================== */
+
+        @media (max-width:380px) {
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .mobile-search-btn {
+
+                width: 39px;
+                height: 39px;
+            }
+
+            .mobile-menu-btn {
+                right: 10px;
+            }
+
+            .benefit {
+                min-height: 70px;
+            }
+
+            .benefit-icon {
+                font-size: 19px;
+            }
+
+            .benefit-text strong {
+                font-size: 8px;
+            }
+
+            .benefit-text span {
+                font-size: 7px;
+            }
+
+            .category-card {
+                min-height: 185px;
+            }
+
+            .category-card h3 {
+                font-size: 18px;
+            }
+
+            .category-card p {
+                font-size: 9px;
+            }
+
             .product-image {
-                height: 350px;
+                height: 180px;
+            }
+
+            .product-info h3 {
+                font-size: 12px;
+            }
+
+            .product-info {
+                padding: 9px;
+            }
+
+            .price {
+                font-size: 14px;
+            }
+
+        }
+
+
+        /* =====================================================
+           REDUCE MOTION
+        ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+
+                animation-duration:
+                    .01ms !important;
+
+                animation-iteration-count:
+                    1 !important;
+
+                transition-duration:
+                    .01ms !important;
             }
 
         }
@@ -1260,29 +2276,39 @@
         </div>
 
 
+        <!-- DESKTOP SEARCH -->
+
         <form
             action="{% url 'search_products' %}"
             method="GET"
             class="search-form"
+            id="desktopSearchForm"
         >
 
             <input
                 type="text"
                 name="q"
+                id="desktopSearchInput"
                 placeholder="Search products..."
                 autocomplete="off"
             >
-
 
             <button
                 type="submit"
                 aria-label="Search"
             >
-                🔍
+                🔍︎
             </button>
+
+            <div
+                class="search-suggestions"
+                id="desktopSuggestions"
+            ></div>
 
         </form>
 
+
+        <!-- DESKTOP NAV -->
 
         <div class="nav-links">
 
@@ -1290,33 +2316,27 @@
                 🏠 Home
             </a>
 
-
             <a href="{% url 'search_products' %}?category=Men">
                 👔 Men
             </a>
-
 
             <a href="{% url 'search_products' %}?category=Women">
                 👗 Women
             </a>
 
-
             <a href="{% url 'search_products' %}?category=Kids">
                 🧒 Kids
             </a>
 
-
             <a href="{% url 'cart' %}">
                 🛒 Cart
             </a>
-
 
             {% if user.is_authenticated %}
 
                 <a href="{% url 'my_orders' %}">
                     📦 My Orders
                 </a>
-
 
                 <a href="{% url 'logout' %}">
                     🚪 Logout
@@ -1328,6 +2348,166 @@
                     🔐 Login
                 </a>
 
+                <a href="{% url 'register' %}">
+                    📝 Register
+                </a>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- MOBILE SEARCH BUTTON -->
+
+        <button
+            class="mobile-search-btn"
+            id="mobileSearchBtn"
+            type="button"
+            aria-label="Open Search"
+        >
+            🔍︎
+        </button>
+
+    </nav>
+
+
+    <!-- =====================================================
+         MOBILE SEARCH PANEL
+    ===================================================== -->
+
+    <div
+        class="mobile-search-panel"
+        id="mobileSearchPanel"
+    >
+
+        <form
+            action="{% url 'search_products' %}"
+            method="GET"
+            id="mobileSearchForm"
+            role="search"
+        >
+
+            <button
+                type="button"
+                class="mobile-search-back"
+                id="mobileSearchBack"
+                aria-label="Close Search"
+            >
+                ←
+            </button>
+
+            <input
+                type="search"
+                name="q"
+                id="mobileSearchInput"
+                placeholder="Search products..."
+                autocomplete="off"
+                enterkeyhint="search"
+            >
+
+            <button
+                type="submit"
+                class="mobile-search-submit"
+                aria-label="Search"
+            >
+                🔍︎
+            </button>
+
+            <div
+                class="search-suggestions"
+                id="mobileSuggestions"
+            ></div>
+
+        </form>
+
+    </div>
+
+
+    <!-- =====================================================
+         MOBILE MENU BUTTON
+    ===================================================== -->
+
+    <button
+        class="mobile-menu-btn"
+        id="mobileMenuBtn"
+        type="button"
+        aria-label="Open Menu"
+    >
+        ☰
+    </button>
+
+
+    <!-- OVERLAY -->
+
+    <div
+        class="mobile-menu-overlay"
+        id="mobileMenuOverlay"
+    ></div>
+
+
+    <!-- =====================================================
+         MOBILE MENU
+    ===================================================== -->
+
+    <aside
+        class="mobile-menu-panel"
+        id="mobileMenuPanel"
+    >
+
+        <div class="mobile-menu-header">
+
+            <strong>
+                TuviWear
+            </strong>
+
+            <button
+                class="mobile-menu-close"
+                id="mobileMenuClose"
+                type="button"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="mobile-menu-links">
+
+            <a href="{% url 'home' %}">
+                🏠 Home
+            </a>
+
+            <a href="{% url 'search_products' %}?category=Men">
+                👔 Men
+            </a>
+
+            <a href="{% url 'search_products' %}?category=Women">
+                👗 Women
+            </a>
+
+            <a href="{% url 'search_products' %}?category=Kids">
+                🧒 Kids
+            </a>
+
+            <a href="{% url 'cart' %}">
+                🛒 Cart
+            </a>
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'my_orders' %}">
+                    📦 My Orders
+                </a>
+
+                <a href="{% url 'logout' %}">
+                    🚪 Logout
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    🔐 Login
+                </a>
 
                 <a href="{% url 'register' %}">
                     📝 Register
@@ -1337,8 +2517,7 @@
 
         </div>
 
-    </nav>
-
+    </aside>
 
 
     <!-- =====================================================
@@ -1347,20 +2526,17 @@
 
     <section class="benefits">
 
-
         <div class="benefit">
 
             <div class="benefit-icon">
                 🚚
             </div>
 
-
             <div class="benefit-text">
 
                 <strong>
-                    FREE DELIVERY WORLDWIDE
+                    FREE DELIVERY ALL OVER KOLKATA
                 </strong>
-
 
                 <span>
                     On orders over ₹999
@@ -1371,20 +2547,17 @@
         </div>
 
 
-
         <div class="benefit">
 
             <div class="benefit-icon">
                 🛡️
             </div>
 
-
             <div class="benefit-text">
 
                 <strong>
                     SECURE PAYMENT
                 </strong>
-
 
                 <span>
                     100% secure payment
@@ -1395,20 +2568,17 @@
         </div>
 
 
-
         <div class="benefit">
 
             <div class="benefit-icon">
                 ↩️
             </div>
 
-
             <div class="benefit-text">
 
                 <strong>
                     EASY RETURNS
                 </strong>
-
 
                 <span>
                     30 days return policy
@@ -1421,13 +2591,11 @@
     </section>
 
 
-
     <!-- =====================================================
          HERO
     ===================================================== -->
 
     <section class="tuvi-hero">
-
 
         <div class="tuvi-hero-content">
 
@@ -1435,16 +2603,12 @@
                 ✦ TUVIWEAR — EST. 2026 ✦
             </p>
 
-
             <h1>
                 WEAR YOUR
-
                 <span>
                     IDENTITY.
                 </span>
-
             </h1>
-
 
             <p class="tuvi-hero-text">
 
@@ -1455,15 +2619,11 @@
                 <br>
 
                 A statement of who you are.
-
                 Discover contemporary pieces,
-
                 refined essentials, and effortless style
-
                 curated for the modern you.
 
             </p>
-
 
             <div class="tuvi-hero-buttons">
 
@@ -1473,7 +2633,6 @@
                 >
                     SHOP NOW
                 </a>
-
 
                 <a
                     href="#categories"
@@ -1487,13 +2646,9 @@
         </div>
 
 
-
-        <!-- =================================================
-             HERO IMAGE
-        ================================================= -->
+        <!-- HERO IMAGE -->
 
         <div class="tuvi-hero-visual">
-
 
             <div class="tuvi-hero-image-wrapper">
 
@@ -1505,13 +2660,11 @@
 
             </div>
 
-
             <div class="tuvi-hero-badge">
 
                 <strong>
                     NEW
                 </strong>
-
 
                 <span>
                     COLLECTION
@@ -1524,7 +2677,6 @@
     </section>
 
 
-
     <!-- =====================================================
          CATEGORIES
     ===================================================== -->
@@ -1534,26 +2686,21 @@
         id="categories"
     >
 
-
         <div class="section-heading">
 
             <h2>
                 SHOP BY CATEGORY
             </h2>
 
-
             <div class="section-line"></div>
 
         </div>
 
 
-
         <div class="category-container">
 
 
-            <!-- =================================================
-                 MEN
-            ================================================= -->
+            <!-- MEN -->
 
             <a
                 href="{% url 'search_products' %}?category=Men"
@@ -1568,18 +2715,15 @@
                         class="category-image"
                     >
 
-
                     <div class="category-content">
 
                         <h3>
                             MEN
                         </h3>
 
-
                         <p>
                             Explore men's fashion
                         </p>
-
 
                         <span class="category-arrow">
                             Explore now →
@@ -1592,10 +2736,7 @@
             </a>
 
 
-
-            <!-- =================================================
-                 WOMEN
-            ================================================= -->
+            <!-- WOMEN -->
 
             <a
                 href="{% url 'search_products' %}?category=Women"
@@ -1610,18 +2751,15 @@
                         class="category-image"
                     >
 
-
                     <div class="category-content">
 
                         <h3>
                             WOMEN
                         </h3>
 
-
                         <p>
                             Explore women's fashion
                         </p>
-
 
                         <span class="category-arrow">
                             Explore now →
@@ -1634,10 +2772,7 @@
             </a>
 
 
-
-            <!-- =================================================
-                 KIDS
-            ================================================= -->
+            <!-- KIDS -->
 
             <a
                 href="{% url 'search_products' %}?category=Kids"
@@ -1652,18 +2787,15 @@
                         class="category-image"
                     >
 
-
                     <div class="category-content">
 
                         <h3>
                             KIDS
                         </h3>
 
-
                         <p>
                             Explore kids' fashion
                         </p>
-
 
                         <span class="category-arrow">
                             Explore now →
@@ -1680,7 +2812,6 @@
     </section>
 
 
-
     <!-- =====================================================
          PRODUCTS
     ===================================================== -->
@@ -1690,28 +2821,32 @@
         id="products"
     >
 
-
         <div class="section-heading">
 
             <h2>
                 LATEST PRODUCTS
             </h2>
 
-
             <div class="section-line"></div>
 
         </div>
 
 
-
         <div class="product-container">
-
 
             {% for product in products %}
 
-
-                <div class="product-card">
-
+                <div
+                    class="product-card"
+                    data-product-name="{{ product.name|escape }}"
+                    data-product-brand="{% if product.brand %}{{ product.brand.name|escape }}{% endif %}"
+                    data-product-url="{% url 'product_detail' product.slug %}"
+                    {% with product.images.all|first as product_image %}
+                        {% if product_image %}
+                            data-product-image="{{ product_image.image.url }}"
+                        {% endif %}
+                    {% endwith %}
+                >
 
                     <!-- PRODUCT IMAGE -->
 
@@ -1722,9 +2857,7 @@
 
                         <div class="product-image">
 
-
                             {% with product.images.all|first as product_image %}
-
 
                                 {% if product_image %}
 
@@ -1741,20 +2874,16 @@
 
                                 {% endif %}
 
-
                             {% endwith %}
-
 
                         </div>
 
                     </a>
 
 
-
                     <!-- PRODUCT INFO -->
 
                     <div class="product-info">
-
 
                         <a
                             href="{% url 'product_detail' product.slug %}"
@@ -1768,7 +2897,6 @@
                         </a>
 
 
-
                         {% if product.brand %}
 
                             <p>
@@ -1778,13 +2906,11 @@
                         {% endif %}
 
 
-
                         {% if product.discount_price %}
 
                             <div class="price">
                                 ₹{{ product.discount_price }}
                             </div>
-
 
                             <div class="discount-price">
                                 ₹{{ product.base_price }}
@@ -1799,7 +2925,6 @@
                         {% endif %}
 
 
-
                         <a
                             href="{% url 'product_detail' product.slug %}"
                             class="view-btn"
@@ -1807,27 +2932,21 @@
                             View Product
                         </a>
 
-
                     </div>
 
                 </div>
 
-
             {% empty %}
-
 
                 <p>
                     No products available yet.
                 </p>
 
-
             {% endfor %}
-
 
         </div>
 
     </section>
-
 
 
     <!-- =====================================================
@@ -1842,6 +2961,2510 @@
 
     </footer>
 
+
+    <!-- =====================================================
+         MOBILE BOTTOM NAV
+    ===================================================== -->
+
+    <nav class="mobile-bottom-nav">
+
+        <!-- HOME -->
+
+        <a href="{% url 'home' %}">
+
+            <span class="bottom-icon">
+                🏠
+            </span>
+
+            <span>
+                Home
+            </span>
+
+        </a>
+
+
+        <!-- ACCOUNT -->
+
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'my_orders' %}">
+
+                <span class="bottom-icon">
+                    🧾
+                </span>
+
+                <span>
+                    Account
+                </span>
+
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}">
+
+                <span class="bottom-icon">
+                    🧾
+                </span>
+
+                <span>
+                    Account 
+                </span>
+
+            </a>
+
+        {% endif %}
+
+
+        <!-- CART -->
+
+        <a href="{% url 'cart' %}">
+
+            <span class="bottom-icon">
+                🛒
+            </span>
+
+            <span>
+                Cart
+            </span>
+
+        </a>
+
+
+        <!-- MENU -->
+
+        <button
+            type="button"
+            id="bottomMenuBtn"
+        >
+
+            <span class="bottom-icon">
+                ☰
+            </span>
+
+            <span>
+                Menu
+            </span>
+
+        </button>
+
+    </nav>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+
+                /* ==========================================
+                   MOBILE SEARCH
+                ========================================== */
+
+                const searchButton =
+                    document.getElementById(
+                        "mobileSearchBtn"
+                    );
+
+                const searchPanel =
+                    document.getElementById(
+                        "mobileSearchPanel"
+                    );
+
+                const searchInput =
+                    document.getElementById(
+                        "mobileSearchInput"
+                    );
+
+                const searchBack =
+                    document.getElementById(
+                        "mobileSearchBack"
+                    );
+
+                const mobileSearchForm =
+                    document.getElementById(
+                        "mobileSearchForm"
+                    );
+
+
+                let mobileSuggestions =
+                    document.getElementById(
+                        "mobileSuggestions"
+                    );
+
+
+                function openMobileSearch() {
+
+                    if (!searchPanel) {
+                        return;
+                    }
+
+                    searchPanel.classList.add(
+                        "active"
+                    );
+
+                    document.body.style.overflow =
+                        "hidden";
+
+                    setTimeout(
+                        function () {
+
+                            if (searchInput) {
+
+                                searchInput.focus();
+
+                            }
+
+                        },
+                        250
+                    );
+
+                }
+
+
+                function closeMobileSearch() {
+
+                    if (!searchPanel) {
+                        return;
+                    }
+
+                    searchPanel.classList.remove(
+                        "active"
+                    );
+
+                    document.body.style.overflow =
+                        "";
+
+                    if (mobileSuggestions) {
+
+                        mobileSuggestions.classList.remove(
+                            "active"
+                        );
+
+                    }
+
+                }
+
+
+                if (searchButton) {
+
+                    searchButton.addEventListener(
+                        "click",
+                        function (event) {
+
+                            event.preventDefault();
+
+                            event.stopPropagation();
+
+                            openMobileSearch();
+
+                        }
+                    );
+
+                }
+
+
+                if (searchBack) {
+
+                    searchBack.addEventListener(
+                        "click",
+                        function (event) {
+
+                            event.preventDefault();
+
+                            event.stopPropagation();
+
+                            closeMobileSearch();
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   MOBILE SEARCH FORM
+                ========================================== */
+
+                if (mobileSearchForm) {
+
+                    mobileSearchForm.addEventListener(
+                        "submit",
+                        function (event) {
+
+                            const query =
+                                searchInput
+                                    ? searchInput.value.trim()
+                                    : "";
+
+                            if (!query) {
+
+                                event.preventDefault();
+
+                                if (searchInput) {
+
+                                    searchInput.focus();
+
+                                }
+
+                                return;
+                            }
+
+                            /*
+                             * Let Django handle the normal GET
+                             * request.
+                             *
+                             * Example:
+                             *
+                             * /search/?q=shirt
+                             */
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   PRODUCT DATA
+                ========================================== */
+
+                const productCards =
+                    Array.from(
+                        document.querySelectorAll(
+                            ".product-card[data-product-name]"
+                        )
+                    );
+
+
+                const productsData =
+                    productCards.map(
+                        function (card) {
+
+                            return {
+
+                                name:
+                                    card.dataset.productName
+                                    || "",
+
+                                brand:
+                                    card.dataset.productBrand
+                                    || "",
+
+                                url:
+                                    card.dataset.productUrl
+                                    || "#",
+
+                                image:
+                                    card.dataset.productImage
+                                    || ""
+
+                            };
+
+                        }
+                    );
+
+
+                /* ==========================================
+                   SEARCH SUGGESTIONS
+                ========================================== */
+
+                function showSuggestions(
+                    input,
+                    suggestionBox
+                ) {
+
+                    if (
+                        !input ||
+                        !suggestionBox
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const query =
+                        input.value
+                            .trim()
+                            .toLowerCase();
+
+
+                    suggestionBox.innerHTML = "";
+
+
+                    if (!query) {
+
+                        suggestionBox.classList.remove(
+                            "active"
+                        );
+
+                        return;
+
+                    }
+
+
+                    const matchedProducts =
+                        productsData
+                            .filter(
+                                function (product) {
+
+                                    return (
+
+                                        product.name
+                                            .toLowerCase()
+                                            .includes(query)
+
+                                        ||
+
+                                        product.brand
+                                            .toLowerCase()
+                                            .includes(query)
+
+                                    );
+
+                                }
+                            )
+                            .slice(0, 6);
+
+
+                    if (
+                        matchedProducts.length === 0
+                    ) {
+
+                        suggestionBox.classList.remove(
+                            "active"
+                        );
+
+                        return;
+
+                    }
+
+
+                    matchedProducts.forEach(
+                        function (product) {
+
+                            const link =
+                                document.createElement(
+                                    "a"
+                                );
+
+
+                            link.href =
+                                product.url;
+
+                            link.className =
+                                "suggestion-item";
+
+
+                            if (product.image) {
+
+                                const image =
+                                    document.createElement(
+                                        "img"
+                                    );
+
+                                image.src =
+                                    product.image;
+
+                                image.alt =
+                                    product.name;
+
+                                image.className =
+                                    "suggestion-image";
+
+                                link.appendChild(
+                                    image
+                                );
+
+                            }
+
+
+                            const textBox =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            const name =
+                                document.createElement(
+                                    "div"
+                                );
+
+                            name.className =
+                                "suggestion-name";
+
+                            name.textContent =
+                                product.name;
+
+
+                            textBox.appendChild(
+                                name
+                            );
+
+
+                            if (product.brand) {
+
+                                const brand =
+                                    document.createElement(
+                                        "span"
+                                    );
+
+                                brand.className =
+                                    "suggestion-brand";
+
+                                brand.textContent =
+                                    product.brand;
+
+                                textBox.appendChild(
+                                    brand
+                                );
+
+                            }
+
+
+                            link.appendChild(
+                                textBox
+                            );
+
+
+                            suggestionBox.appendChild(
+                                link
+                            );
+
+                        }
+                    );
+
+
+                    suggestionBox.classList.add(
+                        "active"
+                    );
+
+                }
+
+
+                /* ==========================================
+                   DESKTOP SEARCH AUTOCOMPLETE
+                ========================================== */
+
+                const desktopSearchInput =
+                    document.getElementById(
+                        "desktopSearchInput"
+                    );
+
+                const desktopSuggestions =
+                    document.getElementById(
+                        "desktopSuggestions"
+                    );
+
+
+                if (
+                    desktopSearchInput &&
+                    desktopSuggestions
+                ) {
+
+                    desktopSearchInput.addEventListener(
+                        "input",
+                        function () {
+
+                            showSuggestions(
+                                desktopSearchInput,
+                                desktopSuggestions
+                            );
+
+                        }
+                    );
+
+
+                    desktopSearchInput.addEventListener(
+                        "focus",
+                        function () {
+
+                            if (
+                                desktopSearchInput.value.trim()
+                            ) {
+
+                                showSuggestions(
+                                    desktopSearchInput,
+                                    desktopSuggestions
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   MOBILE SEARCH AUTOCOMPLETE
+                ========================================== */
+
+                if (
+                    searchInput &&
+                    mobileSuggestions
+                ) {
+
+                    searchInput.addEventListener(
+                        "input",
+                        function () {
+
+                            showSuggestions(
+                                searchInput,
+                                mobileSuggestions
+                            );
+
+                        }
+                    );
+
+                }
+
+
+                /* ==========================================
+                   CLOSE SUGGESTIONS OUTSIDE
+                ========================================== */
+
+                document.addEventListener(
+                    "click",
+                    function (event) {
+
+
+                        if (
+                            !event.target.closest(
+                                ".search-form"
+                            )
+                        ) {
+
+                            if (
+                                desktopSuggestions
+                            ) {
+
+                                desktopSuggestions.classList.remove(
+                                    "active"
+                                );
+
+                            }
+
+                        }
+
+
+                        if (
+                            !event.target.closest(
+                                ".mobile-search-panel"
+                            ) &&
+                            !event.target.closest(
+                                "#mobileSearchBtn"
+                            )
+                        ) {
+
+                            if (
+                                mobileSuggestions
+                            ) {
+
+                                mobileSuggestions.classList.remove(
+                                    "active"
+                                );
+
+                            }
+
+                        }
+
+                    }
+                );
+
+
+                /* ==========================================
+                   MOBILE MENU
+                ========================================== */
+
+                const menuButton =
+                    document.getElementById(
+                        "mobileMenuBtn"
+                    );
+
+                const bottomMenuButton =
+                    document.getElementById(
+                        "bottomMenuBtn"
+                    );
+
+                const menuPanel =
+                    document.getElementById(
+                        "mobileMenuPanel"
+                    );
+
+                const menuOverlay =
+                    document.getElementById(
+                        "mobileMenuOverlay"
+                    );
+
+                const menuClose =
+                    document.getElementById(
+                        "mobileMenuClose"
+                    );
+
+
+                function openMenu() {
+
+                    if (!menuPanel) {
+                        return;
+                    }
+
+                    closeMobileSearch();
+
+
+                    menuPanel.classList.add(
+                        "active"
+                    );
+
+
+                    if (menuOverlay) {
+
+                        menuOverlay.classList.add(
+                            "active"
+                        );
+
+                    }
+
+
+                    document.body.style.overflow =
+                        "hidden";
+
+                }
+
+
+                function closeMenu() {
+
+                    if (!menuPanel) {
+                        return;
+                    }
+
+
+                    menuPanel.classList.remove(
+                        "active"
+                    );
+
+
+                    if (menuOverlay) {
+
+                        menuOverlay.classList.remove(
+                            "active"
+                        );
+
+                    }
+
+
+                    document.body.style.overflow =
+                        "";
+
+                }
+
+
+                if (menuButton) {
+
+                    menuButton.addEventListener(
+                        "click",
+                        openMenu
+                    );
+
+                }
+
+
+                if (bottomMenuButton) {
+
+                    bottomMenuButton.addEventListener(
+                        "click",
+                        openMenu
+                    );
+
+                }
+
+
+                if (menuClose) {
+
+                    menuClose.addEventListener(
+                        "click",
+                        closeMenu
+                    );
+
+                }
+
+
+                if (menuOverlay) {
+
+                    menuOverlay.addEventListener(
+                        "click",
+                        closeMenu
+                    );
+
+                }
+
+
+                /* ==========================================
+                   ESC KEY
+                ========================================== */
+
+                document.addEventListener(
+                    "keydown",
+                    function (event) {
+
+                        if (
+                            event.key === "Escape"
+                        ) {
+
+                            closeMenu();
+
+                            closeMobileSearch();
+
+
+                            if (
+                                desktopSuggestions
+                            ) {
+
+                                desktopSuggestions.classList.remove(
+                                    "active"
+                                );
+
+                            }
+
+
+                            if (
+                                mobileSuggestions
+                            ) {
+
+                                mobileSuggestions.classList.remove(
+                                    "active"
+                                );
+
+                            }
+
+                        }
+
+                    }
+                );
+
+
+                /* ==========================================
+                   TOUCH HOVER SYSTEM
+                ========================================== */
+
+                const touchElements =
+                    document.querySelectorAll(
+                        ".benefit, .category-card, .product-card, .tuvi-hero-btn, .view-btn, .mobile-menu-links a, .mobile-bottom-nav a, .mobile-bottom-nav button, .suggestion-item"
+                    );
+
+
+                touchElements.forEach(
+                    function (element) {
+
+                        element.addEventListener(
+                            "touchstart",
+                            function () {
+
+                                touchElements.forEach(
+                                    function (item) {
+
+                                        if (
+                                            item !== element
+                                        ) {
+
+                                            item.classList.remove(
+                                                "touch-active"
+                                            );
+
+                                        }
+
+                                    }
+                                );
+
+
+                                element.classList.add(
+                                    "touch-active"
+                                );
+
+                            },
+                            {
+                                passive: true
+                            }
+                        );
+
+                    }
+                );
+
+
+                /* ==========================================
+                   REMOVE TOUCH EFFECT
+                ========================================== */
+
+                document.addEventListener(
+                    "touchstart",
+                    function (event) {
+
+                        const clickedElement =
+                            event.target.closest(
+                                ".benefit, .category-card, .product-card, .tuvi-hero-btn, .view-btn, .mobile-menu-links a, .mobile-bottom-nav a, .mobile-bottom-nav button, .suggestion-item"
+                            );
+
+
+                        if (!clickedElement) {
+
+                            touchElements.forEach(
+                                function (element) {
+
+                                    element.classList.remove(
+                                        "touch-active"
+                                    );
+
+                                }
+                            );
+
+                        }
+
+                    },
+                    {
+                        passive: true
+                    }
+                );
+
+            }
+        );
+
+    </script>
+<!-- =========================================================
+     TUVIWEAR FLIPKART-STYLE FULL SCREEN SEARCH
+     STEP 2
+     Existing homepage/search/result system remains unchanged
+========================================================= -->
+
+<style>
+
+    /* =========================================================
+       FULL SCREEN SEARCH OVERLAY
+    ========================================================= */
+
+    .tuvi-full-search {
+
+        position: fixed;
+
+        inset: 0;
+
+        width: 100%;
+        height: 100dvh;
+
+        background: #fff;
+
+        z-index: 10000;
+
+        display: flex;
+
+        flex-direction: column;
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        pointer-events: none;
+
+        transform: translateY(8px);
+
+        transition:
+            opacity .22s ease,
+            transform .22s ease,
+            visibility .22s ease;
+
+        overflow: hidden;
+    }
+
+
+    .tuvi-full-search.active {
+
+        opacity: 1;
+
+        visibility: visible;
+
+        pointer-events: auto;
+
+        transform: translateY(0);
+
+    }
+
+
+    /* =========================================================
+       FULL SEARCH HEADER
+    ========================================================= */
+
+    .tuvi-full-search-header {
+
+        width: 100%;
+
+        min-height: 72px;
+
+        background: #111;
+
+        color: #fff;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 16px;
+
+        padding:
+            12px
+            clamp(15px, 4vw, 60px);
+
+        flex-shrink: 0;
+
+        box-shadow:
+            0 2px 10px rgba(0,0,0,.15);
+    }
+
+
+    /* =========================================================
+       BACK BUTTON
+    ========================================================= */
+
+    .tuvi-full-search-back {
+
+        width: 44px;
+        height: 44px;
+
+        flex-shrink: 0;
+
+        border: none;
+
+        border-radius: 50%;
+
+        background: #222;
+
+        color: #fff;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 25px;
+
+        cursor: pointer;
+
+        transition:
+            background .2s ease,
+            transform .2s ease;
+    }
+
+
+    .tuvi-full-search-back:hover {
+
+        background: #333;
+
+        transform: scale(1.05);
+
+    }
+
+
+    .tuvi-full-search-back:active {
+
+        transform: scale(.94);
+
+    }
+
+
+    /* =========================================================
+       SEARCH FORM
+    ========================================================= */
+
+    .tuvi-full-search-form {
+
+        width: 100%;
+
+        max-width: 900px;
+
+        height: 48px;
+
+        margin: 0 auto;
+
+        display: flex;
+
+        align-items: center;
+
+        background: #fff;
+
+        border-radius: 5px;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 3px 14px rgba(0,0,0,.20);
+
+        position: relative;
+    }
+
+
+    .tuvi-full-search-form input {
+
+        flex: 1;
+
+        min-width: 0;
+
+        width: 100%;
+
+        height: 100%;
+
+        border: none;
+
+        outline: none;
+
+        padding:
+            0 18px;
+
+        font-size: 15px;
+
+        color: #111;
+
+        background: #fff;
+
+    }
+
+
+    .tuvi-full-search-form input::placeholder {
+
+        color: #888;
+
+    }
+
+
+    .tuvi-full-search-submit {
+
+        width: 58px;
+
+        height: 48px;
+
+        flex-shrink: 0;
+
+        border: none;
+
+        background: #111;
+
+        color: #fff;
+
+        font-size: 19px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        cursor: pointer;
+
+        transition:
+            background .2s ease;
+    }
+
+
+    .tuvi-full-search-submit:hover {
+
+        background: #333;
+
+    }
+
+
+    /* =========================================================
+       SEARCH CONTENT
+    ========================================================= */
+
+    .tuvi-full-search-content {
+
+        width: 100%;
+
+        flex: 1;
+
+        overflow-y: auto;
+
+        background: #fff;
+
+        padding:
+            30px
+            clamp(18px, 5vw, 70px)
+            50px;
+    }
+
+
+    .tuvi-full-search-inner {
+
+        width: 100%;
+
+        max-width: 1100px;
+
+        margin: 0 auto;
+    }
+
+
+    /* =========================================================
+       TITLE
+    ========================================================= */
+
+    .tuvi-full-search-title {
+
+        margin-bottom: 20px;
+
+        color: #111;
+    }
+
+
+    .tuvi-full-search-title h2 {
+
+        font-size: clamp(20px, 3vw, 28px);
+
+        margin-bottom: 7px;
+
+        letter-spacing: -.4px;
+    }
+
+
+    .tuvi-full-search-title p {
+
+        color: #777;
+
+        font-size: 13px;
+    }
+
+
+    /* =========================================================
+       SEARCH SUGGESTIONS
+    ========================================================= */
+
+    .tuvi-full-search-results {
+
+        width: 100%;
+
+        background: #fff;
+
+        border-radius: 8px;
+
+        overflow: hidden;
+
+        border: 1px solid #eee;
+
+        box-shadow:
+            0 4px 18px rgba(0,0,0,.06);
+    }
+
+
+    .tuvi-full-search-empty {
+
+        padding: 45px 20px;
+
+        text-align: center;
+
+        color: #777;
+
+        font-size: 14px;
+
+        display: none;
+    }
+
+
+    .tuvi-full-search-empty.active {
+
+        display: block;
+
+    }
+
+
+    .tuvi-full-search-product {
+
+        width: 100%;
+
+        min-height: 72px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 14px;
+
+        padding:
+            10px 14px;
+
+        text-decoration: none;
+
+        color: #111;
+
+        border-bottom: 1px solid #eee;
+
+        transition:
+            background .18s ease,
+            padding-left .18s ease;
+    }
+
+
+    .tuvi-full-search-product:last-child {
+
+        border-bottom: none;
+
+    }
+
+
+    .tuvi-full-search-product:hover {
+
+        background: #f7f7f7;
+
+        padding-left: 20px;
+
+    }
+
+
+    .tuvi-full-search-product-image {
+
+        width: 55px;
+
+        height: 62px;
+
+        border-radius: 5px;
+
+        background: #eee;
+
+        object-fit: cover;
+
+        flex-shrink: 0;
+    }
+
+
+    .tuvi-full-search-product-info {
+
+        min-width: 0;
+
+        flex: 1;
+    }
+
+
+    .tuvi-full-search-product-name {
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        margin-bottom: 5px;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+    }
+
+
+    .tuvi-full-search-product-brand {
+
+        font-size: 12px;
+
+        color: #777;
+    }
+
+
+    .tuvi-full-search-product-arrow {
+
+        font-size: 20px;
+
+        color: #777;
+
+        flex-shrink: 0;
+    }
+
+
+    /* =========================================================
+       QUICK SEARCH
+    ========================================================= */
+
+    .tuvi-quick-search {
+
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 10px;
+
+        margin-top: 25px;
+    }
+
+
+    .tuvi-quick-search-title {
+
+        width: 100%;
+
+        font-size: 13px;
+
+        font-weight: 600;
+
+        color: #555;
+
+        margin-bottom: 2px;
+    }
+
+
+    .tuvi-quick-search a {
+
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        min-height: 36px;
+
+        padding:
+            0 16px;
+
+        border:
+            1px solid #ddd;
+
+        border-radius: 20px;
+
+        color: #222;
+
+        background: #fff;
+
+        text-decoration: none;
+
+        font-size: 12px;
+
+        transition:
+            background .2s ease,
+            color .2s ease,
+            border-color .2s ease,
+            transform .2s ease;
+    }
+
+
+    .tuvi-quick-search a:hover {
+
+        background: #111;
+
+        color: #fff;
+
+        border-color: #111;
+
+        transform: translateY(-1px);
+
+    }
+
+
+    /* =========================================================
+       DESKTOP
+    ========================================================= */
+
+    @media (min-width: 651px) {
+
+        .tuvi-full-search-header {
+
+            min-height: 76px;
+
+        }
+
+        .tuvi-full-search-content {
+
+            padding-top: 42px;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 650px) {
+
+        .tuvi-full-search-header {
+
+            min-height: 62px;
+
+            height: 62px;
+
+            padding:
+                9px 10px;
+
+            gap: 8px;
+        }
+
+
+        .tuvi-full-search-back {
+
+            width: 40px;
+
+            height: 40px;
+
+            font-size: 23px;
+        }
+
+
+        .tuvi-full-search-form {
+
+            height: 44px;
+
+            border-radius: 6px;
+        }
+
+
+        .tuvi-full-search-form input {
+
+            font-size: 14px;
+
+            padding:
+                0 10px;
+        }
+
+
+        .tuvi-full-search-submit {
+
+            width: 48px;
+
+            height: 44px;
+
+            font-size: 17px;
+        }
+
+
+        .tuvi-full-search-content {
+
+            padding:
+                22px 12px 35px;
+        }
+
+
+        .tuvi-full-search-title {
+
+            margin-bottom: 15px;
+        }
+
+
+        .tuvi-full-search-title h2 {
+
+            font-size: 21px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .tuvi-full-search-title p {
+
+            font-size: 11px;
+        }
+
+
+        .tuvi-full-search-product {
+
+            min-height: 68px;
+
+            gap: 10px;
+
+            padding:
+                9px 10px;
+        }
+
+
+        .tuvi-full-search-product:hover {
+
+            padding-left: 10px;
+
+        }
+
+
+        .tuvi-full-search-product-image {
+
+            width: 48px;
+
+            height: 56px;
+        }
+
+
+        .tuvi-full-search-product-name {
+
+            font-size: 12px;
+
+        }
+
+
+        .tuvi-full-search-product-brand {
+
+            font-size: 10px;
+
+        }
+
+
+        .tuvi-full-search-product-arrow {
+
+            font-size: 17px;
+
+        }
+
+
+        .tuvi-quick-search {
+
+            margin-top: 22px;
+
+            gap: 8px;
+        }
+
+
+        .tuvi-quick-search a {
+
+            min-height: 34px;
+
+            padding:
+                0 13px;
+
+            font-size: 11px;
+        }
+
+    }
+
+
+    /* =========================================================
+       REDUCE MOTION
+    ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .tuvi-full-search,
+        .tuvi-full-search *,
+        .tuvi-full-search *::before,
+        .tuvi-full-search *::after {
+
+            transition-duration: .01ms !important;
+
+        }
+
+    }
+
+</style>
+
+
+<!-- =========================================================
+     FULL SCREEN SEARCH HTML
+========================================================= -->
+
+<div
+    class="tuvi-full-search"
+    id="tuviFullSearch"
+    aria-hidden="true"
+>
+
+    <div class="tuvi-full-search-header">
+
+        <button
+            type="button"
+            class="tuvi-full-search-back"
+            id="tuviFullSearchBack"
+            aria-label="Close search"
+        >
+            ←
+        </button>
+
+
+        <form
+            action="{% url 'search_products' %}"
+            method="GET"
+            class="tuvi-full-search-form"
+            id="tuviFullSearchForm"
+        >
+
+            <input
+                type="search"
+                name="q"
+                id="tuviFullSearchInput"
+                placeholder="Search for products, brands and more..."
+                autocomplete="off"
+                enterkeyhint="search"
+            >
+
+
+            <button
+                type="submit"
+                class="tuvi-full-search-submit"
+                aria-label="Search"
+            >
+                🔍︎
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="tuvi-full-search-content">
+
+        <div class="tuvi-full-search-inner">
+
+
+            <div class="tuvi-full-search-title">
+
+                <h2 id="tuviFullSearchHeading">
+                    Search TuviWear
+                </h2>
+
+                <p id="tuviFullSearchSubheading">
+                    Find your favourite fashion products
+                </p>
+
+            </div>
+
+
+            <!-- PRODUCT SEARCH RESULTS -->
+
+            <div
+                class="tuvi-full-search-results"
+                id="tuviFullSearchResults"
+            >
+
+            </div>
+
+
+            <!-- EMPTY MESSAGE -->
+
+            <div
+                class="tuvi-full-search-empty"
+                id="tuviFullSearchEmpty"
+            >
+                No matching products found.
+            </div>
+
+
+            <!-- QUICK SEARCH -->
+
+            <div class="tuvi-quick-search">
+
+                <div class="tuvi-quick-search-title">
+                    Popular searches
+                </div>
+
+
+                <a
+                    href="{% url 'search_products' %}?category=Men"
+                >
+                    👔 Men
+                </a>
+
+
+                <a
+                    href="{% url 'search_products' %}?category=Women"
+                >
+                    👗 Women
+                </a>
+
+
+                <a
+                    href="{% url 'search_products' %}?category=Kids"
+                >
+                    🧒 Kids
+                </a>
+
+
+                <a
+                    href="{% url 'search_products' %}?q=shirt"
+                >
+                    👕 Shirts
+                </a>
+
+
+                <a
+                    href="{% url 'search_products' %}?q=t-shirt"
+                >
+                    👚 T-Shirts
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* =========================================================
+       TUVIWEAR FULL SCREEN SEARCH
+    ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+
+            /* =================================================
+               ELEMENTS
+            ================================================= */
+
+            const fullSearch =
+                document.getElementById(
+                    "tuviFullSearch"
+                );
+
+
+            const fullSearchBack =
+                document.getElementById(
+                    "tuviFullSearchBack"
+                );
+
+
+            const fullSearchForm =
+                document.getElementById(
+                    "tuviFullSearchForm"
+                );
+
+
+            const fullSearchInput =
+                document.getElementById(
+                    "tuviFullSearchInput"
+                );
+
+
+            const fullSearchResults =
+                document.getElementById(
+                    "tuviFullSearchResults"
+                );
+
+
+            const fullSearchEmpty =
+                document.getElementById(
+                    "tuviFullSearchEmpty"
+                );
+
+
+            const fullSearchHeading =
+                document.getElementById(
+                    "tuviFullSearchHeading"
+                );
+
+
+            const fullSearchSubheading =
+                document.getElementById(
+                    "tuviFullSearchSubheading"
+                );
+
+
+            const existingMobileSearchPanel =
+                document.getElementById(
+                    "mobileSearchPanel"
+                );
+
+
+            const existingMobileSearchInput =
+                document.getElementById(
+                    "mobileSearchInput"
+                );
+
+
+            const existingDesktopSearchInput =
+                document.getElementById(
+                    "desktopSearchInput"
+                );
+
+
+            /* =================================================
+               PRODUCT DATA
+               Read existing product cards.
+               No Django backend logic is changed.
+            ================================================= */
+
+            const existingProductCards =
+                Array.from(
+                    document.querySelectorAll(
+                        ".product-card[data-product-name]"
+                    )
+                );
+
+
+            const fullSearchProducts =
+                existingProductCards.map(
+                    function (card) {
+
+                        return {
+
+                            name:
+                                card.dataset.productName
+                                || "",
+
+                            brand:
+                                card.dataset.productBrand
+                                || "",
+
+                            url:
+                                card.dataset.productUrl
+                                || "#",
+
+                            image:
+                                card.dataset.productImage
+                                || ""
+
+                        };
+
+                    }
+                );
+
+
+            /* =================================================
+               OPEN SEARCH
+            ================================================= */
+
+            function openTuviFullSearch(
+                initialValue
+            ) {
+
+                if (!fullSearch) {
+                    return;
+                }
+
+
+                /* Close old mobile search panel */
+
+                if (existingMobileSearchPanel) {
+
+                    existingMobileSearchPanel.classList.remove(
+                        "active"
+                    );
+
+                }
+
+
+                fullSearch.classList.add(
+                    "active"
+                );
+
+
+                fullSearch.setAttribute(
+                    "aria-hidden",
+                    "false"
+                );
+
+
+                document.body.style.overflow =
+                    "hidden";
+
+
+                const value =
+                    typeof initialValue === "string"
+                        ? initialValue.trim()
+                        : "";
+
+
+                if (fullSearchInput) {
+
+                    fullSearchInput.value =
+                        value;
+
+                }
+
+
+                renderFullSearchResults(
+                    value
+                );
+
+
+                setTimeout(
+                    function () {
+
+                        if (fullSearchInput) {
+
+                            fullSearchInput.focus();
+
+                            try {
+
+                                const length =
+                                    fullSearchInput.value.length;
+
+                                fullSearchInput.setSelectionRange(
+                                    length,
+                                    length
+                                );
+
+                            } catch (error) {
+
+                                /* Ignore unsupported selection errors */
+
+                            }
+
+                        }
+
+                    },
+                    100
+                );
+
+            }
+
+
+            /* =================================================
+               CLOSE SEARCH
+            ================================================= */
+
+            function closeTuviFullSearch() {
+
+                if (!fullSearch) {
+                    return;
+                }
+
+
+                fullSearch.classList.remove(
+                    "active"
+                );
+
+
+                fullSearch.setAttribute(
+                    "aria-hidden",
+                    "true"
+                );
+
+
+                document.body.style.overflow =
+                    "";
+
+
+                if (fullSearchInput) {
+
+                    fullSearchInput.value =
+                        "";
+
+                }
+
+
+                if (fullSearchResults) {
+
+                    fullSearchResults.innerHTML =
+                        "";
+
+                }
+
+
+                if (fullSearchEmpty) {
+
+                    fullSearchEmpty.classList.remove(
+                        "active"
+                    );
+
+                }
+
+
+                if (fullSearchHeading) {
+
+                    fullSearchHeading.textContent =
+                        "Search TuviWear";
+
+                }
+
+
+                if (fullSearchSubheading) {
+
+                    fullSearchSubheading.textContent =
+                        "Find your favourite fashion products";
+
+                }
+
+            }
+
+
+            /* =================================================
+               RENDER SEARCH RESULTS
+            ================================================= */
+
+            function renderFullSearchResults(
+                query
+            ) {
+
+                if (
+                    !fullSearchResults ||
+                    !fullSearchEmpty
+                ) {
+
+                    return;
+
+                }
+
+
+                fullSearchResults.innerHTML =
+                    "";
+
+                fullSearchEmpty.classList.remove(
+                    "active"
+                );
+
+
+                const cleanQuery =
+                    String(query || "")
+                        .trim()
+                        .toLowerCase();
+
+
+                if (!cleanQuery) {
+
+                    if (fullSearchHeading) {
+
+                        fullSearchHeading.textContent =
+                            "Search TuviWear";
+
+                    }
+
+
+                    if (fullSearchSubheading) {
+
+                        fullSearchSubheading.textContent =
+                            "Find your favourite fashion products";
+
+                    }
+
+                    return;
+
+                }
+
+
+                if (fullSearchHeading) {
+
+                    fullSearchHeading.textContent =
+                        "Search results";
+
+                }
+
+
+                if (fullSearchSubheading) {
+
+                    fullSearchSubheading.textContent =
+                        "Showing products matching \"" +
+                        query +
+                        "\"";
+
+                }
+
+
+                const matches =
+                    fullSearchProducts
+                        .filter(
+                            function (product) {
+
+                                const name =
+                                    product.name
+                                        .toLowerCase();
+
+                                const brand =
+                                    product.brand
+                                        .toLowerCase();
+
+                                return (
+                                    name.includes(
+                                        cleanQuery
+                                    )
+                                    ||
+                                    brand.includes(
+                                        cleanQuery
+                                    )
+                                );
+
+                            }
+                        )
+                        .slice(0, 8);
+
+
+                if (
+                    matches.length === 0
+                ) {
+
+                    fullSearchEmpty.classList.add(
+                        "active"
+                    );
+
+                    return;
+
+                }
+
+
+                matches.forEach(
+                    function (product) {
+
+                        const link =
+                            document.createElement(
+                                "a"
+                            );
+
+
+                        link.href =
+                            product.url;
+
+
+                        link.className =
+                            "tuvi-full-search-product";
+
+
+                        if (product.image) {
+
+                            const image =
+                                document.createElement(
+                                    "img"
+                                );
+
+
+                            image.src =
+                                product.image;
+
+
+                            image.alt =
+                                product.name;
+
+
+                            image.className =
+                                "tuvi-full-search-product-image";
+
+
+                            image.loading =
+                                "lazy";
+
+
+                            link.appendChild(
+                                image
+                            );
+
+                        } else {
+
+                            const placeholder =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            placeholder.className =
+                                "tuvi-full-search-product-image";
+
+
+                            link.appendChild(
+                                placeholder
+                            );
+
+                        }
+
+
+                        const info =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        info.className =
+                            "tuvi-full-search-product-info";
+
+
+                        const name =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        name.className =
+                            "tuvi-full-search-product-name";
+
+
+                        name.textContent =
+                            product.name;
+
+
+                        info.appendChild(
+                            name
+                        );
+
+
+                        if (product.brand) {
+
+                            const brand =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            brand.className =
+                                "tuvi-full-search-product-brand";
+
+
+                            brand.textContent =
+                                product.brand;
+
+
+                            info.appendChild(
+                                brand
+                            );
+
+                        }
+
+
+                        link.appendChild(
+                            info
+                        );
+
+
+                        const arrow =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        arrow.className =
+                            "tuvi-full-search-product-arrow";
+
+
+                        arrow.textContent =
+                            "›";
+
+
+                        link.appendChild(
+                            arrow
+                        );
+
+
+                        fullSearchResults.appendChild(
+                            link
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               DESKTOP SEARCH BUTTON
+               Existing desktop search form remains untouched.
+               Only button click opens full screen.
+            ================================================= */
+
+            const desktopSearchForm =
+                document.getElementById(
+                    "desktopSearchForm"
+                );
+
+
+            if (desktopSearchForm) {
+
+                const desktopSearchButton =
+                    desktopSearchForm.querySelector(
+                        "button[type='submit']"
+                    );
+
+
+                if (desktopSearchButton) {
+
+                    desktopSearchButton.addEventListener(
+                        "click",
+                        function (event) {
+
+                            event.preventDefault();
+
+                            event.stopImmediatePropagation();
+
+
+                            const currentValue =
+                                existingDesktopSearchInput
+                                    ? existingDesktopSearchInput.value
+                                    : "";
+
+
+                            openTuviFullSearch(
+                                currentValue
+                            );
+
+                        }
+                    );
+
+                }
+
+            }
+
+
+            /* =================================================
+               MOBILE SEARCH BUTTON
+               Existing mobile search button stays in place.
+            ================================================= */
+
+            const existingMobileSearchButton =
+                document.getElementById(
+                    "mobileSearchBtn"
+                );
+
+
+            if (existingMobileSearchButton) {
+
+                existingMobileSearchButton.addEventListener(
+                    "click",
+                    function (event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+
+                        const currentValue =
+                            existingMobileSearchInput
+                                ? existingMobileSearchInput.value
+                                : "";
+
+
+                        openTuviFullSearch(
+                            currentValue
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               BACK BUTTON
+            ================================================= */
+
+            if (fullSearchBack) {
+
+                fullSearchBack.addEventListener(
+                    "click",
+                    function () {
+
+                        closeTuviFullSearch();
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               SEARCH INPUT
+            ================================================= */
+
+            if (fullSearchInput) {
+
+                fullSearchInput.addEventListener(
+                    "input",
+                    function () {
+
+                        renderFullSearchResults(
+                            fullSearchInput.value
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               SEARCH FORM SUBMIT
+               Existing Django search URL is preserved.
+            ================================================= */
+
+            if (fullSearchForm) {
+
+                fullSearchForm.addEventListener(
+                    "submit",
+                    function (event) {
+
+                        const query =
+                            fullSearchInput
+                                ? fullSearchInput.value.trim()
+                                : "";
+
+
+                        if (!query) {
+
+                            event.preventDefault();
+
+                            if (fullSearchInput) {
+
+                                fullSearchInput.focus();
+
+                            }
+
+                            return;
+
+                        }
+
+
+                        /*
+                         * IMPORTANT:
+                         *
+                         * Do NOT prevent the normal submit.
+                         *
+                         * Django will receive:
+                         *
+                         * /search/?q=product
+                         *
+                         * using your existing URL.
+                         */
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               ESC KEY
+            ================================================= */
+
+            document.addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (
+                        event.key === "Escape" &&
+                        fullSearch &&
+                        fullSearch.classList.contains(
+                            "active"
+                        )
+                    ) {
+
+                        closeTuviFullSearch();
+
+                    }
+
+                }
+            );
+
+
+            /* =================================================
+               PREVENT BACKGROUND SCROLL
+            ================================================= */
+
+            if (fullSearch) {
+
+                fullSearch.addEventListener(
+                    "wheel",
+                    function (event) {
+
+                        /*
+                         * Allow scrolling inside the search
+                         * content, but prevent accidental
+                         * background interaction.
+                         */
+
+                        event.stopPropagation();
+
+                    },
+                    {
+                        passive: true
+                    }
+                );
+
+            }
+
+        }
+    );
+
+</script>
 
 </body>
 

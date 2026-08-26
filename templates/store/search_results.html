@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +7,7 @@
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     >
 
     <title>
@@ -29,30 +28,44 @@
         }
 
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f1f3f6;
-            color: #212121;
+        html {
+            scroll-behavior: smooth;
         }
 
 
-        /* =========================
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f1f3f6;
+            color: #212121;
+            overflow-x: hidden;
+        }
+
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        /* =====================================================
            NAVBAR
-        ========================= */
+        ===================================================== */
 
         .navbar {
-            height: 68px;
+            min-height: 68px;
             background: #111;
-
             display: flex;
             align-items: center;
-
-            padding: 0 5%;
-            gap: 35px;
-
+            padding: 10px 5%;
+            gap: 30px;
             position: sticky;
             top: 0;
-
             z-index: 1000;
         }
 
@@ -61,49 +74,48 @@
             color: white;
             font-size: 25px;
             font-weight: bold;
-
             letter-spacing: .5px;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
 
         .search-box {
             flex: 1;
             max-width: 650px;
+            position: relative;
         }
 
 
         .search-form {
             display: flex;
             height: 43px;
+            width: 100%;
         }
 
 
         .search-form input {
             flex: 1;
-
+            min-width: 0;
             border: none;
             outline: none;
-
             padding: 0 16px;
-
             font-size: 14px;
-
             border-radius: 4px 0 0 4px;
         }
 
 
         .search-form button {
             width: 55px;
-
+            flex-shrink: 0;
             border: none;
-
             background: white;
-
             cursor: pointer;
-
             font-size: 18px;
-
             border-radius: 0 4px 4px 0;
         }
 
@@ -113,24 +125,100 @@
         }
 
 
+        /* =====================================================
+           LIVE SEARCH SUGGESTIONS
+        ===================================================== */
+
+        .search-suggestions {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            width: 100%;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, .18);
+            overflow: hidden;
+            display: none;
+            z-index: 2000;
+        }
+
+
+        .search-suggestions.show {
+            display: block;
+        }
+
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: #222;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+            background: white;
+            transition: background .2s ease;
+        }
+
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+
+        .suggestion-item:hover,
+        .suggestion-item:active {
+            background: #f5f5f5;
+        }
+
+
+        .suggestion-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 4px;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+
+        .suggestion-name {
+            font-size: 14px;
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+
+        .suggestion-loading {
+            padding: 15px;
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           DESKTOP NAV LINKS
+        ===================================================== */
+
         .nav-links {
             margin-left: auto;
-
             display: flex;
-            gap: 22px;
-
+            gap: 20px;
             align-items: center;
         }
 
 
         .nav-links a {
             color: white;
-
             text-decoration: none;
-
             font-size: 14px;
-
             white-space: nowrap;
+            transition: .2s ease;
         }
 
 
@@ -139,80 +227,356 @@
         }
 
 
-        /* =========================
+        /* =====================================================
+           MOBILE MENU BUTTON
+        ===================================================== */
+
+        .mobile-menu-btn {
+            display: none;
+            width: 42px;
+            height: 42px;
+            border: none;
+            background: #222;
+            color: white;
+            border-radius: 5px;
+            font-size: 23px;
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           MOBILE SEARCH BUTTON
+        ===================================================== */
+
+        .mobile-search-btn {
+            display: none;
+            width: 42px;
+            height: 42px;
+            border: none;
+            background: #222;
+            color: white;
+            border-radius: 5px;
+            font-size: 19px;
+            cursor: pointer;
+        }
+
+
+        /* =====================================================
+           MOBILE SEARCH FULL SCREEN
+           FLIPKART STYLE
+        ===================================================== */
+
+        .mobile-search-page {
+            position: fixed;
+            inset: 0;
+            background: #f1f3f6;
+            z-index: 5000;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+
+        .mobile-search-page.show {
+            display: flex;
+        }
+
+
+        .mobile-search-header {
+            height: 64px;
+            min-height: 64px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.15);
+        }
+
+
+        .mobile-search-back {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+
+        .mobile-search-form {
+            flex: 1;
+            height: 42px;
+            display: flex;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+
+        .mobile-search-form input {
+            flex: 1;
+            min-width: 0;
+            border: none;
+            outline: none;
+            padding: 0 13px;
+            font-size: 14px;
+            color: #222;
+        }
+
+
+        .mobile-search-form button {
+            width: 48px;
+            border: none;
+            background: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+
+        .mobile-search-content {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+
+        .mobile-search-label {
+            background: white;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+            font-weight: bold;
+            color: #555;
+        }
+
+
+        .mobile-search-suggestions {
+            background: white;
+        }
+
+
+        .mobile-search-suggestion {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 15px;
+            text-decoration: none;
+            color: #222;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+
+
+        .mobile-search-suggestion:active {
+            background: #f5f5f5;
+        }
+
+
+        .mobile-suggestion-icon {
+            width: 38px;
+            height: 38px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 17px;
+        }
+
+
+        .mobile-suggestion-name {
+            font-size: 14px;
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+
+        .mobile-search-empty {
+            background: white;
+            padding: 35px 20px;
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           MOBILE SIDE MENU
+        ===================================================== */
+
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 1998;
+            display: none;
+        }
+
+
+        .mobile-menu-overlay.show {
+            display: block;
+        }
+
+
+        .mobile-menu-panel {
+            position: fixed;
+            top: 0;
+            right: -290px;
+            width: 290px;
+            max-width: 85%;
+            height: 100vh;
+            background: white;
+            z-index: 1999;
+            box-shadow: -5px 0 25px rgba(0, 0, 0, .2);
+            transition: right .3s ease;
+            overflow-y: auto;
+        }
+
+
+        .mobile-menu-panel.show {
+            right: 0;
+        }
+
+
+        .mobile-menu-header {
+            height: 65px;
+            background: #111;
+            color: white;
+            padding: 0 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .mobile-menu-header strong {
+            font-size: 20px;
+        }
+
+
+        .mobile-menu-close {
+            width: 38px;
+            height: 38px;
+            border: none;
+            background: #222;
+            color: white;
+            border-radius: 4px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+
+        .mobile-menu-links {
+            padding: 10px 0;
+        }
+
+
+        .mobile-menu-links a {
+            display: block;
+            padding: 16px 20px;
+            color: #222;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+            font-size: 15px;
+        }
+
+
+        .mobile-menu-links a:hover,
+        .mobile-menu-links a:active {
+            background: #f5f5f5;
+        }
+
+
+        /* =====================================================
+           MOBILE BOTTOM NAV
+        ===================================================== */
+
+        .mobile-bottom-nav {
+            display: none;
+        }
+
+
+        /* =====================================================
            MAIN
-        ========================= */
+        ===================================================== */
 
         .container {
             width: 94%;
             max-width: 1400px;
-
             margin: 22px auto;
         }
 
 
+        /* =====================================================
+           SEARCH HEADER
+        ===================================================== */
+
         .search-header {
             background: white;
-
             padding: 22px 25px;
-
-            border-radius: 3px;
-
+            border-radius: 4px;
             margin-bottom: 14px;
         }
 
 
         .search-header h1 {
             font-size: 20px;
-
             margin-bottom: 7px;
         }
 
 
         .search-count {
             color: #777;
-
             font-size: 13px;
         }
 
 
-        /* =========================
+        /* =====================================================
+           MOBILE FILTER BUTTON
+        ===================================================== */
+
+        .mobile-filter-btn {
+            display: none;
+        }
+
+
+        /* =====================================================
            LAYOUT
-        ========================= */
+        ===================================================== */
 
         .layout {
             display: flex;
-
             align-items: flex-start;
-
             gap: 14px;
         }
 
 
-        /* =========================
+        /* =====================================================
            FILTER SIDEBAR
-        ========================= */
+        ===================================================== */
 
         .filters {
             width: 250px;
-
             background: white;
-
             flex-shrink: 0;
-
             border-radius: 4px;
-
             overflow: hidden;
         }
 
 
         .filter-heading {
             padding: 20px;
-
             font-size: 17px;
-
             font-weight: bold;
-
             border-bottom: 1px solid #eee;
         }
 
@@ -227,8 +591,6 @@
         }
 
 
-        /* DROPDOWN */
-
         .filter-dropdown {
             width: 100%;
         }
@@ -236,23 +598,14 @@
 
         .filter-dropdown summary {
             list-style: none;
-
             cursor: pointer;
-
             padding: 17px 20px;
-
             font-size: 13px;
-
             font-weight: bold;
-
             text-transform: uppercase;
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
-
             transition: .2s ease;
         }
 
@@ -264,11 +617,8 @@
 
         .filter-dropdown summary::after {
             content: "+";
-
             font-size: 18px;
-
             font-weight: normal;
-
             color: #777;
         }
 
@@ -288,23 +638,17 @@
         }
 
 
-        /* =========================
+        /* =====================================================
            FILTER OPTIONS
-        ========================= */
+        ===================================================== */
 
         .filter-option {
             display: flex;
-
             align-items: center;
-
             gap: 9px;
-
             margin-bottom: 13px;
-
             font-size: 14px;
-
             color: #555;
-
             cursor: pointer;
         }
 
@@ -317,30 +661,22 @@
         .filter-option input {
             width: 15px;
             height: 15px;
-
             cursor: pointer;
         }
 
 
-        /* =========================
+        /* =====================================================
            SORT
-        ========================= */
+        ===================================================== */
 
         .sort-select {
             width: 100%;
-
             border: 1px solid #ddd;
-
             padding: 10px;
-
             background: white;
-
             border-radius: 3px;
-
             outline: none;
-
             cursor: pointer;
-
             font-size: 13px;
         }
 
@@ -350,9 +686,9 @@
         }
 
 
-        /* =========================
+        /* =====================================================
            FILTER BUTTON
-        ========================= */
+        ===================================================== */
 
         .filter-actions {
             padding: 18px 20px;
@@ -361,43 +697,28 @@
 
         .apply-btn {
             width: 100%;
-
             padding: 11px;
-
             border: none;
-
             background: #111;
-
             color: white;
-
             font-weight: bold;
-
             border-radius: 3px;
-
             cursor: pointer;
-
             transition: .2s ease;
         }
 
 
         .apply-btn:hover {
             background: #333;
-
-            transform: translateY(-1px);
         }
 
 
         .clear-filter {
             display: block;
-
             text-align: center;
-
             margin-top: 12px;
-
             color: #2874f0;
-
             text-decoration: none;
-
             font-size: 13px;
         }
 
@@ -407,96 +728,80 @@
         }
 
 
-        /* =========================
+        /* =====================================================
            PRODUCTS AREA
-        ========================= */
+        ===================================================== */
 
         .products-area {
             flex: 1;
-
             min-width: 0;
         }
 
 
-        /* =========================
-           SHOWING BAR
-        ========================= */
-
         .showing-bar {
             background: white;
-
             padding: 14px 18px;
-
             border-radius: 3px;
-
             margin-bottom: 10px;
-
             color: #666;
-
             font-size: 14px;
         }
 
 
-        /* =========================
+        /* =====================================================
            PRODUCT GRID
-        ========================= */
+        ===================================================== */
 
         .product-grid {
             display: grid;
-
-            grid-template-columns:
-                repeat(4, minmax(0, 1fr));
-
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 10px;
         }
 
 
         .product-card {
             background: white;
-
             overflow: hidden;
-
-            border-radius: 3px;
-
-            transition: .25s ease;
+            border-radius: 4px;
+            transition: transform .25s ease, box-shadow .25s ease;
         }
 
 
-        .product-card:hover {
-            transform: translateY(-4px);
+        @media (hover: hover) and (pointer: fine) {
 
-            box-shadow:
-                0 7px 20px rgba(0, 0, 0, .12);
+            .product-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 7px 20px rgba(0, 0, 0, .12);
+            }
+
+
+            .product-card:hover .product-image img {
+                transform: scale(1.05);
+            }
+
+
+            .view-product:hover {
+                background: #333;
+            }
+
         }
 
 
         .product-image {
             width: 100%;
-
             height: 280px;
-
             overflow: hidden;
-
             background: #f7f7f7;
-
             position: relative;
         }
 
 
         .product-image img {
             width: 100%;
-
             height: 100%;
-
             object-fit: cover;
-
-            transition: .35s ease;
-        }
-
-
-        .product-card:hover
-        .product-image img {
-            transform: scale(1.05);
+            display: block;
+            transition: transform .35s ease;
         }
 
 
@@ -507,114 +812,79 @@
 
         .product-name {
             color: #212121;
-
             font-size: 15px;
-
             font-weight: 500;
-
             margin-bottom: 6px;
-
             white-space: nowrap;
-
             overflow: hidden;
-
             text-overflow: ellipsis;
         }
 
 
         .brand {
             color: #878787;
-
             font-size: 12px;
-
             margin-bottom: 10px;
         }
 
 
         .price-line {
             display: flex;
-
             align-items: center;
-
             gap: 8px;
-
             flex-wrap: wrap;
         }
 
 
         .current-price {
             font-size: 18px;
-
             font-weight: bold;
-
             color: #212121;
         }
 
 
         .old-price {
             font-size: 12px;
-
             color: #999;
-
             text-decoration: line-through;
         }
 
 
         .offer {
             font-size: 12px;
-
             color: #008c45;
-
             font-weight: bold;
         }
 
 
         .view-product {
             display: block;
-
             text-align: center;
-
             background: #111;
-
             color: white;
-
             text-decoration: none;
-
             padding: 10px;
-
             margin-top: 13px;
-
             border-radius: 3px;
-
             font-size: 13px;
-
             font-weight: bold;
-
             transition: .2s;
         }
 
 
-        .view-product:hover {
-            background: #333;
-        }
-
-
-        /* =========================
+        /* =====================================================
            NO RESULTS
-        ========================= */
+        ===================================================== */
 
         .no-results {
             background: white;
-
             padding: 80px 20px;
-
             text-align: center;
         }
 
 
         .no-results-icon {
             font-size: 55px;
-
             margin-bottom: 15px;
         }
 
@@ -626,116 +896,89 @@
 
         .no-results p {
             color: #777;
-
             margin-bottom: 20px;
         }
 
 
         .continue-btn {
             display: inline-block;
-
             background: #111;
-
             color: white;
-
             padding: 11px 25px;
-
             text-decoration: none;
-
             border-radius: 3px;
         }
 
 
-        .continue-btn:hover {
-            background: #333;
-        }
-
-
-        /* =========================
+        /* =====================================================
            PAGINATION
-        ========================= */
+        ===================================================== */
 
         .pagination {
             margin-top: 20px;
-
             background: white;
-
             padding: 18px;
-
             display: flex;
-
             justify-content: center;
-
             gap: 7px;
+            flex-wrap: wrap;
         }
 
 
         .pagination a,
         .pagination span {
             min-width: 35px;
-
             height: 35px;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
             border: 1px solid #ddd;
-
             text-decoration: none;
-
             color: #333;
-
             font-size: 13px;
-
             border-radius: 3px;
         }
 
 
         .pagination .active {
             background: #111;
-
             color: white;
-
             border-color: #111;
         }
 
 
-        .pagination a:hover {
-            background: #eee;
-        }
-
-
-        /* =========================
+        /* =====================================================
            FOOTER
-        ========================= */
+        ===================================================== */
 
         footer {
             margin-top: 40px;
-
             background: #111;
-
             color: white;
-
             text-align: center;
-
             padding: 25px;
-
             font-size: 13px;
         }
 
 
-        /* =========================
-           RESPONSIVE
-        ========================= */
+        /* =====================================================
+           TABLET
+        ===================================================== */
 
         @media (max-width: 1100px) {
 
+            .navbar {
+                gap: 20px;
+            }
+
+
+            .nav-links {
+                gap: 14px;
+            }
+
+
             .product-grid {
-                grid-template-columns:
-                    repeat(3, minmax(0, 1fr));
+                grid-template-columns: repeat(3, minmax(0, 1fr));
             }
 
         }
@@ -744,20 +987,55 @@
         @media (max-width: 850px) {
 
             .navbar {
-                height: auto;
+                min-height: 65px;
+                padding: 10px 20px;
+                gap: 12px;
+            }
 
-                padding: 15px 20px;
 
-                flex-wrap: wrap;
+            .logo {
+                font-size: 22px;
             }
 
 
             .search-box {
                 order: 3;
-
                 flex-basis: 100%;
-
                 max-width: none;
+            }
+
+
+            .nav-links {
+                display: none;
+            }
+
+
+            .mobile-menu-btn,
+            .mobile-search-btn {
+                display: block;
+            }
+
+
+            .mobile-search-btn {
+                margin-left: auto;
+            }
+
+
+            .mobile-filter-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 7px;
+                width: 100%;
+                min-height: 45px;
+                border: none;
+                background: #111;
+                color: white;
+                border-radius: 4px;
+                margin-bottom: 12px;
+                font-size: 14px;
+                font-weight: bold;
+                cursor: pointer;
             }
 
 
@@ -767,44 +1045,120 @@
 
 
             .filters {
+                display: none;
                 width: 100%;
-
                 margin-bottom: 14px;
             }
 
 
+            .filters.mobile-filter-open {
+                display: block;
+            }
+
+
             .product-grid {
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
         }
 
 
-        @media (max-width: 500px) {
+        /* =====================================================
+           MOBILE
+        ===================================================== */
 
-            .container {
-                width: 96%;
+        @media (max-width: 600px) {
+
+            body {
+                padding-bottom: 65px;
             }
 
 
             .navbar {
-                gap: 15px;
+                padding: 9px 12px;
+                min-height: 62px;
             }
 
 
-            .nav-links {
-                gap: 12px;
+            .logo {
+                font-size: 20px;
             }
 
 
-            .nav-links a {
+            .search-box {
+                display: none;
+                order: 10;
+                flex-basis: 100%;
+            }
+
+
+            .search-form {
+                height: 42px;
+            }
+
+
+            .mobile-search-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+
+            .mobile-menu-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+
+            /* =================================================
+               MOBILE SEARCH PAGE
+            ================================================= */
+
+            .mobile-search-page {
+                display: none;
+            }
+
+
+            .mobile-search-page.show {
+                display: flex;
+            }
+
+
+            .container {
+                width: 96%;
+                margin: 12px auto;
+            }
+
+
+            .search-header {
+                padding: 16px;
+                margin-bottom: 10px;
+            }
+
+
+            .search-header h1 {
+                font-size: 18px;
+            }
+
+
+            .mobile-filter-btn {
+                margin-bottom: 10px;
+            }
+
+
+            .showing-bar {
+                padding: 11px 13px;
                 font-size: 12px;
             }
 
 
             .product-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
                 gap: 7px;
+            }
+
+
+            .product-card {
+                border-radius: 4px;
             }
 
 
@@ -818,8 +1172,115 @@
             }
 
 
+            .product-name {
+                font-size: 13px;
+            }
+
+
+            .brand {
+                font-size: 11px;
+                margin-bottom: 7px;
+            }
+
+
             .current-price {
                 font-size: 16px;
+            }
+
+
+            .old-price,
+            .offer {
+                font-size: 10px;
+            }
+
+
+            .view-product {
+                padding: 9px 5px;
+                font-size: 11px;
+                margin-top: 9px;
+            }
+
+
+            .pagination {
+                padding: 12px 7px;
+            }
+
+
+            .pagination a,
+            .pagination span {
+                min-width: 32px;
+                height: 32px;
+            }
+
+
+            footer {
+                margin-top: 25px;
+                padding: 20px 10px 85px;
+                font-size: 11px;
+            }
+
+
+            /* =================================================
+               BOTTOM NAV
+            ================================================= */
+
+            .mobile-bottom-nav {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 64px;
+                background: white;
+                border-top: 1px solid #ddd;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                z-index: 1500;
+                box-shadow: 0 -3px 15px rgba(0, 0, 0, .08);
+            }
+
+
+            .mobile-bottom-nav a {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 3px;
+                text-decoration: none;
+                color: #555;
+                font-size: 10px;
+            }
+
+
+            .mobile-bottom-nav a span:first-child {
+                font-size: 20px;
+            }
+
+
+            .mobile-bottom-nav a:active {
+                background: #f5f5f5;
+            }
+
+        }
+
+
+        /* =====================================================
+           VERY SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 360px) {
+
+            .product-image {
+                height: 195px;
+            }
+
+
+            .product-info {
+                padding: 8px;
+            }
+
+
+            .view-product {
+                font-size: 10px;
             }
 
         }
@@ -832,9 +1293,9 @@
 <body>
 
 
-    <!-- =========================
+    <!-- =====================================================
          NAVBAR
-    ========================= -->
+    ===================================================== -->
 
     <nav class="navbar">
 
@@ -843,12 +1304,30 @@
         </div>
 
 
-        <div class="search-box">
+        <!-- MOBILE SEARCH BUTTON -->
+
+        <button
+            type="button"
+            class="mobile-search-btn"
+            id="mobileSearchBtn"
+            aria-label="Open Search"
+        >
+            🔍︎
+        </button>
+
+
+        <!-- DESKTOP SEARCH -->
+
+        <div
+            class="search-box"
+            id="searchBox"
+        >
 
             <form
                 method="GET"
                 action="{% url 'search_products' %}"
                 class="search-form"
+                id="searchForm"
             >
 
                 <input
@@ -856,21 +1335,35 @@
                     name="q"
                     value="{{ query }}"
                     placeholder="Search for products, brands and more..."
+                    autocomplete="off"
+                    id="searchInput"
                 >
 
-                <button type="submit">
-                    🔍
+
+                <button
+                    type="submit"
+                    aria-label="Search"
+                >
+                    🔍︎
                 </button>
 
             </form>
 
+
+            <div
+                class="search-suggestions"
+                id="searchSuggestions"
+            ></div>
+
         </div>
 
+
+        <!-- DESKTOP NAV -->
 
         <div class="nav-links">
 
             <a href="{% url 'home' %}">
-                Home
+                🏠 Home
             </a>
 
 
@@ -882,34 +1375,203 @@
             {% if user.is_authenticated %}
 
                 <a href="{% url 'my_orders' %}">
-                    My Orders
+                    📦 My Orders
                 </a>
 
 
                 <a href="{% url 'logout' %}">
-                    Logout
+                    🚪 Logout
                 </a>
 
             {% else %}
 
                 <a href="{% url 'login' %}">
-                    Login
+                    🔐 Login
                 </a>
 
             {% endif %}
 
         </div>
 
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            type="button"
+            class="mobile-menu-btn"
+            id="mobileMenuBtn"
+            aria-label="Open Menu"
+        >
+            ☰
+        </button>
+
     </nav>
 
 
 
+    <!-- =====================================================
+         MOBILE FULL SCREEN SEARCH
+    ===================================================== -->
+
+    <section
+        class="mobile-search-page"
+        id="mobileSearchPage"
+    >
+
+        <div class="mobile-search-header">
+
+            <button
+                type="button"
+                class="mobile-search-back"
+                id="mobileSearchBack"
+                aria-label="Back"
+            >
+                ←
+            </button>
+
+
+            <form
+                method="GET"
+                action="{% url 'search_products' %}"
+                class="mobile-search-form"
+                id="mobileSearchForm"
+            >
+
+                <input
+                    type="text"
+                    name="q"
+                    id="mobileSearchInput"
+                    placeholder="Search products, brands & more"
+                    autocomplete="off"
+                >
+
+
+                <button
+                    type="submit"
+                    aria-label="Search"
+                >
+                    🔍︎
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="mobile-search-content">
+
+            <div
+                class="mobile-search-label"
+                id="mobileSearchLabel"
+            >
+                Search for products
+            </div>
+
+
+            <div
+                class="mobile-search-suggestions"
+                id="mobileSearchSuggestions"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         MOBILE SIDE MENU
+    ===================================================== -->
+
+    <div
+        class="mobile-menu-overlay"
+        id="mobileMenuOverlay"
+    ></div>
+
+
+    <aside
+        class="mobile-menu-panel"
+        id="mobileMenuPanel"
+    >
+
+        <div class="mobile-menu-header">
+
+            <strong>
+                TuviWear
+            </strong>
+
+
+            <button
+                type="button"
+                class="mobile-menu-close"
+                id="mobileMenuClose"
+            >
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="mobile-menu-links">
+
+            <a href="{% url 'home' %}">
+                🏠 Home
+            </a>
+
+
+            <a href="{% url 'search_products' %}?category=Men">
+                👔 Men
+            </a>
+
+
+            <a href="{% url 'search_products' %}?category=Women">
+                👗 Women
+            </a>
+
+
+            <a href="{% url 'search_products' %}?category=Kids">
+                🧒 Kids
+            </a>
+
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'my_orders' %}">
+                    📦 My Orders
+                </a>
+
+
+                <a href="{% url 'logout' %}">
+                    🚪 Logout
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}">
+                    🔐 Login
+                </a>
+
+
+                <a href="{% url 'register' %}">
+                    📝 Register
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
     <main class="container">
 
 
-        <!-- =========================
-             SEARCH HEADER
-        ========================= -->
+        <!-- SEARCH HEADER -->
 
         <div class="search-header">
 
@@ -945,15 +1607,29 @@
         {% if products %}
 
 
+            <!-- MOBILE FILTER BUTTON -->
+
+            <button
+                type="button"
+                class="mobile-filter-btn"
+                id="mobileFilterBtn"
+            >
+                ☰ &nbsp; FILTERS
+            </button>
+
+
+
             <div class="layout">
 
 
-                <!-- =========================
+                <!-- =================================================
                      FILTER SIDEBAR
-                ========================= -->
+                ================================================= -->
 
-                <aside class="filters">
-
+                <aside
+                    class="filters"
+                    id="filters"
+                >
 
                     <div class="filter-heading">
                         Filters
@@ -965,9 +1641,6 @@
                         action="{% url 'search_products' %}"
                     >
 
-
-                        <!-- SEARCH QUERY -->
-
                         <input
                             type="hidden"
                             name="q"
@@ -975,10 +1648,7 @@
                         >
 
 
-
-                        <!-- =====================
-                             CATEGORY DROPDOWN
-                        ===================== -->
+                        <!-- CATEGORY -->
 
                         <div class="filter-section">
 
@@ -994,14 +1664,12 @@
 
                                 <div class="filter-content">
 
-
                                     <label class="filter-option">
 
                                         <input
                                             type="checkbox"
                                             name="category"
                                             value="Men"
-
                                             {% if "Men" in selected_categories %}
                                                 checked
                                             {% endif %}
@@ -1018,7 +1686,6 @@
                                             type="checkbox"
                                             name="category"
                                             value="Women"
-
                                             {% if "Women" in selected_categories %}
                                                 checked
                                             {% endif %}
@@ -1035,7 +1702,6 @@
                                             type="checkbox"
                                             name="category"
                                             value="Kids"
-
                                             {% if "Kids" in selected_categories %}
                                                 checked
                                             {% endif %}
@@ -1045,7 +1711,6 @@
 
                                     </label>
 
-
                                 </div>
 
                             </details>
@@ -1054,9 +1719,7 @@
 
 
 
-                        <!-- =====================
-                             PRICE DROPDOWN
-                        ===================== -->
+                        <!-- PRICE -->
 
                         <div class="filter-section">
 
@@ -1072,14 +1735,12 @@
 
                                 <div class="filter-content">
 
-
                                     <label class="filter-option">
 
                                         <input
                                             type="radio"
                                             name="price"
                                             value="under_1000"
-
                                             {% if selected_min_price == "0" %}
                                                 checked
                                             {% endif %}
@@ -1096,7 +1757,6 @@
                                             type="radio"
                                             name="price"
                                             value="1000_2000"
-
                                             {% if selected_min_price == "1000" %}
                                                 checked
                                             {% endif %}
@@ -1113,7 +1773,6 @@
                                             type="radio"
                                             name="price"
                                             value="above_2000"
-
                                             {% if selected_min_price == "2000" %}
                                                 checked
                                             {% endif %}
@@ -1123,7 +1782,6 @@
 
                                     </label>
 
-
                                 </div>
 
                             </details>
@@ -1132,9 +1790,7 @@
 
 
 
-                        <!-- =====================
-                             SORT BY DROPDOWN
-                        ===================== -->
+                        <!-- SORT -->
 
                         <div class="filter-section">
 
@@ -1150,7 +1806,6 @@
 
                                 <div class="filter-content">
 
-
                                     <select
                                         name="sort"
                                         class="sort-select"
@@ -1158,7 +1813,6 @@
 
                                         <option
                                             value="newest"
-
                                             {% if selected_sort == "newest" %}
                                                 selected
                                             {% endif %}
@@ -1169,7 +1823,6 @@
 
                                         <option
                                             value="price_low"
-
                                             {% if selected_sort == "price_low" %}
                                                 selected
                                             {% endif %}
@@ -1180,7 +1833,6 @@
 
                                         <option
                                             value="price_high"
-
                                             {% if selected_sort == "price_high" %}
                                                 selected
                                             {% endif %}
@@ -1188,9 +1840,7 @@
                                             Price: High to Low
                                         </option>
 
-
                                     </select>
-
 
                                 </div>
 
@@ -1200,12 +1850,9 @@
 
 
 
-                        <!-- =====================
-                             FILTER ACTIONS
-                        ===================== -->
+                        <!-- FILTER ACTIONS -->
 
                         <div class="filter-actions">
-
 
                             <button
                                 type="submit"
@@ -1222,48 +1869,34 @@
                                 Clear All Filters
                             </a>
 
-
                         </div>
 
-
                     </form>
-
 
                 </aside>
 
 
 
-                <!-- =========================
+                <!-- =================================================
                      PRODUCTS
-                ========================= -->
+                ================================================= -->
 
                 <section class="products-area">
 
 
-                    <!-- SHOWING -->
-
                     <div class="showing-bar">
 
                         Showing
-
                         {{ page_obj.start_index }}
-
                         -
-
                         {{ page_obj.end_index }}
-
                         of
-
                         {{ page_obj.paginator.count }}
 
                     </div>
 
 
-
-                    <!-- PRODUCT GRID -->
-
                     <div class="product-grid">
-
 
                         {% for product in products %}
 
@@ -1279,9 +1912,7 @@
 
                                     <div class="product-image">
 
-
                                         {% with product.images.all|first as image %}
-
 
                                             {% if image %}
 
@@ -1294,14 +1925,12 @@
                                             {% else %}
 
                                                 <div class="no-results-icon">
-                                                    👕
+                                                    🛍️
                                                 </div>
 
                                             {% endif %}
 
-
                                         {% endwith %}
-
 
                                     </div>
 
@@ -1313,65 +1942,45 @@
 
                                 <div class="product-info">
 
-
                                     <div class="product-name">
-
                                         {{ product.name }}
-
                                     </div>
-
 
 
                                     {% if product.brand %}
 
                                         <div class="brand">
-
                                             {{ product.brand.name }}
-
                                         </div>
 
                                     {% endif %}
 
 
-
                                     <div class="price-line">
-
 
                                         {% if product.discount_price %}
 
                                             <span class="current-price">
-
                                                 ₹{{ product.discount_price }}
-
                                             </span>
-
 
                                             <span class="old-price">
-
                                                 ₹{{ product.base_price }}
-
                                             </span>
 
-
                                             <span class="offer">
-
                                                 OFFER
-
                                             </span>
 
                                         {% else %}
 
                                             <span class="current-price">
-
                                                 ₹{{ product.base_price }}
-
                                             </span>
 
                                         {% endif %}
 
-
                                     </div>
-
 
 
                                     <a
@@ -1381,29 +1990,24 @@
                                         View Product
                                     </a>
 
-
                                 </div>
-
 
                             </div>
 
 
                         {% endfor %}
 
-
                     </div>
 
 
 
-                    <!-- =========================
+                    <!-- =================================================
                          PAGINATION
-                    ========================= -->
+                    ================================================= -->
 
                     {% if page_obj.has_other_pages %}
 
-
                         <div class="pagination">
-
 
                             {% if page_obj.has_previous %}
 
@@ -1416,9 +2020,7 @@
                             {% endif %}
 
 
-
                             {% for number in page_obj.paginator.page_range %}
-
 
                                 {% if page_obj.number == number %}
 
@@ -1436,9 +2038,7 @@
 
                                 {% endif %}
 
-
                             {% endfor %}
-
 
 
                             {% if page_obj.has_next %}
@@ -1451,15 +2051,11 @@
 
                             {% endif %}
 
-
                         </div>
-
 
                     {% endif %}
 
-
                 </section>
-
 
             </div>
 
@@ -1467,15 +2063,14 @@
         {% else %}
 
 
-            <!-- =========================
+            <!-- =====================================================
                  NO RESULTS
-            ========================= -->
+            ===================================================== -->
 
             <div class="no-results">
 
-
                 <div class="no-results-icon">
-                    🔍
+                    🔍︎
                 </div>
 
 
@@ -1507,20 +2102,85 @@
                     Continue Shopping
                 </a>
 
-
             </div>
 
 
         {% endif %}
 
-
     </main>
 
 
 
-    <!-- =========================
+    <!-- =====================================================
+         MOBILE BOTTOM NAV
+    ===================================================== -->
+
+    <nav class="mobile-bottom-nav">
+
+
+        <a href="{% url 'home' %}">
+
+            <span>
+                🏠
+            </span>
+
+            <span>
+                Home
+            </span>
+
+        </a>
+
+
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'my_orders' %}">
+
+                <span>
+                    📦
+                </span>
+
+                <span>
+                    Account
+                </span>
+
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}">
+
+                <span>
+                    🔐
+                </span>
+
+                <span>
+                    Account
+                </span>
+
+            </a>
+
+        {% endif %}
+
+
+        <a href="{% url 'cart' %}">
+
+            <span>
+                🛒
+            </span>
+
+            <span>
+                Cart
+            </span>
+
+        </a>
+
+    </nav>
+
+
+
+    <!-- =====================================================
          FOOTER
-    ========================= -->
+    ===================================================== -->
 
     <footer>
 
@@ -1529,7 +2189,1293 @@
     </footer>
 
 
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+
+            /* =================================================
+               DESKTOP ELEMENTS
+            ================================================= */
+
+            const searchBox =
+                document.getElementById("searchBox");
+
+            const searchInput =
+                document.getElementById("searchInput");
+
+            const searchSuggestions =
+                document.getElementById("searchSuggestions");
+
+            const searchForm =
+                document.getElementById("searchForm");
+
+
+            /* =================================================
+               MOBILE SEARCH ELEMENTS
+            ================================================= */
+
+            const mobileSearchBtn =
+                document.getElementById("mobileSearchBtn");
+
+            const mobileSearchPage =
+                document.getElementById("mobileSearchPage");
+
+            const mobileSearchBack =
+                document.getElementById("mobileSearchBack");
+
+            const mobileSearchInput =
+                document.getElementById("mobileSearchInput");
+
+            const mobileSearchForm =
+                document.getElementById("mobileSearchForm");
+
+            const mobileSearchSuggestions =
+                document.getElementById(
+                    "mobileSearchSuggestions"
+                );
+
+            const mobileSearchLabel =
+                document.getElementById(
+                    "mobileSearchLabel"
+                );
+
+
+            /* =================================================
+               MOBILE MENU ELEMENTS
+            ================================================= */
+
+            const mobileMenuBtn =
+                document.getElementById("mobileMenuBtn");
+
+            const mobileMenuClose =
+                document.getElementById("mobileMenuClose");
+
+            const mobileMenuPanel =
+                document.getElementById("mobileMenuPanel");
+
+            const mobileMenuOverlay =
+                document.getElementById("mobileMenuOverlay");
+
+
+            /* =================================================
+               MOBILE FILTER ELEMENTS
+            ================================================= */
+
+            const mobileFilterBtn =
+                document.getElementById("mobileFilterBtn");
+
+            const filters =
+                document.getElementById("filters");
+
+
+            /* =================================================
+               OPEN MOBILE SEARCH PAGE
+            ================================================= */
+
+            function openMobileSearch() {
+
+                if (!mobileSearchPage) {
+                    return;
+                }
+
+
+                mobileSearchPage.classList.add("show");
+
+
+                document.body.style.overflow = "hidden";
+
+
+                if (mobileSearchInput) {
+
+                    mobileSearchInput.value =
+                        searchInput
+                            ? searchInput.value
+                            : "{{ query|escapejs }}";
+
+
+                    setTimeout(function () {
+
+                        mobileSearchInput.focus();
+
+                    }, 150);
+
+                }
+
+
+                renderMobileSearchInitial();
+
+            }
+
+
+            /* =================================================
+               CLOSE MOBILE SEARCH PAGE
+            ================================================= */
+
+            function closeMobileSearch() {
+
+                if (!mobileSearchPage) {
+                    return;
+                }
+
+
+                mobileSearchPage.classList.remove("show");
+
+
+                document.body.style.overflow = "";
+
+
+                if (mobileSearchSuggestions) {
+
+                    mobileSearchSuggestions.innerHTML = "";
+
+                }
+
+            }
+
+
+            if (mobileSearchBtn) {
+
+                mobileSearchBtn.addEventListener(
+                    "click",
+                    openMobileSearch
+                );
+
+            }
+
+
+            if (mobileSearchBack) {
+
+                mobileSearchBack.addEventListener(
+                    "click",
+                    closeMobileSearch
+                );
+
+            }
+
+
+            /* =================================================
+               MOBILE SEARCH PAGE INITIAL CONTENT
+            ================================================= */
+
+            function renderMobileSearchInitial() {
+
+                if (!mobileSearchSuggestions) {
+                    return;
+                }
+
+
+                const currentValue =
+                    mobileSearchInput
+                        ? mobileSearchInput.value.trim()
+                        : "";
+
+
+                if (currentValue) {
+
+                    loadMobileSuggestions(
+                        currentValue
+                    );
+
+                    return;
+
+                }
+
+
+                mobileSearchLabel.textContent =
+                    "Search for products";
+
+
+                mobileSearchSuggestions.innerHTML =
+
+                    '<div class="mobile-search-empty">' +
+
+                        '<div style="font-size:36px;margin-bottom:10px;"> 🔍︎ </div>' +
+
+                        '<div>Search for your favourite products</div>' +
+
+                    '</div>';
+
+            }
+
+
+            /* =================================================
+               MOBILE SEARCH SUBMIT
+            ================================================= */
+
+            if (mobileSearchForm) {
+
+                mobileSearchForm.addEventListener(
+                    "submit",
+                    function (event) {
+
+                        const value =
+                            mobileSearchInput.value.trim();
+
+
+                        if (!value) {
+
+                            event.preventDefault();
+
+                            return;
+
+                        }
+
+
+                        document.body.style.overflow = "";
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               ESCAPE HTML
+            ================================================= */
+
+            function escapeHTML(value) {
+
+                const div =
+                    document.createElement("div");
+
+
+                div.textContent = value;
+
+
+                return div.innerHTML;
+
+            }
+
+
+            /* =================================================
+               CLEAN PRODUCT NAME
+
+               IMPORTANT:
+               Secret product codes such as:
+
+               TU002
+               TU-002
+               TU_002
+               TU 002
+               TU002ABC
+
+               will NOT be shown in suggestions.
+
+               The actual product URL/slug remains unchanged.
+            ================================================= */
+
+            function cleanProductName(name) {
+
+                if (!name) {
+                    return "";
+                }
+
+
+                name = name.trim();
+
+
+                /*
+                 * Remove TuviWear secret product code
+                 * from anywhere inside the product name.
+                 */
+
+                name = name.replace(
+                    /\bTU[-_ ]?\d+[A-Z0-9_-]*\b/gi,
+                    ""
+                );
+
+
+                /*
+                 * Clean extra spaces left after removing code.
+                 */
+
+                name = name.replace(
+                    /\s{2,}/g,
+                    " "
+                );
+
+
+                /*
+                 * Remove unnecessary separators
+                 * left before/after the code.
+                 */
+
+                name = name.replace(
+                    /\s*[-_|:]+\s*$/g,
+                    ""
+                );
+
+
+                name = name.replace(
+                    /^\s*[-_|:]+\s*/g,
+                    ""
+                );
+
+
+                return name.trim();
+
+            }
+
+
+            /* =================================================
+               SEARCH REQUEST STATE
+            ================================================= */
+
+            let searchTimer = null;
+
+            let currentRequest = null;
+
+
+            /* =================================================
+               DESKTOP HIDE SUGGESTIONS
+            ================================================= */
+
+            function hideSuggestions() {
+
+                if (!searchSuggestions) {
+                    return;
+                }
+
+
+                searchSuggestions.classList.remove(
+                    "show"
+                );
+
+
+                searchSuggestions.innerHTML = "";
+
+            }
+
+
+            /* =================================================
+               DESKTOP SHOW LOADING
+            ================================================= */
+
+            function showLoading() {
+
+                if (!searchSuggestions) {
+                    return;
+                }
+
+
+                searchSuggestions.innerHTML =
+                    '<div class="suggestion-loading">' +
+                    'Searching products...' +
+                    '</div>';
+
+
+                searchSuggestions.classList.add(
+                    "show"
+                );
+
+            }
+
+
+            /* =================================================
+               LOAD DESKTOP SUGGESTIONS
+            ================================================= */
+
+            async function loadSuggestions(searchTerm) {
+
+                if (
+                    !searchTerm ||
+                    searchTerm.trim().length === 0
+                ) {
+
+                    hideSuggestions();
+
+                    return;
+
+                }
+
+
+                searchTerm =
+                    searchTerm.trim();
+
+
+                showLoading();
+
+
+                if (currentRequest) {
+
+                    currentRequest.abort();
+
+                }
+
+
+                currentRequest =
+                    new AbortController();
+
+
+                try {
+
+                    const url =
+                        "{% url 'search_products' %}" +
+                        "?q=" +
+                        encodeURIComponent(
+                            searchTerm
+                        );
+
+
+                    const response =
+                        await fetch(
+                            url,
+                            {
+                                signal:
+                                    currentRequest.signal,
+
+                                headers: {
+                                    "X-Requested-With":
+                                        "XMLHttpRequest"
+                                }
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "Search request failed"
+                        );
+
+                    }
+
+
+                    const html =
+                        await response.text();
+
+
+                    const parser =
+                        new DOMParser();
+
+
+                    const documentHTML =
+                        parser.parseFromString(
+                            html,
+                            "text/html"
+                        );
+
+
+                    const productCards =
+                        Array.from(
+                            documentHTML.querySelectorAll(
+                                ".product-card"
+                            )
+                        );
+
+
+                    const results = [];
+
+
+                    productCards.forEach(
+                        function (card) {
+
+
+                            const nameElement =
+                                card.querySelector(
+                                    ".product-name"
+                                );
+
+
+                            const linkElement =
+                                card.querySelector(
+                                    "a[href]"
+                                );
+
+
+                            if (
+                                !nameElement ||
+                                !linkElement
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            let name =
+                                nameElement.textContent
+                                    .trim();
+
+
+                            /*
+                             * Remove secret product code
+                             * before showing suggestion.
+                             */
+
+                            name =
+                                cleanProductName(
+                                    name
+                                );
+
+
+                            if (!name) {
+                                return;
+                            }
+
+
+                            const href =
+                                linkElement.getAttribute(
+                                    "href"
+                                );
+
+
+                            if (!href) {
+                                return;
+                            }
+
+
+                            results.push({
+                                name: name,
+                                href: href
+                            });
+
+                        }
+                    );
+
+
+                    const uniqueResults = [];
+
+                    const seen =
+                        new Set();
+
+
+                    results.forEach(
+                        function (item) {
+
+                            const key =
+                                item.name
+                                    .toLowerCase()
+                                    .trim();
+
+
+                            if (
+                                !seen.has(key)
+                            ) {
+
+                                seen.add(key);
+
+                                uniqueResults.push(
+                                    item
+                                );
+
+                            }
+
+                        }
+                    );
+
+
+                    const finalResults =
+                        uniqueResults.slice(
+                            0,
+                            6
+                        );
+
+
+                    if (
+                        finalResults.length === 0
+                    ) {
+
+                        searchSuggestions.innerHTML =
+                            '<div class="suggestion-loading">' +
+                            'No matching products found' +
+                            '</div>';
+
+
+                        searchSuggestions.classList.add(
+                            "show"
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    searchSuggestions.innerHTML =
+                        finalResults.map(
+                            function (item) {
+
+                                return (
+
+                                    '<a ' +
+                                    'class="suggestion-item" ' +
+                                    'href="' +
+                                    escapeHTML(
+                                        item.href
+                                    ) +
+                                    '">' +
+
+                                        '<span ' +
+                                        'class="suggestion-icon">' +
+                                            '🔍︎' +
+                                        '</span>' +
+
+                                        '<span ' +
+                                        'class="suggestion-name">' +
+
+                                            escapeHTML(
+                                                item.name
+                                            ) +
+
+                                        '</span>' +
+
+                                    '</a>'
+
+                                );
+
+                            }
+                        ).join("");
+
+
+                    searchSuggestions.classList.add(
+                        "show"
+                    );
+
+
+                } catch (error) {
+
+
+                    if (
+                        error.name ===
+                        "AbortError"
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    console.error(
+                        "Product suggestion error:",
+                        error
+                    );
+
+
+                    hideSuggestions();
+
+                }
+
+            }
+
+
+            /* =================================================
+               MOBILE SUGGESTIONS
+            ================================================= */
+
+            async function loadMobileSuggestions(
+                searchTerm
+            ) {
+
+                if (
+                    !searchTerm ||
+                    searchTerm.trim().length === 0
+                ) {
+
+                    renderMobileSearchInitial();
+
+                    return;
+
+                }
+
+
+                searchTerm =
+                    searchTerm.trim();
+
+
+                mobileSearchLabel.textContent =
+                    "Searching products...";
+
+
+                mobileSearchSuggestions.innerHTML =
+
+                    '<div class="mobile-search-empty">' +
+                        'Searching products...' +
+                    '</div>';
+
+
+                if (currentRequest) {
+
+                    currentRequest.abort();
+
+                }
+
+
+                currentRequest =
+                    new AbortController();
+
+
+                try {
+
+                    const url =
+                        "{% url 'search_products' %}" +
+                        "?q=" +
+                        encodeURIComponent(
+                            searchTerm
+                        );
+
+
+                    const response =
+                        await fetch(
+                            url,
+                            {
+                                signal:
+                                    currentRequest.signal,
+
+                                headers: {
+                                    "X-Requested-With":
+                                        "XMLHttpRequest"
+                                }
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "Mobile search request failed"
+                        );
+
+                    }
+
+
+                    const html =
+                        await response.text();
+
+
+                    const parser =
+                        new DOMParser();
+
+
+                    const documentHTML =
+                        parser.parseFromString(
+                            html,
+                            "text/html"
+                        );
+
+
+                    const productCards =
+                        Array.from(
+                            documentHTML.querySelectorAll(
+                                ".product-card"
+                            )
+                        );
+
+
+                    const results = [];
+
+
+                    productCards.forEach(
+                        function (card) {
+
+
+                            const nameElement =
+                                card.querySelector(
+                                    ".product-name"
+                                );
+
+
+                            const linkElement =
+                                card.querySelector(
+                                    "a[href]"
+                                );
+
+
+                            if (
+                                !nameElement ||
+                                !linkElement
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            let name =
+                                nameElement.textContent
+                                    .trim();
+
+
+                            /*
+                             * Secret code remove here too.
+                             */
+
+                            name =
+                                cleanProductName(
+                                    name
+                                );
+
+
+                            const href =
+                                linkElement.getAttribute(
+                                    "href"
+                                );
+
+
+                            if (
+                                !name ||
+                                !href
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            results.push({
+                                name: name,
+                                href: href
+                            });
+
+                        }
+                    );
+
+
+                    const uniqueResults = [];
+
+                    const seen =
+                        new Set();
+
+
+                    results.forEach(
+                        function (item) {
+
+                            const key =
+                                item.name
+                                    .toLowerCase()
+                                    .trim();
+
+
+                            if (
+                                !seen.has(key)
+                            ) {
+
+                                seen.add(key);
+
+                                uniqueResults.push(
+                                    item
+                                );
+
+                            }
+
+                        }
+                    );
+
+
+                    const finalResults =
+                        uniqueResults.slice(
+                            0,
+                            8
+                        );
+
+
+                    if (
+                        finalResults.length === 0
+                    ) {
+
+                        mobileSearchLabel.textContent =
+                            "Search results";
+
+
+                        mobileSearchSuggestions.innerHTML =
+
+                            '<div class="mobile-search-empty">' +
+
+                                '<div style="font-size:36px;margin-bottom:10px;"> 🔍︎ </div>' +
+
+                                '<div>No matching products found</div>' +
+
+                            '</div>';
+
+
+                        return;
+
+                    }
+
+
+                    mobileSearchLabel.textContent =
+                        "Products";
+
+
+                    mobileSearchSuggestions.innerHTML =
+                        finalResults.map(
+                            function (item) {
+
+                                return (
+
+                                    '<a ' +
+                                    'class="mobile-search-suggestion" ' +
+                                    'href="' +
+                                    escapeHTML(
+                                        item.href
+                                    ) +
+                                    '">' +
+
+                                        '<span ' +
+                                        'class="mobile-suggestion-icon">' +
+                                            '🔍︎' +
+                                        '</span>' +
+
+                                        '<span ' +
+                                        'class="mobile-suggestion-name">' +
+
+                                            escapeHTML(
+                                                item.name
+                                            ) +
+
+                                        '</span>' +
+
+                                    '</a>'
+
+                                );
+
+                            }
+                        ).join("");
+
+
+                } catch (error) {
+
+
+                    if (
+                        error.name ===
+                        "AbortError"
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    console.error(
+                        "Mobile search error:",
+                        error
+                    );
+
+
+                    mobileSearchSuggestions.innerHTML =
+
+                        '<div class="mobile-search-empty">' +
+                            'Unable to search right now.' +
+                        '</div>';
+
+                }
+
+            }
+
+
+            /* =================================================
+               DESKTOP SEARCH INPUT
+            ================================================= */
+
+            if (searchInput) {
+
+                searchInput.addEventListener(
+                    "input",
+                    function () {
+
+                        const value =
+                            searchInput.value;
+
+
+                        clearTimeout(
+                            searchTimer
+                        );
+
+
+                        searchTimer =
+                            setTimeout(
+                                function () {
+
+                                    loadSuggestions(
+                                        value
+                                    );
+
+                                },
+                                250
+                            );
+
+                    }
+                );
+
+
+                searchInput.addEventListener(
+                    "keydown",
+                    function (event) {
+
+                        if (
+                            event.key ===
+                            "Escape"
+                        ) {
+
+                            hideSuggestions();
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               MOBILE SEARCH INPUT
+            ================================================= */
+
+            if (mobileSearchInput) {
+
+                mobileSearchInput.addEventListener(
+                    "input",
+                    function () {
+
+                        const value =
+                            mobileSearchInput.value;
+
+
+                        clearTimeout(
+                            searchTimer
+                        );
+
+
+                        searchTimer =
+                            setTimeout(
+                                function () {
+
+                                    loadMobileSuggestions(
+                                        value
+                                    );
+
+                                },
+                                250
+                            );
+
+                    }
+                );
+
+
+                mobileSearchInput.addEventListener(
+                    "keydown",
+                    function (event) {
+
+                        if (
+                            event.key ===
+                            "Escape"
+                        ) {
+
+                            closeMobileSearch();
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               CLICK OUTSIDE DESKTOP SEARCH
+            ================================================= */
+
+            document.addEventListener(
+                "click",
+                function (event) {
+
+                    if (
+                        searchBox &&
+                        !searchBox.contains(
+                            event.target
+                        )
+                    ) {
+
+                        hideSuggestions();
+
+                    }
+
+                }
+            );
+
+
+            /* =================================================
+               DESKTOP FORM SUBMIT
+            ================================================= */
+
+            if (searchForm) {
+
+                searchForm.addEventListener(
+                    "submit",
+                    function () {
+
+                        hideSuggestions();
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               MOBILE MENU
+            ================================================= */
+
+            function openMobileMenu() {
+
+                mobileMenuPanel.classList.add(
+                    "show"
+                );
+
+
+                mobileMenuOverlay.classList.add(
+                    "show"
+                );
+
+
+                document.body.style.overflow =
+                    "hidden";
+
+            }
+
+
+            function closeMobileMenu() {
+
+                mobileMenuPanel.classList.remove(
+                    "show"
+                );
+
+
+                mobileMenuOverlay.classList.remove(
+                    "show"
+                );
+
+
+                document.body.style.overflow =
+                    "";
+
+            }
+
+
+            if (mobileMenuBtn) {
+
+                mobileMenuBtn.addEventListener(
+                    "click",
+                    openMobileMenu
+                );
+
+            }
+
+
+            if (mobileMenuClose) {
+
+                mobileMenuClose.addEventListener(
+                    "click",
+                    closeMobileMenu
+                );
+
+            }
+
+
+            if (mobileMenuOverlay) {
+
+                mobileMenuOverlay.addEventListener(
+                    "click",
+                    closeMobileMenu
+                );
+
+            }
+
+
+            /* =================================================
+               MOBILE FILTER
+            ================================================= */
+
+            if (
+                mobileFilterBtn &&
+                filters
+            ) {
+
+                mobileFilterBtn.addEventListener(
+                    "click",
+                    function () {
+
+                        filters.classList.toggle(
+                            "mobile-filter-open"
+                        );
+
+
+                        if (
+                            filters.classList.contains(
+                                "mobile-filter-open"
+                            )
+                        ) {
+
+                            mobileFilterBtn.innerHTML =
+                                "✕ &nbsp; CLOSE FILTERS";
+
+                        } else {
+
+                            mobileFilterBtn.innerHTML =
+                                "☰ &nbsp; FILTERS";
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               TOUCH DEVICE
+            ================================================= */
+
+            document.addEventListener(
+                "touchstart",
+                function () {
+
+                    document.body.classList.add(
+                        "touch-device"
+                    );
+
+                },
+                {
+                    once: true,
+                    passive: true
+                }
+            );
+
+
+            /* =================================================
+               BACK BUTTON SUPPORT
+            ================================================= */
+
+            window.addEventListener(
+                "popstate",
+                function () {
+
+                    if (
+                        mobileSearchPage &&
+                        mobileSearchPage.classList.contains(
+                            "show"
+                        )
+                    ) {
+
+                        closeMobileSearch();
+
+                    }
+
+                }
+            );
+
+
+        });
+
+    </script>
+
+
 </body>
 
 </html>
-

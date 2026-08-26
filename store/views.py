@@ -2,6 +2,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db import transaction
 from django.db.models import Q, Min
+from django.http import JsonResponse
 
 from products.models import Product, ProductVariant
 from .models import Cart, CartItem, Order, OrderItem
@@ -66,8 +67,245 @@ def product_detail(request, slug):
 # ==========================================
 # SEARCH PRODUCTS
 # ==========================================
+# ==========================================
+# SEARCH PRODUCTS
+# ==========================================
 
 def search_products(request):
+
+    query = request.GET.get(
+        'q',
+        ''
+    ).strip()
+
+    # ==========================================
+    # LIVE SEARCH SUGGESTIONS
+    # ==========================================
+
+    if request.GET.get('suggest') == '1':
+
+        suggestions = []
+
+        if query:
+
+            suggestion_products = (
+                Product.objects
+                .filter(
+                    is_active=True
+                )
+                .filter(
+                    Q(name__icontains=query) |
+                    Q(brand__name__icontains=query) |
+                    Q(category__name__icontains=query)
+                )
+                .select_related(
+                    'brand',
+                    'category'
+                )
+                .prefetch_related(
+                    'images'
+                )
+                .distinct()
+                [:8]
+            )
+
+            for product in suggestion_products:
+
+                image_url = ''
+
+                image = product.images.filter(
+                    is_primary=True
+                ).first()
+
+                if not image:
+
+                    image = product.images.first()
+
+                if image and image.image:
+
+                    image_url = image.image.url
+
+                suggestions.append({
+                    'id': product.id,
+                    'name': product.name,
+                    'brand': (
+                        product.brand.name
+                        if product.brand
+                        else ''
+                    ),
+                    'category': (
+                        product.category.name
+                        if product.category
+                        else ''
+                    ),
+                    'slug': product.slug,
+                    'image': image_url,
+                })
+
+        return JsonResponse({
+            'suggestions': suggestions
+        })
+
+    # ==========================================
+    # NORMAL SEARCH
+    # ==========================================
+
+    sort = request.GET.get(
+        'sort',
+        'newest'
+    )
+
+    in_stock = request.GET.get(
+        'in_stock'
+    )
+
+    categories = request.GET.getlist(
+        'category'
+    )
+
+    price_range = request.GET.get(
+        'price'
+    )
+
+    # ------------------------------------------
+    # Base Product Query
+    # ------------------------------------------
+
+    products = Product.objects.filter(
+        is_active=True
+    ).prefetch_related(
+        'images',
+        'variants__size',
+        'variants__color'
+    )
+
+    # ------------------------------------------
+    # Search
+    # ------------------------------------------
+
+    if query:
+
+        products = products.filter(
+            Q(name__icontains=query) |
+            Q(brand__name__icontains=query) |
+            Q(category__name__icontains=query)
+        ).distinct()
+
+    # ------------------------------------------
+    # Category Filter
+    # ------------------------------------------
+
+    if categories:
+
+        products = products.filter(
+            category__name__in=categories
+        ).distinct()
+
+    # ------------------------------------------
+    # Availability Filter
+    # ------------------------------------------
+
+    if in_stock:
+
+        products = products.filter(
+            variants__is_active=True,
+            variants__stock_quantity__gt=0
+        ).distinct()
+
+    # ------------------------------------------
+    # Price Filters
+    # ------------------------------------------
+
+    if price_range == 'under_1000':
+
+        products = products.filter(
+            variants__is_active=True,
+            variants__price__lt=1000
+        ).distinct()
+
+    elif price_range == '1000_2000':
+
+        products = products.filter(
+            variants__is_active=True,
+            variants__price__gte=1000,
+            variants__price__lte=2000
+        ).distinct()
+
+    elif price_range == 'above_2000':
+
+        products = products.filter(
+            variants__is_active=True,
+            variants__price__gt=2000
+        ).distinct()
+
+    # ------------------------------------------
+    # Sorting
+    # ------------------------------------------
+
+    if sort == 'price_low':
+
+        products = products.annotate(
+            lowest_price=Min(
+                'variants__price'
+            )
+        ).order_by(
+            'lowest_price',
+            '-id'
+        )
+
+    elif sort == 'price_high':
+
+        products = products.annotate(
+            lowest_price=Min(
+                'variants__price'
+            )
+        ).order_by(
+            '-lowest_price',
+            '-id'
+        )
+
+    else:
+
+        products = products.order_by(
+            '-id'
+        )
+
+    # ------------------------------------------
+    # Available Categories
+    # ------------------------------------------
+
+    available_categories = (
+        Product.objects
+        .filter(
+            is_active=True
+        )
+        .values_list(
+            'category__name',
+            flat=True
+        )
+        .distinct()
+    )
+
+    # ------------------------------------------
+    # Result Count
+    # ------------------------------------------
+
+    product_count = products.count()
+
+    return render(
+        request,
+        'store/search_results.html',
+        {
+            'products': products,
+            'query': query,
+            'sort': sort,
+            'in_stock': in_stock,
+            'selected_categories': categories,
+            'price_range': price_range,
+            'available_categories': available_categories,
+            'product_count': product_count,
+        }
+    )
 
     query = request.GET.get(
         'q',
