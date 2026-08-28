@@ -249,57 +249,218 @@
 
 
         /* =====================================================
-           DESKTOP NAV LINKS
+           DESKTOP NAV LINKS — FLIPKART STYLE
         ===================================================== */
 
         .nav-links {
             display: flex;
-
             align-items: center;
             justify-content: flex-end;
-
-            gap: clamp(12px, 1.7vw, 25px);
-
+            gap: 8px;
             white-space: nowrap;
             flex-shrink: 0;
         }
 
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-
-            font-size: 14px;
-
+        .nav-item {
             position: relative;
-
-            transition:
-                color .25s ease,
-                transform .25s ease;
+            display: flex;
+            align-items: center;
         }
 
-        .nav-links a:hover {
-            color: #ccc;
+        .nav-item > a,
+        .nav-dropdown-trigger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-height: 42px;
+            padding: 9px 11px;
+            color: #fff;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            transition: background .22s ease, color .22s ease, transform .22s ease, border-color .22s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .nav-item > a:hover,
+        .nav-item > a.touch-active,
+        .nav-dropdown-trigger:hover,
+        .nav-dropdown-trigger.touch-active,
+        .nav-item:focus-within > .nav-dropdown-trigger {
+            background: #2a2a2a;
+            border-color: #444;
+            color: #fff;
             transform: translateY(-1px);
         }
 
-        .nav-links a::after {
-            content: "";
-
-            position: absolute;
-
-            left: 0;
-            bottom: -6px;
-
-            width: 0;
-            height: 2px;
-
-            background: #fff;
-
-            transition: width .25s ease;
+        .nav-chevron {
+            font-size: 10px;
+            opacity: .85;
+            transition: transform .22s ease;
         }
 
-        .nav-links a:hover::after {
+        .nav-item:hover .nav-chevron,
+        .nav-item:focus-within .nav-chevron {
+            transform: rotate(180deg);
+        }
+
+        .nav-dropdown {
+            position: absolute;
+            top: calc(100% + 9px);
+            right: 0;
+            min-width: 235px;
+            padding: 8px;
+            background: #fff;
+            color: #111;
+            border: 1px solid #e7e7e7;
+            border-radius: 10px;
+            box-shadow: 0 16px 38px rgba(0,0,0,.22);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-8px);
+            transition: opacity .2s ease, visibility .2s ease, transform .2s ease;
+            z-index: 6000;
+        }
+
+        .nav-dropdown::before {
+            content: "";
+            position: absolute;
+            top: -7px;
+            right: 22px;
+            width: 13px;
+            height: 13px;
+            background: #fff;
+            border-left: 1px solid #e7e7e7;
+            border-top: 1px solid #e7e7e7;
+            transform: rotate(45deg);
+        }
+
+        .nav-item:hover > .nav-dropdown,
+        .nav-item:focus-within > .nav-dropdown,
+        .nav-dropdown.open {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .nav-dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 11px 12px;
+            margin-bottom: 4px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .nav-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: #111;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .nav-user-info strong {
+            display: block;
+            color: #111;
+            font-size: 13px;
+            line-height: 1.2;
+        }
+
+        .nav-user-info span {
+            display: block;
+            color: #888;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .nav-dropdown a,
+        .nav-dropdown .nav-action {
             width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-height: 40px;
+            padding: 9px 11px;
+            border-radius: 7px;
+            color: #222;
+            background: transparent;
+            text-decoration: none;
+            border: none;
+            font: inherit;
+            font-size: 13px;
+            cursor: pointer;
+            text-align: left;
+            transition: background .18s ease, color .18s ease, padding-left .18s ease, transform .18s ease;
+        }
+
+        .nav-dropdown a:hover,
+        .nav-dropdown a.touch-active,
+        .nav-dropdown .nav-action:hover,
+        .nav-dropdown .nav-action.touch-active {
+            background: #f2f2f2;
+            color: #111;
+            padding-left: 15px;
+            transform: translateX(2px);
+        }
+
+        .nav-dropdown-divider {
+            height: 1px;
+            background: #eee;
+            margin: 6px 5px;
+        }
+
+        .nav-dropdown-section {
+            padding: 7px 11px 4px;
+            color: #999;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .8px;
+            text-transform: uppercase;
+        }
+
+        .nav-more-dropdown {
+            min-width: 250px;
+        }
+
+        .nav-account-dropdown {
+            min-width: 220px;
+        }
+
+        .nav-account-guest {
+            color: #777 !important;
+            font-size: 12px !important;
+            cursor: default !important;
+            transform: none !important;
+            background: transparent !important;
+            padding-left: 11px !important;
+        }
+
+        .nav-account-disabled {
+            color: #444 !important;
+        }
+
+        @media (max-width:1200px) and (min-width:951px) {
+            .nav-links { gap: 4px; }
+            .nav-item > a,
+            .nav-dropdown-trigger {
+                padding-left: 8px;
+                padding-right: 8px;
+                font-size: 13px;
+            }
         }
 
 
@@ -2150,6 +2311,11 @@
                     translateY(-2px);
             }
 
+            .mobile-bottom-nav .mobile-account-details-trigger.active {
+                color: #111;
+                transform: translateY(-2px);
+            }
+
 
             /* =================================================
                FOOTER
@@ -2259,10 +2425,275 @@
 
     </style>
 
+
+<style id="tuvi-account-dashboard-css">
+/* =========================================================
+   TUVIWEAR ACCOUNT DETAILS DASHBOARD
+   Self-contained: does not alter existing page sections.
+========================================================= */
+#tuviAccountPage {
+    position: fixed;
+    inset: 0;
+    z-index: 99990;
+    display: none;
+    background: #f1f3f6;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+}
+#tuviAccountPage.active { display:block; animation: tuviAccountIn .22s ease; }
+@keyframes tuviAccountIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+
+.tuvi-account-topbar{
+    position:sticky;
+    top:0;
+    z-index:5;
+    height:64px;
+    background:#111;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:0 28px;
+    box-shadow:0 2px 12px rgba(0,0,0,.18);
+}
+.tuvi-account-back{
+    border:0;background:rgba(255,255,255,.1);color:#fff;
+    width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:20px;
+    transition:.18s ease;
+}
+.tuvi-account-back:hover,.tuvi-account-back.touch-active{background:#fff;color:#111;transform:scale(1.05)}
+.tuvi-account-brand{font-weight:800;font-size:22px;letter-spacing:-.3px}
+.tuvi-account-title{font-size:14px;opacity:.72;border-left:1px solid rgba(255,255,255,.25);padding-left:18px}
+
+.tuvi-account-wrap{max-width:1180px;margin:0 auto;padding:28px 22px 50px}
+.tuvi-account-profile{
+    background:#fff;border-radius:14px;padding:22px;
+    display:flex;align-items:center;justify-content:space-between;gap:18px;
+    box-shadow:0 1px 3px rgba(0,0,0,.08);margin-bottom:18px;
+}
+.tuvi-profile-left{display:flex;align-items:center;gap:15px;min-width:0}
+.tuvi-profile-avatar{
+    width:58px;height:58px;border-radius:50%;background:#111;color:#fff;
+    display:grid;place-items:center;font-size:26px;flex:0 0 auto;
+}
+.tuvi-profile-name{font-size:20px;font-weight:750;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tuvi-profile-sub{font-size:13px;color:#777;margin-top:4px}
+.tuvi-edit-profile-btn{
+    border:1px solid #ddd;background:#fff;border-radius:9px;padding:10px 15px;
+    cursor:pointer;font-weight:650;transition:.18s ease;
+}
+.tuvi-edit-profile-btn:hover,.tuvi-edit-profile-btn.touch-active{background:#111;color:#fff;transform:translateY(-1px)}
+
+.tuvi-quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:18px}
+.tuvi-quick-card{
+    background:#fff;border:1px solid #ddd;border-radius:12px;min-height:112px;
+    display:flex;align-items:center;gap:16px;padding:20px;cursor:pointer;
+    transition:.2s ease;box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+.tuvi-quick-card:hover,.tuvi-quick-card.touch-active{
+    transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.10);border-color:#c9c9c9
+}
+.tuvi-icon{font-size:31px;width:42px;text-align:center}
+.tuvi-quick-card strong{font-size:21px;color:#111}
+.tuvi-quick-card small{display:block;color:#777;margin-top:4px}
+
+.tuvi-section{
+    background:#fff;border-radius:12px;margin-bottom:18px;
+    box-shadow:0 1px 3px rgba(0,0,0,.07);overflow:hidden;
+}
+.tuvi-section-title{
+    font-size:22px;font-weight:750;color:#111;padding:20px 22px 12px;margin:0
+}
+.tuvi-section-subtitle{color:#888;font-size:12px;padding:0 22px 12px}
+.tuvi-setting-row{
+    display:flex;align-items:center;gap:16px;min-height:68px;padding:12px 22px;
+    border-top:1px solid #f0f0f0;cursor:pointer;transition:.18s ease;
+}
+.tuvi-setting-row:hover,.tuvi-setting-row.touch-active{background:#fafafa;padding-left:27px}
+.tuvi-setting-icon{font-size:25px;width:38px;text-align:center;flex:0 0 38px}
+.tuvi-setting-main{flex:1;min-width:0}
+.tuvi-setting-main strong{display:block;font-size:16px;font-weight:500;color:#222}
+.tuvi-setting-main span{display:block;font-size:12px;color:#888;margin-top:3px}
+.tuvi-arrow{font-size:23px;color:#555}
+
+.tuvi-offers{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:4px 16px 18px
+}
+.tuvi-offer{
+    border:1px solid #e2e2e2;border-radius:10px;overflow:hidden;background:#fff;
+    cursor:pointer;transition:.2s ease;
+}
+.tuvi-offer:hover,.tuvi-offer.touch-active{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.11)}
+.tuvi-offer-art{height:145px;display:flex;align-items:center;justify-content:center;padding:15px;text-align:center}
+.tuvi-offer:nth-child(1) .tuvi-offer-art{background:linear-gradient(135deg,#171717,#3d3d3d);color:#fff}
+.tuvi-offer:nth-child(2) .tuvi-offer-art{background:linear-gradient(135deg,#eee,#d9e1e9);color:#111}
+.tuvi-offer:nth-child(3) .tuvi-offer-art{background:linear-gradient(135deg,#f7d7dc,#fff);color:#a32336}
+.tuvi-offer-art b{font-size:24px;display:block}
+.tuvi-offer-art span{font-size:11px;display:block;margin-top:6px;opacity:.85}
+.tuvi-offer-body{padding:10px 12px 13px;text-align:center}
+.tuvi-offer-body strong{font-size:15px}.tuvi-offer-body span{display:block;font-size:12px;color:#666;margin-top:4px}
+
+.tuvi-info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:18px}
+.tuvi-mini-section{margin-bottom:0}
+.tuvi-logout{
+    width:100%;height:52px;border:1px solid #ddd;background:#fff;border-radius:10px;
+    color:#111;font-size:16px;font-weight:750;cursor:pointer;transition:.18s ease;
+}
+.tuvi-logout:hover,.tuvi-logout.touch-active{background:#111;color:#fff}
+
+.tuvi-account-toast{
+    position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);
+    background:#111;color:#fff;padding:12px 18px;border-radius:10px;
+    box-shadow:0 8px 30px rgba(0,0,0,.25);opacity:0;pointer-events:none;
+    transition:.22s ease;z-index:100020;font-size:13px;max-width:min(90vw,520px);text-align:center
+}
+.tuvi-account-toast.show{opacity:1;transform:translate(-50%,0)}
+.tuvi-account-modal{
+    position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100010;
+    display:none;align-items:center;justify-content:center;padding:20px
+}
+.tuvi-account-modal.show{display:flex}
+.tuvi-modal-box{
+    width:min(520px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:15px;
+    padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.28)
+}
+.tuvi-modal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+.tuvi-modal-head h3{margin:0;font-size:21px}
+.tuvi-modal-close{border:0;background:#f2f2f2;border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:18px}
+.tuvi-form-row{margin-bottom:13px}
+.tuvi-form-row label{display:block;font-size:12px;color:#666;margin-bottom:5px}
+.tuvi-form-row input,.tuvi-form-row select{
+    width:100%;box-sizing:border-box;border:1px solid #ddd;border-radius:8px;padding:11px 12px;
+    font:inherit;outline:none
+}
+.tuvi-form-row input:focus,.tuvi-form-row select:focus{border-color:#111}
+.tuvi-modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.tuvi-btn{border:1px solid #111;border-radius:8px;padding:10px 16px;cursor:pointer;font-weight:650}
+.tuvi-btn.primary{background:#111;color:#fff}.tuvi-btn.secondary{background:#fff;color:#111}
+
+@media(max-width:700px){
+    .tuvi-account-topbar{height:56px;padding:0 14px;gap:10px}
+    .tuvi-account-brand{font-size:19px}.tuvi-account-title{display:none}
+    .tuvi-account-wrap{padding:14px 10px 34px}
+    .tuvi-account-profile{padding:16px}.tuvi-profile-name{font-size:17px}
+    .tuvi-profile-avatar{width:48px;height:48px;font-size:22px}
+    .tuvi-edit-profile-btn{padding:8px 10px;font-size:12px}
+    .tuvi-quick-grid{grid-template-columns:repeat(2,1fr)}
+    .tuvi-info-grid{grid-template-columns:1fr}
+    .tuvi-quick-card{min-height:88px;padding:12px 8px;gap:6px;overflow:hidden}.tuvi-quick-card strong{font-size:15px;line-height:1.2;white-space:nowrap}.tuvi-quick-card small{display:block;font-size:8px;line-height:1.2;white-space:nowrap;margin-top:4px;letter-spacing:-.1px}.tuvi-icon{font-size:22px;width:27px;flex:0 0 27px}.tuvi-quick-card > div:last-child{min-width:0;overflow:visible;flex:1}
+    .tuvi-section-title{font-size:20px;padding:18px 16px 10px}
+    .tuvi-section-subtitle{padding:0 16px 10px}
+    .tuvi-setting-row{padding:12px 16px;min-height:62px}
+    .tuvi-setting-row:hover,.tuvi-setting-row.touch-active{padding-left:19px}
+    .tuvi-setting-main strong{font-size:15px}
+    .tuvi-setting-icon{font-size:23px}
+    .tuvi-offers{grid-template-columns:1fr;padding:4px 12px 14px}
+    .tuvi-offer-art{height:120px}
+}
+</style>
+
 </head>
 
 
 <body>
+
+<!-- =========================================================
+     TUVIWEAR ACCOUNT DETAILS PAGE
+     Opens from Account Details in the desktop dropdown.
+========================================================= -->
+<section id="tuviAccountPage" aria-hidden="true">
+    <div class="tuvi-account-topbar">
+        <button type="button" class="tuvi-account-back" id="tuviAccountBack" aria-label="Back">←</button>
+        <div class="tuvi-account-brand">TuviWear</div>
+        <div class="tuvi-account-title">Account Details</div>
+    </div>
+
+    <div class="tuvi-account-wrap">
+        <div class="tuvi-account-profile">
+            <div class="tuvi-profile-left">
+                <div class="tuvi-profile-avatar">🙎🏻‍♂️</div>
+                <div>
+                    {% if user.is_authenticated %}
+                        <div class="tuvi-profile-name">{{ user.get_full_name|default:user.username }}</div>
+                        <div class="tuvi-profile-sub">Your TuviWear account</div>
+                    {% else %}
+                        <div class="tuvi-profile-name">Guest User</div>
+                        <div class="tuvi-profile-sub">Login to manage your TuviWear account</div>
+                    {% endif %}
+                </div>
+            </div>
+            <button type="button" class="tuvi-edit-profile-btn" data-account-action="edit-profile">✏️ Edit Profile</button>
+        </div>
+
+        <div class="tuvi-quick-grid">
+            <div class="tuvi-quick-card" data-account-action="orders">
+                <div class="tuvi-icon">📦</div>
+                <div><strong>Orders</strong><small>Track and manage your orders</small></div>
+            </div>
+            <div class="tuvi-quick-card" data-account-action="wishlist">
+                <div class="tuvi-icon">♡</div>
+                <div><strong>Wishlist</strong><small>Your saved fashion picks</small></div>
+            </div>
+            <div class="tuvi-quick-card" data-account-action="coupons">
+                <div class="tuvi-icon">🎁</div>
+                <div><strong>Coupons</strong><small>Offers available for you</small></div>
+            </div>
+            <div class="tuvi-quick-card" data-account-action="help">
+                <div class="tuvi-icon">🎧</div>
+                <div><strong>Help Center</strong><small>Get help with TuviWear</small></div>
+            </div>
+        </div>
+
+        <section class="tuvi-section">
+            <h2 class="tuvi-section-title">Account Settings</h2>
+            <div class="tuvi-setting-row" data-account-action="plus"><div class="tuvi-setting-icon">✦</div><div class="tuvi-setting-main"><strong>TuviWear Plus</strong><span>Exclusive benefits and offers</span></div><div class="tuvi-arrow">›</div></div>
+            <div class="tuvi-setting-row" data-account-action="devices"><div class="tuvi-setting-icon">📱</div><div class="tuvi-setting-main"><strong>Manage Devices</strong><span>Review devices signed in to your account</span></div><div class="tuvi-arrow">›</div></div>
+            <div class="tuvi-setting-row" data-account-action="edit-profile"><div class="tuvi-setting-icon">♙</div><div class="tuvi-setting-main"><strong>Edit Profile</strong><span>Update your name and profile information</span></div><div class="tuvi-arrow">›</div></div>
+            <div class="tuvi-setting-row" data-account-action="cards"><div class="tuvi-setting-icon">💳</div><div class="tuvi-setting-main"><strong>Saved Credit / Debit &amp; Gift Cards</strong><span>Manage saved payment methods</span></div><div class="tuvi-arrow">›</div></div>
+            <div class="tuvi-setting-row" data-account-action="addresses"><div class="tuvi-setting-icon">⌖</div><div class="tuvi-setting-main"><strong>Saved Addresses</strong><span>Manage your delivery addresses</span></div><div class="tuvi-arrow">›</div></div>
+            <div class="tuvi-setting-row" data-account-action="language"><div class="tuvi-setting-icon">अA</div><div class="tuvi-setting-main"><strong>Select Language</strong><span>Choose your preferred language</span></div><div class="tuvi-arrow">›</div></div>
+            <div class="tuvi-setting-row" data-account-action="notifications"><div class="tuvi-setting-icon">🔔</div><div class="tuvi-setting-main"><strong>Notification Settings</strong><span>Control TuviWear notifications</span></div><div class="tuvi-arrow">›</div></div>
+            <div class="tuvi-setting-row" data-account-action="privacy"><div class="tuvi-setting-icon">🔐</div><div class="tuvi-setting-main"><strong>Privacy Center</strong><span>Manage privacy and account security</span></div><div class="tuvi-arrow">›</div></div>
+        </section>
+
+        <section class="tuvi-section">
+            <h2 class="tuvi-section-title">My Activity</h2>
+            <div class="tuvi-setting-row" data-account-action="reviews"><div class="tuvi-setting-icon">📝</div><div class="tuvi-setting-main"><strong>Reviews</strong><span>See and manage your product reviews</span></div><div class="tuvi-arrow">›</div></div>
+            <div class="tuvi-setting-row" data-account-action="qa"><div class="tuvi-setting-icon">💬</div><div class="tuvi-setting-main"><strong>Questions &amp; Answers</strong><span>Your product questions and answers</span></div><div class="tuvi-arrow">›</div></div>
+        </section>
+
+        <section class="tuvi-section tuvi-mini-section">
+            <h2 class="tuvi-section-title">Earn with TuviWear</h2>
+            <div class="tuvi-setting-row" data-account-action="sell"><div class="tuvi-setting-icon">🏪</div><div class="tuvi-setting-main"><strong>Sell on TuviWear</strong><span>Start selling your products</span></div><div class="tuvi-arrow">›</div></div>
+        </section>
+
+        <section class="tuvi-section tuvi-mini-section">
+            <h2 class="tuvi-section-title">Feedback &amp; Information</h2>
+            <div class="tuvi-setting-row" data-account-action="terms"><div class="tuvi-setting-icon">📄</div><div class="tuvi-setting-main"><strong>Terms, Policies and Licenses</strong><span>TuviWear policies and legal information</span></div><div class="tuvi-arrow">›</div></div>
+            <div class="tuvi-setting-row" data-account-action="faq"><div class="tuvi-setting-icon">?</div><div class="tuvi-setting-main"><strong>Browse FAQs</strong><span>Frequently asked questions</span></div><div class="tuvi-arrow">›</div></div>
+        </section>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="tuvi-logout" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Log Out</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="tuvi-logout" style="display:flex;align-items:center;justify-content:center;text-decoration:none;">Log In</a>
+        {% endif %}
+    </div>
+</section>
+
+<div class="tuvi-account-toast" id="tuviAccountToast" role="status"></div>
+
+<div class="tuvi-account-modal" id="tuviAccountModal" aria-hidden="true">
+    <div class="tuvi-modal-box" role="dialog" aria-modal="true">
+        <div class="tuvi-modal-head">
+            <h3 id="tuviModalTitle">TuviWear</h3>
+            <button type="button" class="tuvi-modal-close" id="tuviModalClose" aria-label="Close">×</button>
+        </div>
+        <div id="tuviModalBody"></div>
+    </div>
+</div>
+
 
 
     <!-- =====================================================
@@ -2308,51 +2739,101 @@
         </form>
 
 
-        <!-- DESKTOP NAV -->
+        <!-- DESKTOP NAV — FLIPKART STYLE
+             Existing Django URLs are preserved.
+             Mobile navigation/search is untouched. -->
 
-        <div class="nav-links">
+        <div class="nav-links" aria-label="Main navigation">
 
-            <a href="{% url 'home' %}">
-                🏠 Home
-            </a>
+            <!-- HOME -->
+            <div class="nav-item">
+                <a href="{% url 'home' %}">🏠 <span>Home</span></a>
+            </div>
 
-            <a href="{% url 'search_products' %}?category=Men">
-                👔 Men
-            </a>
+            <!-- ACCOUNT -->
+            <div class="nav-item">
+                <button
+                    type="button"
+                    class="nav-dropdown-trigger"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    {% if user.is_authenticated %}👨🏻‍💼{% else %}🔐{% endif %}
+                    <span>Account</span>
+                    <span class="nav-chevron">▼</span>
+                </button>
 
-            <a href="{% url 'search_products' %}?category=Women">
-                👗 Women
-            </a>
+                <div class="nav-dropdown nav-account-dropdown">
+                    <div class="nav-dropdown-header">
+                        <div class="nav-avatar">
+                            {% if user.is_authenticated %}👨🏻‍💼{% else %}🔐{% endif %}
+                        </div>
+                        <div class="nav-user-info">
+                            {% if user.is_authenticated %}
+                                <strong>{{ user.get_full_name|default:user.username }}</strong>
+                                <span>Account menu</span>
+                            {% else %}
+                                <strong>Welcome to TuviWear</strong>
+                                <span>Login to manage your account</span>
+                            {% endif %}
+                        </div>
+                    </div>
 
-            <a href="{% url 'search_products' %}?category=Kids">
-                🧒 Kids
-            </a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'logout' %}">🚪 <span>Logout</span></a>
+                        <a href="#" class="account-details-trigger">⚙️ <span>Account Details</span></a>
+                    {% else %}
+                        <a href="{% url 'login' %}">🔐 <span>Login</span></a>
+                        <a href="{% url 'register' %}">📝 <span>Register</span></a>
+                    {% endif %}
+                </div>
+            </div>
 
-            <a href="{% url 'cart' %}">
-                🛒 Cart
-            </a>
+            <!-- CART -->
+            <div class="nav-item">
+                <a href="{% url 'cart' %}">🛒 <span>Cart</span></a>
+            </div>
 
-            {% if user.is_authenticated %}
+            <!-- MORE -->
+            <div class="nav-item">
+                <button
+                    type="button"
+                    class="nav-dropdown-trigger"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    ⋮ <span>More</span>
+                    <span class="nav-chevron">▼</span>
+                </button>
 
-                <a href="{% url 'my_orders' %}">
-                    📦 My Orders
-                </a>
+                <div class="nav-dropdown nav-more-dropdown">
+                    <div class="nav-dropdown-header">
+                        <div class="nav-avatar">👤</div>
+                        <div class="nav-user-info">
+                            {% if user.is_authenticated %}
+                                <strong>{{ user.get_full_name|default:user.username }}</strong>
+                                <span>Account holder</span>
+                            {% else %}
+                                <strong>Guest User</strong>
+                                <span>TuviWear account</span>
+                            {% endif %}
+                        </div>
+                    </div>
 
-                <a href="{% url 'logout' %}">
-                    🚪 Logout
-                </a>
+                    <div class="nav-dropdown-section">Account</div>
+                    <a href="#" class="account-details-trigger">⚙️ <span>Account Details</span></a>
 
-            {% else %}
+                    <div class="nav-dropdown-divider"></div>
+                    <div class="nav-dropdown-section">Shop by category</div>
 
-                <a href="{% url 'login' %}">
-                    🔐 Login
-                </a>
+                    <a href="{% url 'search_products' %}?category=Men">👔 <span>Men</span></a>
+                    <a href="{% url 'search_products' %}?category=Women">👗 <span>Women</span></a>
+                    <a href="{% url 'search_products' %}?category=Kids">🧒 <span>Kids</span></a>
 
-                <a href="{% url 'register' %}">
-                    📝 Register
-                </a>
-
-            {% endif %}
+                    <div class="nav-dropdown-divider"></div>
+                    <a href="{% url 'my_orders' %}">📦 <span>My Orders</span></a>
+                </div>
+            </div>
 
         </div>
 
@@ -2491,6 +2972,10 @@
 
             <a href="{% url 'cart' %}">
                 🛒 Cart
+            </a>
+
+            <a href="#" class="mobile-account-details-trigger">
+                ⚙️ Account Details
             </a>
 
             {% if user.is_authenticated %}
@@ -2987,10 +3472,12 @@
 
         {% if user.is_authenticated %}
 
-            <a href="{% url 'my_orders' %}">
+            <a href="#"
+               class="mobile-account-details-trigger"
+               aria-label="Open Account Details">
 
                 <span class="bottom-icon">
-                    🧾
+                    👨🏻‍💼
                 </span>
 
                 <span>
@@ -3001,14 +3488,16 @@
 
         {% else %}
 
-            <a href="{% url 'login' %}">
+            <a href="#"
+               class="mobile-account-details-trigger"
+               aria-label="Open Account Details">
 
                 <span class="bottom-icon">
-                    🧾
+                    👨🏻‍💼
                 </span>
 
                 <span>
-                    Account 
+                    Account
                 </span>
 
             </a>
@@ -4694,6 +5183,66 @@
 <script>
 
     /* =========================================================
+       DESKTOP NAV DROPDOWNS
+       Hover works on desktop; click/touch also works.
+       Mobile navbar remains untouched.
+    ========================================================= */
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const navItems = document.querySelectorAll(".nav-item");
+
+        navItems.forEach(function (item) {
+            const trigger = item.querySelector(":scope > .nav-dropdown-trigger");
+            const dropdown = item.querySelector(":scope > .nav-dropdown");
+
+            if (!trigger || !dropdown) return;
+
+            trigger.addEventListener("click", function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                const willOpen = !dropdown.classList.contains("open");
+
+                document.querySelectorAll(".nav-dropdown.open").forEach(function (openMenu) {
+                    if (openMenu !== dropdown) openMenu.classList.remove("open");
+                });
+
+                document.querySelectorAll(".nav-dropdown-trigger[aria-expanded='true']").forEach(function (openTrigger) {
+                    if (openTrigger !== trigger) openTrigger.setAttribute("aria-expanded", "false");
+                });
+
+                dropdown.classList.toggle("open", willOpen);
+                trigger.setAttribute("aria-expanded", willOpen ? "true" : "false");
+            });
+        });
+
+        document.addEventListener("click", function (event) {
+            if (event.target.closest(".nav-item")) return;
+
+            document.querySelectorAll(".nav-dropdown.open").forEach(function (menu) {
+                menu.classList.remove("open");
+            });
+
+            document.querySelectorAll(".nav-dropdown-trigger[aria-expanded='true']").forEach(function (trigger) {
+                trigger.setAttribute("aria-expanded", "false");
+            });
+        });
+
+        document.querySelectorAll(".nav-item > a, .nav-dropdown a, .nav-dropdown-trigger").forEach(function (element) {
+            element.addEventListener("touchstart", function () {
+                element.classList.add("touch-active");
+            }, { passive: true });
+
+            ["touchend", "touchcancel"].forEach(function (eventName) {
+                element.addEventListener(eventName, function () {
+                    setTimeout(function () { element.classList.remove("touch-active"); }, 120);
+                }, { passive: true });
+            });
+        });
+    });
+
+
+    /* =========================================================
        TUVIWEAR FULL SCREEN SEARCH
     ========================================================= */
 
@@ -5464,6 +6013,227 @@
         }
     );
 
+</script>
+
+
+<script id="tuvi-account-dashboard-js">
+(function () {
+    "use strict";
+
+    function initTuviAccountDashboard() {
+        const page = document.getElementById("tuviAccountPage");
+        if (!page) return;
+
+        const back = document.getElementById("tuviAccountBack");
+        const modal = document.getElementById("tuviAccountModal");
+        const modalTitle = document.getElementById("tuviModalTitle");
+        const modalBody = document.getElementById("tuviModalBody");
+        const modalClose = document.getElementById("tuviModalClose");
+        const toast = document.getElementById("tuviAccountToast");
+
+        let lastFocused = null;
+
+        function showPage() {
+            lastFocused = document.activeElement;
+            page.classList.add("active");
+            page.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+            window.scrollTo(0, 0);
+            if (back) back.focus({preventScroll:true});
+        }
+
+        function hidePage() {
+            page.classList.remove("active");
+            page.setAttribute("aria-hidden", "true");
+            closeModal();
+            document.body.style.overflow = "";
+            document.querySelectorAll(".mobile-account-details-trigger.active").forEach(function(el){
+                el.classList.remove("active");
+            });
+            if (lastFocused && typeof lastFocused.focus === "function") {
+                lastFocused.focus({preventScroll:true});
+            }
+        }
+
+        function openModal(title, body) {
+            if (!modal) return;
+            modalTitle.textContent = title;
+            modalBody.innerHTML = body;
+            modal.classList.add("show");
+            modal.setAttribute("aria-hidden", "false");
+            setTimeout(function(){ if (modalClose) modalClose.focus(); }, 0);
+        }
+
+        function closeModal() {
+            if (!modal) return;
+            modal.classList.remove("show");
+            modal.setAttribute("aria-hidden", "true");
+        }
+
+        let toastTimer;
+        function showToast(message) {
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.add("show");
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function(){ toast.classList.remove("show"); }, 2400);
+        }
+
+        function goToExisting(url) {
+            if (url) window.location.href = url;
+        }
+
+        function accountAction(action) {
+            if (action === "orders") {
+                {% if user.is_authenticated %}
+                goToExisting("{% url 'my_orders' %}");
+                {% else %}
+                openModal("Orders", "<p style='color:#555'>Please login first to view your orders.</p><div class='tuvi-modal-actions'><a class='tuvi-btn primary' href=\"{% url 'login' %}\">Login</a></div>");
+                {% endif %}
+                return;
+            }
+
+            const messages = {
+                wishlist: ["Wishlist", "Your wishlist section is ready. Add products to your wishlist from the product cards to see them here."],
+                coupons: ["Coupons", "Your available TuviWear coupons and promotional offers will appear here."],
+                help: ["Help Center", "For help with an order, payment, delivery or return, please contact TuviWear support."],
+                plus: ["TuviWear Plus", "TuviWear Plus benefits will appear here. This section is ready for future membership features."],
+                devices: ["Manage Devices", "Device management is ready. Your signed-in devices can be listed here when device tracking is connected to Django."],
+                cards: ["Saved Cards", "Saved payment methods can be managed here. No card information is stored by this front-end page."],
+                addresses: ["Saved Addresses", "Your saved delivery addresses will appear here once address storage is connected to your Django account model."],
+                reviews: ["Reviews", "Your reviews will appear here when connected to the existing product-review system."],
+                qa: ["Questions & Answers", "Your product questions and answers will appear here."],
+                "offer-1": ["TuviWear Card", "TuviWear Card offers are currently a front-end preview."],
+                "offer-2": ["TuviPay", "TuviPay offers are currently a front-end preview."],
+                "offer-3": ["Reward Points", "Reward offers are currently a front-end preview."],
+                sell: ["Sell on TuviWear", "Seller onboarding can be connected here later without changing the home page."],
+                terms: ["Terms, Policies and Licenses", "TuviWear terms and policies can be placed here."],
+                faq: ["Frequently Asked Questions", "FAQs can be added here without changing the existing website layout."]
+            };
+
+            if (action === "edit-profile") {
+                const currentName = {% if user.is_authenticated %}"{{ user.get_full_name|default:user.username|escapejs }}"{% else %}"Guest User"{% endif %};
+                openModal("Edit Profile", `
+                    <form id="tuviEditProfileForm">
+                        <div class="tuvi-form-row"><label>Account name</label><input id="tuviProfileNameInput" value="${currentName.replace(/"/g, '&quot;')}" maxlength="80"></div>
+                        <div class="tuvi-form-row"><label>Display preference</label><select id="tuviProfilePreference"><option>Standard</option><option>Fashion</option><option>Minimal</option></select></div>
+                        <div class="tuvi-modal-actions"><button type="button" class="tuvi-btn secondary" data-modal-close>Cancel</button><button type="submit" class="tuvi-btn primary">Save</button></div>
+                    </form>
+                `);
+                const form = document.getElementById("tuviEditProfileForm");
+                if (form) form.addEventListener("submit", function(e){
+                    e.preventDefault();
+                    const input = document.getElementById("tuviProfileNameInput");
+                    const profileName = document.querySelector(".tuvi-profile-name");
+                    if (input && profileName && input.value.trim()) profileName.textContent = input.value.trim();
+                    closeModal();
+                    showToast("Profile display updated.");
+                });
+                return;
+            }
+
+            if (action === "language") {
+                openModal("Select Language", `
+                    <div class="tuvi-form-row"><label>Preferred language</label>
+                    <select id="tuviLanguageSelect"><option>English</option><option>বাংলা (Bengali)</option><option>हिन्दी (Hindi)</option></select></div>
+                    <div class="tuvi-modal-actions"><button type="button" class="tuvi-btn primary" id="tuviLanguageSave">Save</button></div>
+                `);
+                document.getElementById("tuviLanguageSave")?.addEventListener("click", function(){
+                    const value = document.getElementById("tuviLanguageSelect")?.value || "English";
+                    localStorage.setItem("tuviwear_language", value);
+                    closeModal(); showToast("Language preference saved: " + value);
+                });
+                return;
+            }
+
+            if (action === "notifications") {
+                const enabled = localStorage.getItem("tuviwear_notifications") !== "off";
+                openModal("Notification Settings", `
+                    <div class="tuvi-form-row"><label><input id="tuviNotificationToggle" type="checkbox" ${enabled ? "checked" : ""}> Enable TuviWear notifications</label></div>
+                    <div class="tuvi-modal-actions"><button type="button" class="tuvi-btn primary" id="tuviNotificationSave">Save</button></div>
+                `);
+                document.getElementById("tuviNotificationSave")?.addEventListener("click", function(){
+                    const on = document.getElementById("tuviNotificationToggle")?.checked;
+                    localStorage.setItem("tuviwear_notifications", on ? "on" : "off");
+                    closeModal(); showToast(on ? "Notifications enabled." : "Notifications disabled.");
+                });
+                return;
+            }
+
+            if (action === "privacy") {
+                openModal("Privacy Center", "<p style='color:#555;line-height:1.6'>Your account privacy controls are available here. Never enter card passwords, OTPs or other sensitive information into this front-end page.</p>");
+                return;
+            }
+
+            if (messages[action]) {
+                openModal(messages[action][0], "<p style='color:#555;line-height:1.6'>" + messages[action][1] + "</p>");
+            }
+        }
+
+        document.querySelectorAll(".account-details-trigger").forEach(function(el){
+            el.addEventListener("click", function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                showPage();
+            });
+        });
+
+        // Mobile Account tab + mobile menu Account Details use the same
+        // dashboard, so desktop and mobile stay perfectly in sync.
+        document.querySelectorAll(".mobile-account-details-trigger").forEach(function(el){
+            el.addEventListener("click", function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                el.classList.add("active");
+                showPage();
+                setTimeout(function(){ el.classList.remove("active"); }, 350);
+            });
+        });
+
+        page.addEventListener("click", function(e){
+            const target = e.target.closest("[data-account-action]");
+            if (target) {
+                e.preventDefault();
+                accountAction(target.getAttribute("data-account-action"));
+            }
+        });
+
+        if (back) back.addEventListener("click", hidePage);
+        if (modalClose) modalClose.addEventListener("click", closeModal);
+
+        if (modal) {
+            modal.addEventListener("click", function(e){
+                if (e.target === modal) closeModal();
+                const close = e.target.closest("[data-modal-close]");
+                if (close) closeModal();
+            });
+        }
+
+        document.addEventListener("keydown", function(e){
+            if (e.key === "Escape") {
+                if (modal && modal.classList.contains("show")) {
+                    closeModal();
+                } else if (page.classList.contains("active")) {
+                    hidePage();
+                }
+            }
+        });
+
+        // Touch feedback without changing desktop hover behaviour.
+        document.querySelectorAll(".tuvi-quick-card,.tuvi-setting-row,.tuvi-offer,.tuvi-account-back,.tuvi-edit-profile-btn,.tuvi-logout").forEach(function(el){
+            el.addEventListener("touchstart", function(){ el.classList.add("touch-active"); }, {passive:true});
+            ["touchend","touchcancel"].forEach(function(evt){
+                el.addEventListener(evt, function(){ el.classList.remove("touch-active"); }, {passive:true});
+            });
+        });
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initTuviAccountDashboard);
+    } else {
+        initTuviAccountDashboard();
+    }
+})();
 </script>
 
 </body>
