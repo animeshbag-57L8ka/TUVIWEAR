@@ -1622,6 +1622,7 @@
                 color: #111;
 
                 -webkit-appearance: none;
+                appearance: none;
             }
 
             .mobile-search-panel input::placeholder {
@@ -2808,7 +2809,7 @@
 
                 <div class="nav-dropdown nav-more-dropdown">
                     <div class="nav-dropdown-header">
-                        <div class="nav-avatar">👤</div>
+                        <div class="nav-avatar">👨🏻‍💼</div>
                         <div class="nav-user-info">
                             {% if user.is_authenticated %}
                                 <strong>{{ user.get_full_name|default:user.username }}</strong>
