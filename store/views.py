@@ -1060,7 +1060,50 @@ def men_products(request):
             "products": products,
         }
     )
+from django.shortcuts import redirect, get_object_or_404
 
+
+def buy_now(request, variant_id):
+    """
+    Buy Now:
+    Stores the selected product variant and quantity
+    in the session and sends the user directly to checkout.
+    """
+
+    variant = get_object_or_404(
+        ProductVariant,
+        id=variant_id,
+        is_active=True
+    )
+
+    # Get quantity safely
+    try:
+        quantity = int(request.POST.get("quantity", 1))
+    except (TypeError, ValueError):
+        quantity = 1
+
+    # Validate quantity
+    if quantity < 1:
+        quantity = 1
+
+    if quantity > variant.stock_quantity:
+        quantity = variant.stock_quantity
+
+    # If no stock is available
+    if variant.stock_quantity <= 0:
+        return redirect(
+            "product_detail",
+            slug=variant.product.slug
+        )
+
+    # Store Buy Now information separately.
+    # This does NOT modify the existing cart.
+    request.session["buy_now_variant_id"] = variant.id
+    request.session["buy_now_quantity"] = quantity
+
+    request.session.modified = True
+
+    return redirect("checkout")
 
 
 
