@@ -1,17 +1,17 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>{{ product.name }} - TuviWear</title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -23,1082 +23,1198 @@
             color: #222;
         }
 
-        /* NAVBAR */
+        /* =========================
+           NAVBAR
+        ========================= */
 
         .navbar {
             background: #111;
             color: white;
-            padding: 18px 7%;
+            padding: 14px 6%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
         }
 
         .cart-link {
             color: white;
             text-decoration: none;
-            font-size: 16px;
+            font-size: 15px;
+            transition: opacity 0.2s ease;
         }
 
-        /* CONTAINER */
+        .cart-link:hover {
+            opacity: 0.75;
+        }
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
 
         .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 18px;
         }
 
-        /* PRODUCT */
+        /* =========================
+           PRODUCT BOX
+        ========================= */
 
         .product-box {
             background: white;
-            border-radius: 16px;
-            padding: 30px;
-
+            border-radius: 14px;
+            padding: 24px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-
-            gap: 45px;
-
-            box-shadow:
-                0 5px 25px rgba(0, 0, 0, 0.08);
+            gap: 35px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
         }
 
-        /* IMAGE */
+        /* =========================
+           IMAGE
+        ========================= */
 
         .image-section {
             display: flex;
             justify-content: center;
             align-items: center;
-
-            min-height: 450px;
-
+            min-height: 420px;
             background: #f5f5f5;
-
             border-radius: 12px;
-
             overflow: hidden;
         }
 
         .main-image {
             width: 100%;
-            height: 450px;
-
+            height: 420px;
             object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .main-image:hover {
+            transform: scale(1.02);
         }
 
         .no-image {
             color: #777;
-            font-size: 18px;
+            font-size: 17px;
         }
 
-        /* PRODUCT INFO */
+        /* =========================
+           PRODUCT INFO
+        ========================= */
+
+        .product-info {
+            min-width: 0;
+        }
 
         .product-info h1 {
-            font-size: 34px;
-
+            font-size: 30px;
             margin-top: 0;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .description {
             color: #666;
-
-            line-height: 1.7;
-
-            margin-bottom: 25px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 15px;
         }
 
-        .price {
-            font-size: 28px;
+        /* =========================
+           PRICE
+        ========================= */
 
+        .price-box {
+            margin: 20px 0;
+        }
+
+        .offer-label {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #16803c;
+            padding: 4px 8px;
+            border-radius: 5px;
+            font-size: 12px;
             font-weight: bold;
-
-            margin: 25px 0;
+            margin-bottom: 7px;
         }
 
-        /* OPTIONS */
+        .price-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .current-price {
+            font-size: 27px;
+            font-weight: bold;
+            color: #111;
+        }
+
+        .original-price {
+            font-size: 16px;
+            color: #888;
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            background: #e8f5e9;
+            color: #16803c;
+            padding: 4px 7px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .select-price {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           OPTIONS
+        ========================= */
 
         .option-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .option-title {
             display: block;
-
             font-weight: bold;
-
-            margin-bottom: 10px;
+            margin-bottom: 9px;
+            font-size: 15px;
         }
 
         .options {
             display: flex;
-
             flex-wrap: wrap;
-
-            gap: 10px;
+            gap: 8px;
         }
 
         .option-button {
             border: 1px solid #ccc;
-
             background: white;
-
-            padding: 11px 18px;
-
+            padding: 9px 15px;
             border-radius: 8px;
-
             cursor: pointer;
-
-            font-size: 15px;
-
-            transition: 0.2s;
+            font-size: 14px;
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                border-color 0.2s ease,
+                transform 0.15s ease;
         }
 
         .option-button:hover {
             border-color: #111;
+            transform: translateY(-1px);
+        }
+
+        .option-button:active {
+            transform: scale(0.97);
         }
 
         .option-button.selected {
             background: #111;
-
             color: white;
-
             border-color: #111;
         }
 
-        .option-button.disabled-option {
-            color: #aaa;
-
-            background: #f5f5f5;
-
-            border-color: #ddd;
-
-            cursor: not-allowed;
-
-            text-decoration: line-through;
-        }
-
-        /* QUANTITY */
+        /* =========================
+           QUANTITY
+        ========================= */
 
         .quantity-box {
             display: flex;
-
             align-items: center;
-
-            gap: 12px;
-
-            margin-top: 15px;
+            gap: 10px;
+            margin-top: 17px;
         }
 
         .quantity-label {
             font-weight: bold;
+            font-size: 14px;
         }
 
-        .quantity-select {
-            width: 90px;
-
-            padding: 10px;
-
+        .quantity-controls {
+            display: flex;
+            align-items: center;
             border: 1px solid #ccc;
-
             border-radius: 8px;
-
-            font-size: 15px;
-
+            overflow: hidden;
             background: white;
         }
 
-        /* STOCK */
+        .quantity-btn {
+            width: 38px;
+            height: 38px;
+            border: none;
+            background: white;
+            font-size: 19px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .quantity-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .quantity-btn:active {
+            transform: scale(0.94);
+        }
+
+        .quantity-btn:disabled {
+            color: #aaa;
+            cursor: not-allowed;
+        }
+
+        .quantity-number {
+            min-width: 40px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        /* =========================
+           STOCK
+        ========================= */
 
         .stock {
-            margin-top: 10px;
-
-            font-size: 14px;
-
+            margin-top: 8px;
+            font-size: 13px;
             color: #555;
         }
 
         .stock.available {
             color: #16803c;
-
             font-weight: bold;
         }
 
         .stock.out {
             color: #d00000;
-
             font-weight: bold;
         }
 
-        /* ADD TO CART */
+        /* =========================
+           ACTION BUTTONS
+        ========================= */
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 22px;
+            width: 100%;
+        }
+
+        .add-cart-btn,
+        .buy-now-btn {
+            width: 100%;
+            min-width: 0;
+            border: none;
+            color: white;
+            padding: 13px 10px;
+            border-radius: 9px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition:
+                transform 0.15s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+            white-space: nowrap;
+        }
 
         .add-cart-btn {
-            width: 100%;
-
-            border: none;
-
             background: #111;
-
-            color: white;
-
-            padding: 16px;
-
-            border-radius: 10px;
-
-            font-size: 17px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-            margin-top: 25px;
-
-            transition: 0.2s;
         }
 
         .add-cart-btn:hover {
             background: #333;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        .add-cart-btn:disabled {
+        .buy-now-btn {
+            background: #172554;
+        }
+
+        .buy-now-btn:hover {
+            background: #1e3a8a;
+            box-shadow: 0 4px 12px rgba(23, 37, 84, 0.2);
+        }
+
+        .add-cart-btn:active,
+        .buy-now-btn:active {
+            transform: scale(0.98);
+        }
+
+        .add-cart-btn:disabled,
+        .buy-now-btn:disabled {
             background: #aaa;
-
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
+
+        /* =========================
+           MESSAGE
+        ========================= */
 
         .message {
-            margin-top: 12px;
-
+            margin-top: 10px;
             color: #d00;
-
-            font-size: 14px;
+            font-size: 13px;
         }
 
-        /* MOBILE */
+        /* =========================
+           TABLET / MOBILE
+        ========================= */
 
         @media (max-width: 768px) {
 
+            .navbar {
+                padding: 13px 18px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .cart-link {
+                font-size: 14px;
+            }
+
+            .container {
+                margin: 20px auto;
+                padding: 0 12px;
+            }
+
             .product-box {
                 grid-template-columns: 1fr;
+                gap: 22px;
+                padding: 17px;
+                border-radius: 12px;
+            }
+
+            .image-section {
+                min-height: 330px;
+                height: 330px;
+            }
+
+            .main-image {
+                height: 330px;
             }
 
             .product-info h1 {
-                font-size: 27px;
+                font-size: 25px;
+                margin-bottom: 10px;
             }
 
-            .image-section,
-            .main-image {
-                height: 350px;
-
-                min-height: 350px;
+            .description {
+                font-size: 14px;
+                line-height: 1.5;
+                margin-bottom: 17px;
             }
 
+            .option-group {
+                margin-bottom: 17px;
+            }
+
+            .option-button {
+                padding: 8px 13px;
+                font-size: 13px;
+            }
+
+            .current-price {
+                font-size: 25px;
+            }
+
+            .original-price {
+                font-size: 15px;
+            }
+
+            .select-price {
+                font-size: 22px;
+            }
+
+            .quantity-box {
+                margin-top: 14px;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                margin-top: 20px;
+            }
+
+            .add-cart-btn,
+            .buy-now-btn {
+                padding: 12px 7px;
+                font-size: 14px;
+                border-radius: 8px;
+            }
         }
 
-    </style>
+        /* =========================
+           SMALL MOBILE
+        ========================= */
 
+        @media (max-width: 420px) {
+
+            .navbar {
+                padding: 12px 14px;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .cart-link {
+                font-size: 13px;
+            }
+
+            .container {
+                width: 100%;
+                margin: 14px auto;
+                padding: 0 9px;
+            }
+
+            .product-box {
+                padding: 13px;
+                gap: 18px;
+            }
+
+            .image-section {
+                height: 285px;
+                min-height: 285px;
+            }
+
+            .main-image {
+                height: 285px;
+            }
+
+            .product-info h1 {
+                font-size: 22px;
+            }
+
+            .description {
+                font-size: 13px;
+            }
+
+            .option-title {
+                font-size: 14px;
+            }
+
+            .option-button {
+                padding: 7px 11px;
+                font-size: 12px;
+            }
+
+            .price-box {
+                margin: 16px 0;
+            }
+
+            .current-price {
+                font-size: 23px;
+            }
+
+            .original-price {
+                font-size: 14px;
+            }
+
+            .discount-badge {
+                font-size: 11px;
+            }
+
+            .quantity-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .quantity-number {
+                min-width: 36px;
+            }
+
+            .add-cart-btn,
+            .buy-now-btn {
+                padding: 11px 4px;
+                font-size: 12px;
+            }
+        }
+
+        /* =========================
+           VERY SMALL MOBILE
+        ========================= */
+
+        @media (max-width: 340px) {
+
+            .add-cart-btn,
+            .buy-now-btn {
+                font-size: 11px;
+                padding: 10px 2px;
+            }
+
+            .action-buttons {
+                gap: 6px;
+            }
+
+            .product-box {
+                padding: 11px;
+            }
+        }
+    </style>
 </head>
 
 
 <body>
 
+    <!-- =========================
+         NAVBAR
+    ========================= -->
 
-<!-- NAVBAR -->
+    <nav class="navbar">
 
-<nav class="navbar">
-
-    <div class="logo">
-        TuviWear
-    </div>
-
-    <a
-        href="{% url 'cart' %}"
-        class="cart-link"
-    >
-        🛒 Cart
-    </a>
-
-</nav>
-
-
-<div class="container">
-
-    <div class="product-box">
-
-
-        <!-- PRODUCT IMAGE -->
-
-        <div class="image-section">
-
-            {% for image in product.images.all %}
-
-                {% if forloop.first %}
-
-                    <img
-                        src="{{ image.image.url }}"
-                        alt="{{ product.name }}"
-                        class="main-image"
-                    >
-
-                {% endif %}
-
-            {% empty %}
-
-                <div class="no-image">
-                    No Image Available
-                </div>
-
-            {% endfor %}
-
+        <div class="logo">
+            TuviWear
         </div>
 
+        <a
+            href="{% url 'cart' %}"
+            class="cart-link"
+        >
+            🛒 Cart
+        </a>
 
-        <!-- PRODUCT INFORMATION -->
-
-        <div class="product-info">
-
-            <h1>
-                {{ product.name }}
-            </h1>
-
-
-            {% if product.description %}
-
-                <div class="description">
-                    {{ product.description }}
-                </div>
-
-            {% endif %}
+    </nav>
 
 
-            <!--
-                VARIANT DATA
+    <!-- =========================
+         MAIN CONTAINER
+    ========================= -->
 
-                Each variant contains:
+    <div class="container">
 
-                ID
-                SIZE
-                COLOR
-                PRICE
-                STOCK
-                ADD TO CART URL
-            -->
+        <div class="product-box">
 
-            <div
-                id="variant-data"
-                style="display: none;"
-            >
+            <!-- =========================
+                 PRODUCT IMAGE
+            ========================= -->
 
-                {% for variant in variants %}
+            <div class="image-section">
 
-                    <span
-                        class="variant"
+                {% for image in product.images.all %}
 
-                        data-id="{{ variant.id }}"
+                    {% if forloop.first %}
 
-                        data-size="{{ variant.size.name }}"
+                        <img
+                            src="{{ image.image.url }}"
+                            alt="{{ product.name }}"
+                            class="main-image"
+                        >
 
-                        data-color="{{ variant.color.name }}"
+                    {% endif %}
 
-                        data-price="{{ variant.price }}"
+                {% empty %}
 
-                        data-stock="{{ variant.stock_quantity }}"
-
-                        data-url="{% url 'add_to_cart' variant.id %}"
-                    >
-                    </span>
+                    <div class="no-image">
+                        No Image Available
+                    </div>
 
                 {% endfor %}
 
             </div>
 
 
-            <!-- SIZE -->
+            <!-- =========================
+                 PRODUCT INFORMATION
+            ========================= -->
 
-            <div class="option-group">
+            <div class="product-info">
 
-                <span class="option-title">
-                    Size
-                </span>
+                <h1>
+                    {{ product.name }}
+                </h1>
+
+
+                {% if product.description %}
+
+                    <div class="description">
+                        {{ product.description }}
+                    </div>
+
+                {% endif %}
+
+
+                <!-- =========================
+                     VARIANT DATA
+                ========================= -->
 
                 <div
-                    class="options"
-                    id="size-options"
+                    id="variant-data"
+                    style="display: none;"
                 >
 
                     {% for variant in variants %}
 
-                        <button
-                            type="button"
-
-                            class="option-button size-option"
-
+                        <span
+                            class="variant"
+                            data-id="{{ variant.id }}"
                             data-size="{{ variant.size.name }}"
+                            data-color="{{ variant.color.name }}"
+                            data-price="{{ variant.price }}"
+                            data-stock="{{ variant.stock_quantity }}"
+                            data-url="{% url 'add_to_cart' variant.id %}"
+                            data-buy-url="{% url 'buy_now' variant.id %}"
                         >
-                            {{ variant.size.name }}
-                        </button>
+                        </span>
 
                     {% endfor %}
 
                 </div>
 
-            </div>
+
+                <!-- =========================
+                     SIZE
+                ========================= -->
+
+                <div class="option-group">
+
+                    <span class="option-title">
+                        Size
+                    </span>
+
+                    <div
+                        class="options"
+                        id="size-options"
+                    >
+
+                        {% for variant in variants %}
+
+                            <button
+                                type="button"
+                                class="option-button size-option"
+                                data-size="{{ variant.size.name }}"
+                            >
+                                {{ variant.size.name }}
+                            </button>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
 
 
-            <!-- COLOR -->
+                <!-- =========================
+                     COLOR
+                ========================= -->
 
-            <div class="option-group">
+                <div class="option-group">
 
-                <span class="option-title">
-                    Color
-                </span>
+                    <span class="option-title">
+                        Color
+                    </span>
+
+                    <div
+                        class="options"
+                        id="color-options"
+                    >
+
+                        {% for variant in variants %}
+
+                            <button
+                                type="button"
+                                class="option-button color-option"
+                                data-color="{{ variant.color.name }}"
+                            >
+                                {{ variant.color.name }}
+                            </button>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     PRICE
+                ========================= -->
 
                 <div
-                    class="options"
-                    id="color-options"
+                    class="price-box"
+                    id="price-box"
                 >
 
-                    {% for variant in variants %}
+                    <div
+                        class="select-price"
+                        id="price"
+                    >
+                        Select size and color
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     STOCK
+                ========================= -->
+
+                <div
+                    class="stock"
+                    id="stock"
+                >
+                    Please select size and color.
+                </div>
+
+
+                <!-- =========================
+                     QUANTITY
+                ========================= -->
+
+                <div
+                    class="quantity-box"
+                    id="quantity-box"
+                    style="display: none;"
+                >
+
+                    <label class="quantity-label">
+                        Quantity:
+                    </label>
+
+                    <div class="quantity-controls">
 
                         <button
                             type="button"
-
-                            class="option-button color-option"
-
-                            data-color="{{ variant.color.name }}"
+                            class="quantity-btn"
+                            id="decrease-quantity"
                         >
-                            {{ variant.color.name }}
+                            −
                         </button>
 
-                    {% endfor %}
+                        <span
+                            class="quantity-number"
+                            id="quantity-number"
+                        >
+                            1
+                        </span>
+
+                        <button
+                            type="button"
+                            class="quantity-btn"
+                            id="increase-quantity"
+                        >
+                            +
+                        </button>
+
+                    </div>
 
                 </div>
 
-            </div>
 
+                <!-- =========================
+                     ADD TO CART + BUY NOW
+                ========================= -->
 
-            <!-- PRICE -->
-
-            <div
-                class="price"
-                id="price"
-            >
-                Select size and color
-            </div>
-
-
-            <!-- STOCK -->
-
-            <div
-                class="stock"
-                id="stock"
-            >
-                Please select size and color.
-            </div>
-
-
-            <!-- QUANTITY -->
-
-            <div
-                class="quantity-box"
-                id="quantity-box"
-                style="display: none;"
-            >
-
-                <label
-                    for="quantity"
-                    class="quantity-label"
+                <form
+                    id="add-to-cart-form"
+                    method="POST"
+                    action=""
                 >
-                    Quantity:
-                </label>
 
-                <select
-                    id="quantity"
-                    class="quantity-select"
+                    {% csrf_token %}
+
+                    <input
+                        type="hidden"
+                        name="quantity"
+                        id="cart-quantity"
+                        value="1"
+                    >
+
+                    <div class="action-buttons">
+
+                        <button
+                            type="submit"
+                            id="add-cart-btn"
+                            class="add-cart-btn"
+                            disabled
+                        >
+                            🛒 Add to Cart
+                        </button>
+
+                        <button
+                            type="button"
+                            id="buy-now-btn"
+                            class="buy-now-btn"
+                            disabled
+                        >
+                            ⚡ Buy Now
+                        </button>
+
+                    </div>
+
+                </form>
+
+
+                <div
+                    id="message"
+                    class="message"
                 >
-                </select>
+                </div>
 
             </div>
-
-
-            <!-- ADD TO CART FORM -->
-
-            <form
-                id="add-to-cart-form"
-                method="POST"
-                action=""
-            >
-
-                {% csrf_token %}
-
-                <button
-                    type="submit"
-                    id="add-cart-btn"
-                    class="add-cart-btn"
-                    disabled
-                >
-                    Add to Cart
-                </button>
-
-            </form>
-
-
-            <div
-                id="message"
-                class="message"
-            >
-            </div>
-
 
         </div>
 
     </div>
 
-</div>
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        /*
+            GET ALL VARIANTS
+        */
+
+        const variants =
+            Array.from(
+                document.querySelectorAll(
+                    "#variant-data .variant"
+                )
+            );
 
 
-<script>
+        /*
+            ELEMENTS
+        */
 
-    /*
-        GET ALL VARIANTS
-    */
-
-    const variants =
-        Array.from(
+        const sizeButtons =
             document.querySelectorAll(
-                "#variant-data .variant"
-            )
-        );
-
-
-    /*
-        ELEMENTS
-    */
-
-    const sizeButtons =
-        document.querySelectorAll(
-            ".size-option"
-        );
-
-    const colorButtons =
-        document.querySelectorAll(
-            ".color-option"
-        );
-
-    const priceElement =
-        document.getElementById(
-            "price"
-        );
-
-    const stockElement =
-        document.getElementById(
-            "stock"
-        );
-
-    const quantityBox =
-        document.getElementById(
-            "quantity-box"
-        );
-
-    const quantitySelect =
-        document.getElementById(
-            "quantity"
-        );
-
-    const addCartForm =
-        document.getElementById(
-            "add-to-cart-form"
-        );
-
-    const addCartButton =
-        document.getElementById(
-            "add-cart-btn"
-        );
-
-    const messageElement =
-        document.getElementById(
-            "message"
-        );
-
-
-    /*
-        SELECTED OPTIONS
-    */
-
-    let selectedSize = null;
-
-    let selectedColor = null;
-
-
-    /*
-        REMOVE DUPLICATE SIZE BUTTONS
-    */
-
-    function removeDuplicateSizes() {
-
-        const seen = new Set();
-
-        document
-            .querySelectorAll(".size-option")
-            .forEach(button => {
-
-                const value =
-                    button.dataset.size;
-
-                if (seen.has(value)) {
-
-                    button.remove();
-
-                } else {
-
-                    seen.add(value);
-
-                }
-
-            });
-
-    }
-
-
-    /*
-        REMOVE DUPLICATE COLOR BUTTONS
-    */
-
-    function removeDuplicateColors() {
-
-        const seen = new Set();
-
-        document
-            .querySelectorAll(".color-option")
-            .forEach(button => {
-
-                const value =
-                    button.dataset.color;
-
-                if (seen.has(value)) {
-
-                    button.remove();
-
-                } else {
-
-                    seen.add(value);
-
-                }
-
-            });
-
-    }
-
-
-    removeDuplicateSizes();
-
-    removeDuplicateColors();
-
-
-    /*
-        FIND EXACT VARIANT
-    */
-
-    function findVariant() {
-
-        return variants.find(
-            variant => {
-
-                const variantSize =
-                    variant.dataset.size;
-
-                const variantColor =
-                    variant.dataset.color;
-
-                return (
-                    variantSize === selectedSize &&
-                    variantColor === selectedColor
-                );
-
-            }
-        );
-
-    }
-
-
-    /*
-        CLEAR QUANTITY
-    */
-
-    function clearQuantity() {
-
-        quantitySelect.innerHTML = "";
-
-        quantityBox.style.display =
-            "none";
-
-    }
-
-
-    /*
-        CREATE QUANTITY OPTIONS
-    */
-
-    function createQuantityOptions(stock) {
-
-        quantitySelect.innerHTML = "";
-
-        if (stock <= 0) {
-
-            quantityBox.style.display =
-                "none";
-
-            return;
-
-        }
-
-
-        for (
-            let i = 1;
-            i <= stock;
-            i++
-        ) {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-            option.value = i;
-
-            option.textContent = i;
-
-            quantitySelect.appendChild(
-                option
+                ".size-option"
             );
 
-        }
+        const colorButtons =
+            document.querySelectorAll(
+                ".color-option"
+            );
 
+        const priceElement =
+            document.getElementById(
+                "price"
+            );
 
-        quantityBox.style.display =
-            "flex";
+        const priceBox =
+            document.getElementById(
+                "price-box"
+            );
 
-    }
+        const stockElement =
+            document.getElementById(
+                "stock"
+            );
 
+        const quantityBox =
+            document.getElementById(
+                "quantity-box"
+            );
 
-    /*
-        UPDATE PRODUCT
-    */
+        const quantityNumber =
+            document.getElementById(
+                "quantity-number"
+            );
 
-    function updateProduct() {
+        const decreaseQuantity =
+            document.getElementById(
+                "decrease-quantity"
+            );
 
-        /*
-            Nothing selected
-        */
+        const increaseQuantity =
+            document.getElementById(
+                "increase-quantity"
+            );
 
-        if (
-            !selectedSize ||
-            !selectedColor
-        ) {
+        const cartQuantity =
+            document.getElementById(
+                "cart-quantity"
+            );
 
-            priceElement.innerText =
-                "Select size and color";
+        const addCartForm =
+            document.getElementById(
+                "add-to-cart-form"
+            );
 
-            stockElement.innerText =
-                "Please select size and color.";
+        const addCartButton =
+            document.getElementById(
+                "add-cart-btn"
+            );
 
-            stockElement.className =
-                "stock";
+        const buyNowButton =
+            document.getElementById(
+                "buy-now-btn"
+            );
 
-            addCartButton.disabled =
-                true;
-
-            addCartForm.action =
-                "";
-
-            clearQuantity();
-
-            return;
-
-        }
-
-
-        /*
-            Find exact variant
-        */
-
-        const variant =
-            findVariant();
-
-
-        /*
-            Combination does not exist
-        */
-
-        if (!variant) {
-
-            priceElement.innerText =
-                "Unavailable";
-
-            stockElement.innerText =
-                "This size and color combination is unavailable.";
-
-            stockElement.className =
-                "stock out";
-
-            addCartButton.disabled =
-                true;
-
-            addCartForm.action =
-                "";
-
-            clearQuantity();
-
-            return;
-
-        }
-
-
-        /*
-            PRICE
-        */
-
-        priceElement.innerText =
-            "₹" + variant.dataset.price;
-
-
-        /*
-            STOCK
-        */
-
-        const stock =
-            parseInt(
-                variant.dataset.stock,
-                10
+        const messageElement =
+            document.getElementById(
+                "message"
             );
 
 
         /*
-            OUT OF STOCK
+            SELECTED OPTIONS
         */
 
-        if (
-            isNaN(stock) ||
-            stock <= 0
-        ) {
-
-            stockElement.innerText =
-                "Out of Stock";
-
-            stockElement.className =
-                "stock out";
-
-            addCartButton.disabled =
-                true;
-
-            addCartForm.action =
-                "";
-
-            clearQuantity();
-
-            return;
-
-        }
+        let selectedSize = null;
+        let selectedColor = null;
+        let selectedVariant = null;
+        let selectedQuantity = 1;
 
 
         /*
-            AVAILABLE
+            REMOVE DUPLICATE SIZE BUTTONS
         */
 
-        stockElement.innerText =
-            "In Stock (" +
-            stock +
-            " available)";
+        function removeDuplicateSizes() {
 
-        stockElement.className =
-            "stock available";
-
-
-        /*
-            CREATE QUANTITY OPTIONS
-        */
-
-        createQuantityOptions(
-            stock
-        );
-
-
-        /*
-            CORRECT ADD TO CART URL
-        */
-
-        addCartForm.action =
-            variant.dataset.url;
-
-
-        /*
-            ENABLE BUTTON
-        */
-
-        addCartButton.disabled =
-            false;
-
-        messageElement.innerText =
-            "";
-
-    }
-
-
-    /*
-        SIZE CLICK
-    */
-
-    document.addEventListener(
-        "click",
-        function(event) {
-
-            const button =
-                event.target.closest(
-                    ".size-option"
-                );
-
-            if (!button) {
-                return;
-            }
-
-
-            selectedSize =
-                button.dataset.size;
-
-
-            /*
-                Remove old selection
-            */
+            const seen = new Set();
 
             document
-                .querySelectorAll(
-                    ".size-option"
-                )
-                .forEach(btn => {
+                .querySelectorAll(".size-option")
+                .forEach(button => {
 
-                    btn.classList.remove(
-                        "selected"
-                    );
+                    const value =
+                        button.dataset.size;
+
+                    if (seen.has(value)) {
+
+                        button.remove();
+
+                    } else {
+
+                        seen.add(value);
+
+                    }
 
                 });
 
-
-            /*
-                Select clicked size
-            */
-
-            button.classList.add(
-                "selected"
-            );
-
-
-            updateProduct();
-
         }
-    );
 
 
-    /*
-        COLOR CLICK
-    */
+        /*
+            REMOVE DUPLICATE COLOR BUTTONS
+        */
 
-    document.addEventListener(
-        "click",
-        function(event) {
+        function removeDuplicateColors() {
 
-            const button =
-                event.target.closest(
-                    ".color-option"
-                );
-
-            if (!button) {
-                return;
-            }
-
-
-            selectedColor =
-                button.dataset.color;
-
-
-            /*
-                Remove old selection
-            */
+            const seen = new Set();
 
             document
-                .querySelectorAll(
-                    ".color-option"
-                )
-                .forEach(btn => {
+                .querySelectorAll(".color-option")
+                .forEach(button => {
 
-                    btn.classList.remove(
-                        "selected"
-                    );
+                    const value =
+                        button.dataset.color;
+
+                    if (seen.has(value)) {
+
+                        button.remove();
+
+                    } else {
+
+                        seen.add(value);
+
+                    }
 
                 });
 
+        }
 
-            /*
-                Select clicked color
-            */
 
-            button.classList.add(
-                "selected"
+        removeDuplicateSizes();
+        removeDuplicateColors();
+
+
+        /*
+            FIND EXACT VARIANT
+        */
+
+        function findVariant() {
+
+            return variants.find(
+                variant => {
+
+                    return (
+                        variant.dataset.size === selectedSize &&
+                        variant.dataset.color === selectedColor
+                    );
+
+                }
             );
 
+        }
 
-            updateProduct();
+
+        /*
+            RESET QUANTITY
+        */
+
+        function resetQuantity() {
+
+            selectedQuantity = 1;
+
+            quantityNumber.innerText = "1";
+
+            cartQuantity.value = "1";
 
         }
-    );
 
 
-    /*
-        FORM SUBMIT
-    */
+        /*
+            UPDATE QUANTITY DISPLAY
+        */
 
-    addCartForm.addEventListener(
-        "submit",
-        function(event) {
+        function updateQuantityDisplay() {
+
+            quantityNumber.innerText =
+                selectedQuantity;
+
+            cartQuantity.value =
+                selectedQuantity;
+
+        }
+
+
+        /*
+            UPDATE QUANTITY LIMIT
+        */
+
+        function updateQuantityButtons(stock) {
+
+            decreaseQuantity.disabled =
+                selectedQuantity <= 1;
+
+            increaseQuantity.disabled =
+                selectedQuantity >= stock;
+
+        }
+
+
+        /*
+            UPDATE PRODUCT
+        */
+
+        function updateProduct() {
 
             /*
-                Validate variant
+                NOTHING SELECTED
+            */
+
+            if (
+                !selectedSize ||
+                !selectedColor
+            ) {
+
+                selectedVariant = null;
+
+                priceElement.innerText =
+                    "Select size and color";
+
+                priceBox.innerHTML = `
+                    <div
+                        class="select-price"
+                        id="price"
+                    >
+                        Select size and color
+                    </div>
+                `;
+
+                stockElement.innerText =
+                    "Please select size and color.";
+
+                stockElement.className =
+                    "stock";
+
+                quantityBox.style.display =
+                    "none";
+
+                addCartButton.disabled =
+                    true;
+
+                buyNowButton.disabled =
+                    true;
+
+                addCartForm.action =
+                    "";
+
+                resetQuantity();
+
+                return;
+
+            }
+
+
+            /*
+                FIND VARIANT
             */
 
             const variant =
                 findVariant();
 
 
-            if (
-                !variant ||
-                addCartButton.disabled
-            ) {
+            /*
+                INVALID COMBINATION
+            */
 
-                event.preventDefault();
+            if (!variant) {
 
-                messageElement.innerText =
-                    "Please select a valid size and color.";
+                selectedVariant = null;
+
+                priceElement.innerText =
+                    "Unavailable";
+
+                stockElement.innerText =
+                    "This size and color combination is unavailable.";
+
+                stockElement.className =
+                    "stock out";
+
+                quantityBox.style.display =
+                    "none";
+
+                addCartButton.disabled =
+                    true;
+
+                buyNowButton.disabled =
+                    true;
+
+                addCartForm.action =
+                    "";
+
+                resetQuantity();
 
                 return;
 
             }
 
 
+            selectedVariant = variant;
+
+
             /*
-                Validate quantity
+                STOCK
             */
-
-            const quantity =
-                parseInt(
-                    quantitySelect.value,
-                    10
-                );
-
 
             const stock =
                 parseInt(
@@ -1107,16 +1223,40 @@
                 );
 
 
+            /*
+                OUT OF STOCK
+            */
+
             if (
-                isNaN(quantity) ||
-                quantity < 1 ||
-                quantity > stock
+                isNaN(stock) ||
+                stock <= 0
             ) {
 
-                event.preventDefault();
+                priceBox.innerHTML = `
+                    <div class="select-price">
+                        ₹${variant.dataset.price}
+                    </div>
+                `;
 
-                messageElement.innerText =
-                    "Please select a valid quantity.";
+                stockElement.innerText =
+                    "Out of Stock";
+
+                stockElement.className =
+                    "stock out";
+
+                quantityBox.style.display =
+                    "none";
+
+                addCartButton.disabled =
+                    true;
+
+                buyNowButton.disabled =
+                    true;
+
+                addCartForm.action =
+                    "";
+
+                resetQuantity();
 
                 return;
 
@@ -1124,45 +1264,529 @@
 
 
             /*
-                SEND QUANTITY TO DJANGO
+                PRICE
             */
 
-            let hiddenQuantity =
-                addCartForm.querySelector(
-                    'input[name="quantity"]'
+            let currentPrice =
+                parseFloat(
+                    variant.dataset.price
                 );
 
 
-            if (!hiddenQuantity) {
-
-                hiddenQuantity =
-                    document.createElement(
-                        "input"
-                    );
-
-                hiddenQuantity.type =
-                    "hidden";
-
-                hiddenQuantity.name =
-                    "quantity";
-
-                addCartForm.appendChild(
-                    hiddenQuantity
+            let basePrice =
+                parseFloat(
+                    "{{ product.base_price|default:'0' }}"
                 );
+
+
+            let discountPrice =
+                parseFloat(
+                    "{{ product.discount_price|default:'0' }}"
+                );
+
+
+            let offerPrice =
+                currentPrice;
+
+
+            if (
+                !isNaN(discountPrice) &&
+                discountPrice > 0 &&
+                discountPrice < currentPrice
+            ) {
+
+                offerPrice =
+                    discountPrice;
 
             }
 
 
-            hiddenQuantity.value =
-                quantity;
+            let originalPrice =
+                basePrice;
+
+
+            if (
+                isNaN(originalPrice) ||
+                originalPrice <= offerPrice
+            ) {
+
+                originalPrice =
+                    currentPrice;
+
+            }
+
+
+            let discountPercentage = 0;
+
+
+            if (
+                originalPrice > offerPrice
+            ) {
+
+                discountPercentage =
+                    Math.round(
+                        (
+                            (
+                                originalPrice -
+                                offerPrice
+                            ) /
+                            originalPrice
+                        ) * 100
+                    );
+
+            }
+
+
+            if (
+                originalPrice > offerPrice
+            ) {
+
+                priceBox.innerHTML = `
+
+                    <div class="offer-label">
+                        OFFER PRICE
+                    </div>
+
+                    <div class="price-row">
+
+                        <span class="current-price">
+                            ₹${offerPrice.toFixed(2)}
+                        </span>
+
+                        <span class="original-price">
+                            ₹${originalPrice.toFixed(2)}
+                        </span>
+
+                        ${
+                            discountPercentage > 0
+                            ?
+                            `
+                            <span class="discount-badge">
+                                ${discountPercentage}% OFF
+                            </span>
+                            `
+                            :
+                            ""
+                        }
+
+                    </div>
+
+                `;
+
+            } else {
+
+                priceBox.innerHTML = `
+
+                    <div class="price-row">
+
+                        <span class="current-price">
+                            ₹${currentPrice.toFixed(2)}
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            /*
+                STOCK DISPLAY
+            */
+
+            stockElement.innerText =
+                "In Stock (" +
+                stock +
+                " available)";
+
+            stockElement.className =
+                "stock available";
+
+
+            /*
+                QUANTITY
+            */
+
+            resetQuantity();
+
+            quantityBox.style.display =
+                "flex";
+
+            updateQuantityButtons(stock);
+
+
+            /*
+                ADD TO CART URL
+            */
+
+            addCartForm.action =
+                variant.dataset.url;
+
+
+            /*
+                ENABLE BUTTONS
+            */
+
+            addCartButton.disabled =
+                false;
+
+            buyNowButton.disabled =
+                false;
+
+            messageElement.innerText =
+                "";
 
         }
-    );
 
-</script>
 
+        /*
+            SIZE CLICK
+        */
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+                const button =
+                    event.target.closest(
+                        ".size-option"
+                    );
+
+                if (!button) {
+                    return;
+                }
+
+
+                selectedSize =
+                    button.dataset.size;
+
+
+                document
+                    .querySelectorAll(
+                        ".size-option"
+                    )
+                    .forEach(btn => {
+
+                        btn.classList.remove(
+                            "selected"
+                        );
+
+                    });
+
+
+                button.classList.add(
+                    "selected"
+                );
+
+
+                updateProduct();
+
+            }
+        );
+
+
+        /*
+            COLOR CLICK
+        */
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+                const button =
+                    event.target.closest(
+                        ".color-option"
+                    );
+
+                if (!button) {
+                    return;
+                }
+
+
+                selectedColor =
+                    button.dataset.color;
+
+
+                document
+                    .querySelectorAll(
+                        ".color-option"
+                    )
+                    .forEach(btn => {
+
+                        btn.classList.remove(
+                            "selected"
+                        );
+
+                    });
+
+
+                button.classList.add(
+                    "selected"
+                );
+
+
+                updateProduct();
+
+            }
+        );
+
+
+        /*
+            DECREASE QUANTITY
+        */
+
+        decreaseQuantity.addEventListener(
+            "click",
+            function() {
+
+                if (!selectedVariant) {
+                    return;
+                }
+
+
+                if (selectedQuantity > 1) {
+
+                    selectedQuantity--;
+
+                    updateQuantityDisplay();
+
+                    updateQuantityButtons(
+                        parseInt(
+                            selectedVariant.dataset.stock,
+                            10
+                        )
+                    );
+
+                }
+
+            }
+        );
+
+
+        /*
+            INCREASE QUANTITY
+        */
+
+        increaseQuantity.addEventListener(
+            "click",
+            function() {
+
+                if (!selectedVariant) {
+                    return;
+                }
+
+
+                const stock =
+                    parseInt(
+                        selectedVariant.dataset.stock,
+                        10
+                    );
+
+
+                if (
+                    selectedQuantity < stock
+                ) {
+
+                    selectedQuantity++;
+
+                    updateQuantityDisplay();
+
+                    updateQuantityButtons(
+                        stock
+                    );
+
+                }
+
+            }
+        );
+
+
+        /*
+            ADD TO CART SUBMIT
+        */
+
+        addCartForm.addEventListener(
+            "submit",
+            function(event) {
+
+                if (
+                    !selectedVariant ||
+                    addCartButton.disabled
+                ) {
+
+                    event.preventDefault();
+
+                    messageElement.innerText =
+                        "Please select a valid size and color.";
+
+                    return;
+
+                }
+
+
+                const quantity =
+                    parseInt(
+                        cartQuantity.value,
+                        10
+                    );
+
+
+                const stock =
+                    parseInt(
+                        selectedVariant.dataset.stock,
+                        10
+                    );
+
+
+                if (
+                    isNaN(quantity) ||
+                    quantity < 1 ||
+                    quantity > stock
+                ) {
+
+                    event.preventDefault();
+
+                    messageElement.innerText =
+                        "Please select a valid quantity.";
+
+                    return;
+
+                }
+
+            }
+        );
+
+
+        /*
+            BUY NOW
+        */
+
+        buyNowButton.addEventListener(
+            "click",
+            function() {
+
+                if (
+                    !selectedVariant ||
+                    buyNowButton.disabled
+                ) {
+
+                    messageElement.innerText =
+                        "Please select a valid size and color.";
+
+                    return;
+
+                }
+
+
+                const quantity =
+                    parseInt(
+                        cartQuantity.value,
+                        10
+                    );
+
+
+                const stock =
+                    parseInt(
+                        selectedVariant.dataset.stock,
+                        10
+                    );
+
+
+                if (
+                    isNaN(quantity) ||
+                    quantity < 1 ||
+                    quantity > stock
+                ) {
+
+                    messageElement.innerText =
+                        "Please select a valid quantity.";
+
+                    return;
+
+                }
+
+
+                /*
+                    CREATE TEMPORARY BUY NOW FORM
+                    WITHOUT CHANGING NORMAL CART
+                */
+
+                const form =
+                    document.createElement(
+                        "form"
+                    );
+
+
+                form.method =
+                    "POST";
+
+
+                form.action =
+                    selectedVariant.dataset.buyUrl;
+
+
+                const csrfToken =
+                    addCartForm.querySelector(
+                        'input[name="csrfmiddlewaretoken"]'
+                    );
+
+
+                if (csrfToken) {
+
+                    const csrf =
+                        document.createElement(
+                            "input"
+                        );
+
+                    csrf.type =
+                        "hidden";
+
+                    csrf.name =
+                        "csrfmiddlewaretoken";
+
+                    csrf.value =
+                        csrfToken.value;
+
+                    form.appendChild(
+                        csrf
+                    );
+
+                }
+
+
+                const quantityInput =
+                    document.createElement(
+                        "input"
+                    );
+
+
+                quantityInput.type =
+                    "hidden";
+
+                quantityInput.name =
+                    "quantity";
+
+                quantityInput.value =
+                    quantity;
+
+
+                form.appendChild(
+                    quantityInput
+                );
+
+
+                document.body.appendChild(
+                    form
+                );
+
+
+                form.submit();
+
+            }
+        );
+
+    </script>
 
 </body>
 
 </html>
-

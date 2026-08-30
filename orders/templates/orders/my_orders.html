@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,159 +16,406 @@
             box-sizing: border-box;
         }
 
+        html,
         body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f6f6f6;
             color: #222;
         }
 
-        /* Navbar */
+        /* ================= NAVBAR ================= */
 
         .navbar {
+            width: 100%;
             background: #111;
             color: white;
-            padding: 20px 50px;
+
+            padding: 20px 6%;
 
             display: flex;
             justify-content: space-between;
             align-items: center;
+
+            gap: 20px;
         }
 
         .logo {
             font-size: 26px;
             font-weight: bold;
+            white-space: nowrap;
         }
 
         .nav-links {
             display: flex;
+            align-items: center;
             gap: 25px;
         }
 
         .nav-links a {
             color: white;
             text-decoration: none;
+
             font-size: 15px;
+            white-space: nowrap;
+
+            transition: 0.2s ease;
         }
 
         .nav-links a:hover {
-            color: #ccc;
+            opacity: 0.7;
         }
 
-        /* Container */
+        /* ================= MAIN ================= */
 
         .container {
-            width: 90%;
-            max-width: 1000px;
-            margin: 40px auto;
+            width: 92%;
+            max-width: 1050px;
+
+            margin: 38px auto 60px;
         }
 
-        h1 {
-            margin-bottom: 30px;
+        .page-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 25px;
         }
 
-        /* Order Card */
+        .page-heading h1 {
+            font-size: 34px;
+        }
+
+        .order-count {
+            background: white;
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            color: #555;
+            font-size: 13px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* ================= ORDER CARD ================= */
 
         .order-card {
             background: white;
-            padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 12px;
+
+            border-radius: 16px;
+
+            margin-bottom: 22px;
+
+            overflow: hidden;
+
+            border: 1px solid #eeeeee;
 
             box-shadow:
-                0 3px 12px rgba(0, 0, 0, 0.08);
+                0 5px 20px rgba(0, 0, 0, 0.07);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
         }
 
-        /* Order Header */
+        .order-card:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 9px 25px rgba(0, 0, 0, 0.09);
+        }
+
+        /* ================= ORDER HEADER ================= */
 
         .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 19px 22px;
 
-            padding-bottom: 18px;
-            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .order-left {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .order-icon {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #eef5ff;
+
+            border-radius: 50%;
+
+            font-size: 20px;
         }
 
         .order-id {
-            font-size: 21px;
+            font-size: 18px;
             font-weight: bold;
+        }
+
+        .order-date {
+            color: #777;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .order-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
         }
 
         .status {
-            padding: 7px 15px;
-            border-radius: 20px;
-            background: #eee;
+            padding: 7px 14px;
 
-            font-size: 14px;
+            border-radius: 20px;
+
+            background: #fff3df;
+            color: #a96700;
+
+            font-size: 12px;
+            font-weight: bold;
+
             text-transform: capitalize;
         }
 
-        /* Order Information */
-
-        .order-info {
-            margin-top: 20px;
-            line-height: 1.8;
-            color: #555;
+        .order-total-top {
+            font-size: 17px;
+            font-weight: bold;
         }
 
-        /* Products */
+        /* ================= ORDER BODY ================= */
 
-        .items-title {
-            margin-top: 25px;
-            margin-bottom: 12px;
-            font-size: 18px;
+        .order-body {
+            padding: 20px 22px;
+        }
+
+        .order-columns {
+            display: grid;
+
+            grid-template-columns: 0.75fr 1.25fr;
+
+            gap: 25px;
+        }
+
+        /* ================= CUSTOMER ================= */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .section-icon {
+            width: 29px;
+            height: 29px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            background: #f1f5ff;
+
+            font-size: 14px;
+        }
+
+        .customer-details {
+            color: #666;
+
+            font-size: 13px;
+            line-height: 1.8;
+
+            padding-left: 2px;
+        }
+
+        .customer-details strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        /* ================= ITEMS ================= */
+
+        .items-section {
+            border-left: 1px solid #eeeeee;
+            padding-left: 25px;
         }
 
         .item {
-            background: #f8f8f8;
-            padding: 15px;
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+
+            padding: 11px;
+
+            background: #fafafa;
+
+            border: 1px solid #eeeeee;
+
+            border-radius: 12px;
+
             margin-bottom: 10px;
-            border-radius: 8px;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        .item:hover {
+            background: #f5f5f5;
+        }
+
+        /* ================= PRODUCT IMAGE ================= */
+
+        .item-image-link {
+            flex-shrink: 0;
+
+            display: block;
+
+            text-decoration: none;
+        }
+
+        .item-image {
+            width: 72px;
+            height: 82px;
+
+            object-fit: cover;
+
+            background: #eeeeee;
+
+            border-radius: 9px;
+
+            border: 1px solid #e3e3e3;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .item-image-link:hover .item-image {
+            transform: scale(1.04);
+
+            box-shadow:
+                0 6px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .no-image {
+            width: 72px;
+            height: 82px;
+
+            flex-shrink: 0;
 
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: #eeeeee;
+
+            color: #888;
+
+            font-size: 11px;
+        }
+
+        .item-info {
+            flex: 1;
+            min-width: 0;
         }
 
         .item-name {
+            font-size: 14px;
             font-weight: bold;
+
+            margin-bottom: 6px;
         }
 
         .item-details {
             color: #666;
-            font-size: 14px;
-            margin-top: 5px;
+
+            font-size: 12px;
+
+            line-height: 1.7;
         }
 
         .item-price {
+            font-size: 14px;
             font-weight: bold;
+
+            white-space: nowrap;
         }
 
-        /* Total */
+        /* ================= TOTAL ================= */
 
-        .total {
-            margin-top: 20px;
-            padding-top: 15px;
+        .total-box {
+            margin-top: 18px;
 
-            border-top: 1px solid #eee;
+            padding: 13px 16px;
 
-            text-align: right;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-            font-size: 21px;
+            background: #f3f7ff;
+
+            border-radius: 10px;
+
+            color: #174ea6;
+
             font-weight: bold;
+            font-size: 14px;
         }
 
-        /* Empty */
+        .total-amount {
+            font-size: 17px;
+        }
+
+        /* ================= EMPTY ================= */
 
         .empty {
             background: white;
-            padding: 50px;
+
+            padding: 65px 25px;
+
             text-align: center;
 
-            border-radius: 12px;
+            border-radius: 16px;
+
+            border: 1px solid #eeeeee;
 
             box-shadow:
-                0 3px 12px rgba(0, 0, 0, 0.08);
+                0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .empty-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
         }
 
         .empty h2 {
@@ -178,52 +424,289 @@
 
         .empty p {
             color: #666;
+            font-size: 14px;
         }
 
         .shop-btn {
             display: inline-block;
 
-            margin-top: 20px;
+            margin-top: 22px;
 
             background: #111;
             color: white;
 
-            padding: 12px 22px;
+            padding: 12px 24px;
+
+            border-radius: 8px;
 
             text-decoration: none;
-            border-radius: 6px;
+
+            font-weight: bold;
+            font-size: 14px;
+
+            transition:
+                background 0.2s ease,
+                transform 0.15s ease;
         }
 
         .shop-btn:hover {
             background: #333;
         }
 
-        /* Mobile */
+        .shop-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            background: #111;
+            color: white;
+
+            padding: 38px 7% 22px;
+        }
+
+        .footer-content {
+            max-width: 1050px;
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns:
+                1.4fr
+                1fr
+                1fr
+                1fr;
+
+            gap: 35px;
+        }
+
+        .footer h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .footer p,
+        .footer a {
+            color: #bbb;
+            font-size: 13px;
+            line-height: 1.8;
+            text-decoration: none;
+        }
+
+        .footer a {
+            display: block;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        .copyright {
+            max-width: 1050px;
+            margin: 25px auto 0;
+
+            padding-top: 18px;
+
+            border-top: 1px solid #333;
+
+            text-align: center;
+
+            color: #888;
+
+            font-size: 12px;
+        }
+
+        /* ================= TABLET ================= */
+
+        @media (max-width: 850px) {
+
+            .order-columns {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .items-section {
+                border-left: none;
+
+                border-top: 1px solid #eeeeee;
+
+                padding-left: 0;
+                padding-top: 20px;
+            }
+
+        }
+
+        /* ================= MOBILE ================= */
 
         @media (max-width: 600px) {
 
             .navbar {
-                padding: 18px 20px;
+                padding: 16px 14px;
+            }
+
+            .logo {
+                font-size: 21px;
             }
 
             .nav-links {
-                gap: 12px;
+                gap: 10px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
             }
 
             .container {
                 width: 94%;
+                margin: 28px auto 45px;
+            }
+
+            .page-heading {
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .page-heading h1 {
+                font-size: 28px;
+            }
+
+            .order-count {
+                font-size: 11px;
+                padding: 7px 10px;
             }
 
             .order-header {
+                padding: 16px;
+            }
+
+            .order-left {
+                gap: 9px;
+            }
+
+            .order-icon {
+                width: 37px;
+                height: 37px;
+                font-size: 17px;
+            }
+
+            .order-id {
+                font-size: 15px;
+            }
+
+            .order-date {
+                font-size: 10px;
+            }
+
+            .order-right {
+                gap: 7px;
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
+                align-items: flex-end;
+            }
+
+            .status {
+                padding: 5px 10px;
+                font-size: 10px;
+            }
+
+            .order-total-top {
+                font-size: 13px;
+            }
+
+            .order-body {
+                padding: 17px 15px;
+            }
+
+            .customer-details {
+                font-size: 12px;
             }
 
             .item {
-                flex-direction: column;
-                align-items: flex-start;
+                padding: 9px;
                 gap: 10px;
+            }
+
+            .item-image,
+            .no-image {
+                width: 62px;
+                height: 72px;
+            }
+
+            .item-name {
+                font-size: 13px;
+            }
+
+            .item-details {
+                font-size: 11px;
+            }
+
+            .item-price {
+                font-size: 12px;
+            }
+
+            .total-box {
+                font-size: 13px;
+            }
+
+            .total-amount {
+                font-size: 15px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+                gap: 25px;
+            }
+
+        }
+
+        /* ================= SMALL MOBILE ================= */
+
+        @media (max-width: 380px) {
+
+            .navbar {
+                padding: 14px 10px;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .nav-links {
+                gap: 7px;
+            }
+
+            .nav-links a {
+                font-size: 10.5px;
+            }
+
+            .page-heading h1 {
+                font-size: 25px;
+            }
+
+            .order-header {
+                align-items: flex-start;
+            }
+
+            .order-right {
+                gap: 5px;
+            }
+
+            .item {
+                flex-wrap: wrap;
+            }
+
+            .item-info {
+                width: calc(100% - 78px);
+            }
+
+            .item-price {
+                width: 100%;
+                text-align: right;
+                padding-top: 2px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
             }
 
         }
@@ -236,7 +719,7 @@
 <body>
 
 
-    <!-- Navbar -->
+    <!-- ================= NAVBAR ================= -->
 
     <nav class="navbar">
 
@@ -244,18 +727,19 @@
             TuviWear
         </div>
 
+
         <div class="nav-links">
 
             <a href="{% url 'home' %}">
-                Home
+                🏠 Home
             </a>
 
             <a href="{% url 'cart' %}">
-                Cart 🛒
+                🛒 Cart
             </a>
 
             <a href="{% url 'my_orders' %}">
-                My Orders
+                📦 My Orders
             </a>
 
         </div>
@@ -263,13 +747,26 @@
     </nav>
 
 
-    <!-- Main Container -->
+    <!-- ================= MAIN ================= -->
 
-    <div class="container">
+    <main class="container">
 
-        <h1>
-            My Orders
-        </h1>
+
+        <div class="page-heading">
+
+            <h1>
+                My Orders
+            </h1>
+
+            {% if orders %}
+
+                <div class="order-count">
+                    {{ orders|length }} Order{{ orders|length|pluralize }}
+                </div>
+
+            {% endif %}
+
+        </div>
 
 
         {% if orders %}
@@ -278,152 +775,249 @@
             {% for order in orders %}
 
 
-                <!-- Order -->
+                <!-- ================= ORDER CARD ================= -->
 
                 <div class="order-card">
 
 
-                    <!-- Header -->
+                    <!-- ORDER HEADER -->
 
                     <div class="order-header">
 
-                        <div class="order-id">
 
-                            Order #{{ order.id }}
+                        <div class="order-left">
 
-                        </div>
-
-
-                        <div class="status">
-
-                            {{ order.status }}
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Customer Information -->
-
-                    <div class="order-info">
-
-                        <div>
-
-                            <strong>Name:</strong>
-
-                            {{ order.customer_name }}
-
-                        </div>
-
-
-                        <div>
-
-                            <strong>Phone:</strong>
-
-                            {{ order.phone }}
-
-                        </div>
-
-
-                        <div>
-
-                            <strong>Email:</strong>
-
-                            {{ order.email }}
-
-                        </div>
-
-
-                        <div>
-
-                            <strong>Address:</strong>
-
-                            {{ order.address }},
-                            {{ order.city }},
-                            {{ order.state }}
-                            -
-                            {{ order.pincode }}
-
-                        </div>
-
-
-                        <div>
-
-                            <strong>Ordered:</strong>
-
-                            {{ order.created_at|date:"d M Y, h:i A" }}
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- Products -->
-
-                    <h3 class="items-title">
-
-                        Ordered Items
-
-                    </h3>
-
-
-                    {% for item in order.items.all %}
-
-
-                        <div class="item">
+                            <div class="order-icon">
+                                🛍️
+                            </div>
 
 
                             <div>
 
-                                <div class="item-name">
-
-                                    {{ item.product_name }}
-
+                                <div class="order-id">
+                                    Order #{{ order.id }}
                                 </div>
 
 
-                                <div class="item-details">
+                                <div class="order-date">
 
-                                    Size:
-                                    {{ item.size }}
+                                    🗓️
 
-                                    &nbsp; | &nbsp;
-
-                                    Color:
-                                    {{ item.color }}
-
-                                    &nbsp; | &nbsp;
-
-                                    Quantity:
-                                    {{ item.quantity }}
+                                    {{ order.created_at|date:"d M Y, h:i A" }}
 
                                 </div>
 
                             </div>
-
-
-                            <div class="item-price">
-
-                                ₹{{ item.subtotal }}
-
-                            </div>
-
 
                         </div>
 
 
-                    {% endfor %}
+                        <div class="order-right">
 
+                            <div class="status">
+                                {{ order.status }}
+                            </div>
 
-                    <!-- Total -->
+                            <div class="order-total-top">
+                                ₹{{ order.total_amount|floatformat:2 }}
+                            </div>
 
-                    <div class="total">
-
-                        Total:
-                        ₹{{ order.total_amount }}
+                        </div>
 
                     </div>
 
+
+                    <!-- ORDER BODY -->
+
+                    <div class="order-body">
+
+
+                        <div class="order-columns">
+
+
+                            <!-- ================= CUSTOMER DETAILS ================= -->
+
+                            <div class="customer-section">
+
+
+                                <h3 class="section-title">
+
+                                    <span class="section-icon">
+                                        👤
+                                    </span>
+
+                                    Delivery Details
+
+                                </h3>
+
+
+                                <div class="customer-details">
+
+                                    <div>
+                                        <strong>Name:</strong>
+                                        {{ order.customer_name }}
+                                    </div>
+
+                                    <div>
+                                        <strong>Phone:</strong>
+                                        {{ order.phone }}
+                                    </div>
+
+                                    <div>
+                                        <strong>Email:</strong>
+                                        {{ order.email }}
+                                    </div>
+
+                                    <div>
+                                        <strong>Address:</strong>
+                                        {{ order.address }},
+                                        {{ order.city }},
+                                        {{ order.state }}
+                                        -
+                                        {{ order.pincode }}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ================= ORDERED ITEMS ================= -->
+
+                            <div class="items-section">
+
+
+                                <h3 class="section-title">
+
+                                    <span class="section-icon">
+                                        🛍️
+                                    </span>
+
+                                    Ordered Items
+
+                                </h3>
+
+
+                                {% for item in order.items.all %}
+
+
+                                    <div class="item">
+
+
+                                        {% with product=item.variant.product %}
+
+                                            {% with image=product.images.first %}
+
+
+                                                {% if image %}
+
+                                                    <a
+                                                        href="{% url 'product_detail' product.slug %}"
+                                                        class="item-image-link"
+                                                    >
+
+                                                        <img
+                                                            src="{{ image.image.url }}"
+                                                            alt="{{ product.name }}"
+                                                            class="item-image"
+                                                        >
+
+                                                    </a>
+
+                                                {% elif product.main_image %}
+
+                                                    <a
+                                                        href="{% url 'product_detail' product.slug %}"
+                                                        class="item-image-link"
+                                                    >
+
+                                                        <img
+                                                            src="{{ product.main_image.url }}"
+                                                            alt="{{ product.name }}"
+                                                            class="item-image"
+                                                        >
+
+                                                    </a>
+
+                                                {% else %}
+
+                                                    <div class="no-image">
+                                                        No Image
+                                                    </div>
+
+                                                {% endif %}
+
+
+                                            {% endwith %}
+
+                                        {% endwith %}
+
+
+                                        <div class="item-info">
+
+
+                                            <div class="item-name">
+
+                                                {{ item.product_name }}
+
+                                            </div>
+
+
+                                            <div class="item-details">
+
+                                                Size:
+                                                {{ item.size }}
+
+                                                &nbsp; | &nbsp;
+
+                                                Color:
+                                                {{ item.color }}
+
+                                                &nbsp; | &nbsp;
+
+                                                Quantity:
+                                                {{ item.quantity }}
+
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="item-price">
+
+                                            ₹{{ item.subtotal|floatformat:2 }}
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                {% endfor %}
+
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ================= TOTAL ================= -->
+
+                        <div class="total-box">
+
+                            <span>
+                                Total Amount
+                            </span>
+
+                            <span class="total-amount">
+                                ₹{{ order.total_amount|floatformat:2 }}
+                            </span>
+
+                        </div>
+
+
+                    </div>
 
                 </div>
 
@@ -434,9 +1028,13 @@
         {% else %}
 
 
-            <!-- No Orders -->
+            <!-- ================= EMPTY ================= -->
 
             <div class="empty">
+
+                <div class="empty-icon">
+                    📦
+                </div>
 
                 <h2>
                     No Orders Yet
@@ -460,10 +1058,119 @@
         {% endif %}
 
 
-    </div>
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+
+        <div class="footer-content">
+
+
+            <div>
+
+                <h3>
+                    TuviWear
+                </h3>
+
+                <p>
+                    Comfortable and stylish
+                    clothing for everyone.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Shop
+                </h3>
+
+                <a href="{% url 'home' %}">
+                    Men
+                </a>
+
+                <a href="{% url 'home' %}">
+                    Women
+                </a>
+
+                <a href="{% url 'home' %}">
+                    New Arrivals
+                </a>
+
+                <a href="{% url 'home' %}">
+                    Best Sellers
+                </a>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Customer Care
+                </h3>
+
+                <a href="#">
+                    Contact Us
+                </a>
+
+                <a href="#">
+                    FAQ
+                </a>
+
+                <a href="#">
+                    Shipping Policy
+                </a>
+
+                <a href="#">
+                    Return Policy
+                </a>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    About Us
+                </h3>
+
+                <a href="#">
+                    Our Story
+                </a>
+
+                <a href="#">
+                    Careers
+                </a>
+
+                <a href="#">
+                    Privacy Policy
+                </a>
+
+                <a href="#">
+                    Terms & Conditions
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="copyright">
+
+            © 2026 TuviWear. All Rights Reserved.
+
+        </div>
+
+
+    </footer>
 
 
 </body>
 
 </html>
-

@@ -1,9 +1,7 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta
@@ -13,574 +11,2065 @@
 
     <title>Checkout - TuviWear</title>
 
-
     <style>
 
+        /* =====================================================
+           RESET
+        ===================================================== */
+
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+        }
 
         body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f6f6f6;
-            color: #222;
+            width: 100%;
+            min-height: 100vh;
+            overflow-x: hidden;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fafc 0%,
+                    #f3f4f6 100%
+                );
+
+            color: #111827;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
         }
 
 
-        /* NAVBAR */
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
 
         .navbar {
-            background: #111;
-            color: white;
-            padding: 18px 7%;
+            width: 100%;
+            min-height: 64px;
+
+            background: #0b0b0b;
+            color: #ffffff;
 
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+
+            padding:
+                0
+                clamp(18px, 5vw, 60px);
+
+            gap: 20px;
+
+            position: relative;
+            z-index: 50;
+        }
+
+        .navbar-logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+
+            transition:
+                transform 0.25s ease,
+                opacity 0.25s ease;
+        }
+
+        .navbar-logo:hover {
+            transform: translateY(-1px);
+            opacity: 0.85;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 8px 4px;
+
+            transition:
+                color 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .nav-links a:hover {
+            color: #d1fae5;
+            transform: translateY(-2px);
         }
 
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .page {
+            width: min(1180px, calc(100% - 32px));
+
+            margin:
+                42px
+                auto
+                70px;
+        }
+
+        .page-title-wrap {
+            margin-bottom: 26px;
+        }
+
+        .page-title {
+            font-size: clamp(30px, 4vw, 40px);
+            font-weight: 800;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 10px;
+        }
+
+        .title-line {
+            width: 48px;
+            height: 4px;
+
+            border-radius: 999px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #10b981,
+                    #6366f1
+                );
         }
 
 
-        .back {
-            color: white;
-            text-decoration: none;
-            font-size: 15px;
-        }
+        /* =====================================================
+           MAIN GRID
+        ===================================================== */
 
-
-        /* CONTAINER */
-
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-
-        h1 {
-            margin-bottom: 30px;
-        }
-
-
-        .checkout-box {
+        .checkout-grid {
             display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 30px;
+
+            grid-template-columns:
+                minmax(300px, 0.85fr)
+                minmax(420px, 1.25fr);
+
+            gap: 22px;
+
+            align-items: start;
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
         }
 
 
-        /* BOX */
+        /* =====================================================
+           CARD
+        ===================================================== */
 
-        .box {
-            background: white;
-            padding: 25px;
+        .card {
+            background: rgba(255, 255, 255, 0.96);
 
-            border-radius: 14px;
+            border:
+                1px solid
+                rgba(15, 23, 42, 0.06);
+
+            border-radius: 16px;
+
+            padding: 20px;
 
             box-shadow:
-                0 5px 25px rgba(0, 0, 0, 0.08);
+                0 10px 35px
+                rgba(15, 23, 42, 0.07);
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 16px 42px
+                rgba(15, 23, 42, 0.10);
+
+            border-color:
+                rgba(16, 185, 129, 0.15);
         }
 
 
-        .box h2 {
-            margin-top: 0;
-            margin-bottom: 25px;
-        }
+        /* =====================================================
+           CARD HEADER
+        ===================================================== */
 
+        .card-header {
+            display: flex;
+            align-items: center;
 
-        /* FORM */
+            gap: 12px;
 
-        .form-group {
             margin-bottom: 18px;
         }
 
+        .header-icon {
+            width: 42px;
+            height: 42px;
 
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
+            flex: 0 0 42px;
 
+            border-radius: 11px;
 
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-
-            width: 100%;
-
-            padding: 12px;
-
-            border: 1px solid #ccc;
-
-            border-radius: 8px;
-
-            font-size: 15px;
-
-            font-family: inherit;
-        }
-
-
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-
-            outline: none;
-
-            border-color: #111;
-        }
-
-
-        /* ERRORS */
-
-        .error {
-            color: #d00;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-
-        .form-errors {
-            background: #ffeaea;
-            color: #c00;
-
-            padding: 12px;
-
-            border-radius: 8px;
-
-            margin-bottom: 20px;
-        }
-
-
-        /* ORDER ITEMS */
-
-        .order-item {
-
-            padding: 15px 0;
-
-            border-bottom: 1px solid #eee;
-        }
-
-
-        .order-item:last-child {
-            border-bottom: none;
-        }
-
-
-        .item-name {
-            font-weight: bold;
-            margin-bottom: 7px;
-        }
-
-
-        .item-details {
-            color: #666;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-
-        .item-total {
-
-            margin-top: 8px;
-
-            font-weight: bold;
-        }
-
-
-        /* TOTAL */
-
-        .total {
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #ecfdf5
+                );
 
             display: flex;
-
-            justify-content: space-between;
-
             align-items: center;
+            justify-content: center;
 
-            border-top: 2px solid #eee;
+            font-size: 21px;
 
-            margin-top: 20px;
+            box-shadow:
+                inset 0 0 0 1px
+                rgba(99, 102, 241, 0.08);
 
-            padding-top: 20px;
+            transition:
+                transform 0.3s ease;
+        }
 
-            font-size: 22px;
+        .card:hover .header-icon {
+            transform:
+                rotate(-4deg)
+                scale(1.05);
+        }
 
-            font-weight: bold;
+        .card-header h2 {
+            font-size: 17px;
+            font-weight: 800;
         }
 
 
-        /* BUTTON */
+        /* =====================================================
+           PRODUCT ITEM
+        ===================================================== */
 
-        .place-order {
+        .product-item {
+            display: flex;
+            align-items: center;
 
+            gap: 16px;
+
+            padding: 12px;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            border-radius: 12px;
+
+            background: #ffffff;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .product-item-spaced {
+            margin-bottom: 10px;
+        }
+
+        .product-item:hover {
+            transform: translateY(-2px);
+
+            border-color:
+                rgba(16, 185, 129, 0.35);
+
+            box-shadow:
+                0 8px 22px
+                rgba(15, 23, 42, 0.08);
+        }
+
+
+        /* =====================================================
+           PRODUCT LINK / IMAGE
+        ===================================================== */
+
+        .product-link {
+            display: block;
+
+            width: 84px;
+            height: 108px;
+
+            flex: 0 0 84px;
+
+            border-radius: 9px;
+
+            overflow: hidden;
+
+            background: #f3f4f6;
+
+            position: relative;
+
+            cursor: pointer;
+        }
+
+        .product-link::after {
+            content: "View";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            padding: 5px;
+
+            text-align: center;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            color: #ffffff;
+
+            background:
+                rgba(0, 0, 0, 0.68);
+
+            transform:
+                translateY(100%);
+
+            transition:
+                transform 0.25s ease;
+        }
+
+        .product-link:hover::after,
+        .product-link:focus-visible::after {
+            transform:
+                translateY(0);
+        }
+
+        .product-link img {
             width: 100%;
+            height: 100%;
 
-            border: none;
+            object-fit: cover;
 
-            background: #111;
+            display: block;
 
-            color: white;
+            transition:
+                transform 0.35s ease;
+        }
 
-            padding: 16px;
+        .product-link:hover img,
+        .product-link:focus-visible img {
+            transform: scale(1.06);
+        }
+
+        .no-image {
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #9ca3af;
+
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           PRODUCT INFO
+        ===================================================== */
+
+        .product-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 15px;
+            font-weight: 800;
+
+            line-height: 1.3;
+
+            margin-bottom: 7px;
+
+            word-break: break-word;
+        }
+
+        .product-meta {
+            color: #64748b;
+
+            font-size: 12px;
+
+            line-height: 1.65;
+        }
+
+        .product-price {
+            color: #059669;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            margin-top: 7px;
+        }
+
+
+        /* =====================================================
+           EMPTY ORDER
+        ===================================================== */
+
+        .empty-order {
+            text-align: center;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+
+            padding:
+                30px
+                10px;
+        }
+
+
+        /* =====================================================
+           SUMMARY
+        ===================================================== */
+
+        .summary {
+            margin-top: 20px;
+
+            border-top:
+                1px solid
+                #e5e7eb;
+
+            padding-top: 14px;
+        }
+
+        .summary-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            font-size: 13px;
+
+            margin-bottom: 11px;
+
+            color: #475569;
+        }
+
+        .summary-row span:last-child {
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .discount-row span:last-child {
+            color: #059669;
+        }
+
+        .total-row {
+            border-top:
+                1px dashed
+                #dbe3ea;
+
+            margin-top: 14px;
+
+            padding-top: 17px;
+
+            font-size: 17px;
+            font-weight: 800;
+
+            color: #111827;
+        }
+
+        .total-row span:last-child {
+            font-size: 18px;
+        }
+
+
+        /* =====================================================
+           SECURE CHECKOUT
+        ===================================================== */
+
+        .secure-card {
+            background:
+                linear-gradient(
+                    135deg,
+                    #f0fdf4,
+                    #ecfdf5
+                );
+
+            border:
+                1px solid
+                #d1fae5;
+        }
+
+        .secure-content {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+        }
+
+        .secure-icon {
+            width: 42px;
+            height: 42px;
+
+            flex: 0 0 42px;
+
+            border-radius: 50%;
+
+            background: #10b981;
+
+            color: #ffffff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 19px;
+
+            box-shadow:
+                0 5px 15px
+                rgba(16, 185, 129, 0.25);
+        }
+
+        .secure-text strong {
+            display: block;
+
+            color: #065f46;
+
+            font-size: 14px;
+
+            margin-bottom: 4px;
+        }
+
+        .secure-text span {
+            display: block;
+
+            color: #047857;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+        .secure-lock {
+            margin-left: auto;
+
+            font-size: 18px;
+
+            color: #047857;
+        }
+
+
+        /* =====================================================
+           DELIVERY CARD
+        ===================================================== */
+
+        .delivery-card {
+            padding: 22px;
+        }
+
+        .saved-message {
+            display: flex;
+            align-items: flex-start;
+
+            gap: 10px;
+
+            padding:
+                12px
+                14px;
+
+            margin-bottom: 21px;
 
             border-radius: 10px;
 
-            font-size: 17px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #f0fdf4,
+                    #ecfdf5
+                );
 
-            font-weight: bold;
+            border:
+                1px solid
+                #d1fae5;
+
+            color: #166534;
+
+            font-size: 12px;
+
+            line-height: 1.55;
+        }
+
+        .saved-check {
+            width: 20px;
+            height: 20px;
+
+            flex: 0 0 20px;
+
+            border-radius: 50%;
+
+            background: #10b981;
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+
+            font-size: 12px;
+            font-weight: 800;
+
+            margin-bottom: 7px;
+
+            color: #1f2937;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .field-icon {
+            position: absolute;
+
+            left: 13px;
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color: #64748b;
+
+            font-size: 15px;
+
+            pointer-events: none;
+
+            z-index: 2;
+        }
+
+        .field-icon.textarea-icon {
+            top: 17px;
+            transform: none;
+        }
+
+        .form-control {
+            width: 100%;
+
+            min-height: 46px;
+
+            border:
+                1px solid
+                #dbe3ea;
+
+            border-radius: 9px;
+
+            background: #ffffff;
+
+            color: #111827;
+
+            padding:
+                0
+                13px
+                0
+                41px;
+
+            outline: none;
+
+            font-size: 13px;
+
+            transition:
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                transform 0.2s ease;
+        }
+
+        textarea.form-control {
+            min-height: 82px;
+
+            resize: vertical;
+
+            padding:
+                12px
+                13px
+                12px
+                41px;
+        }
+
+        .form-control:hover {
+            border-color: #b8c4d0;
+        }
+
+        .form-control:focus {
+            border-color: #10b981;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(16, 185, 129, 0.10);
+        }
+
+        .form-control:read-only {
+            background: #f8fafc;
+            cursor: default;
+        }
+
+
+        /* =====================================================
+           TWO COLUMN FORM
+        ===================================================== */
+
+        .form-row {
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                1fr;
+
+            gap: 14px;
+        }
+
+
+        /* =====================================================
+           ERRORS
+        ===================================================== */
+
+        .field-error {
+            color: #dc2626;
+
+            font-size: 11px;
+
+            margin-top: 5px;
+        }
+
+        .non-field-errors {
+            margin-bottom: 16px;
+
+            padding:
+                11px
+                13px;
+
+            border-radius: 9px;
+
+            color: #991b1b;
+
+            background: #fef2f2;
+
+            border:
+                1px solid
+                #fecaca;
+
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           PAYMENT BUTTON
+        ===================================================== */
+
+        .payment-btn {
+            width: 100%;
+
+            min-height: 52px;
+
+            margin-top: 7px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0b0b0b,
+                    #171717
+                );
+
+            color: #ffffff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 11px;
+
+            font-size: 14px;
+            font-weight: 800;
 
             cursor: pointer;
 
-            margin-top: 25px;
+            position: relative;
 
-            transition: 0.2s;
+            overflow: hidden;
+
+            box-shadow:
+                0 9px 22px
+                rgba(0, 0, 0, 0.18);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .payment-btn::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            bottom: 0;
+
+            width: 55px;
+
+            left: -80px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,0.20),
+                    transparent
+                );
+
+            transform: skewX(-20deg);
+
+            transition:
+                left 0.6s ease;
+        }
+
+        .payment-btn:hover::before {
+            left: calc(100% + 40px);
+        }
+
+        .payment-btn:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 30px
+                rgba(0, 0, 0, 0.23);
+        }
+
+        .payment-btn:active {
+            transform: scale(0.985);
+        }
+
+        .payment-icon {
+            font-size: 17px;
+        }
+
+        .payment-arrow {
+            font-size: 20px;
+
+            transition:
+                transform 0.25s ease;
+        }
+
+        .payment-btn:hover .payment-arrow {
+            transform:
+                translateX(4px);
+        }
+
+        .payment-note {
+            text-align: center;
+
+            margin-top: 12px;
+
+            color: #64748b;
+
+            font-size: 11px;
         }
 
 
-        .place-order:hover {
-            background: #333;
+        /* =====================================================
+           TOUCH EFFECT
+        ===================================================== */
+
+        .touch-active {
+            transform:
+                scale(0.985) !important;
+
+            transition:
+                transform 0.12s ease !important;
         }
 
 
-        /* MOBILE */
+        /* =====================================================
+           TABLET
+        ===================================================== */
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
 
-            .checkout-box {
+            .checkout-grid {
                 grid-template-columns: 1fr;
             }
 
+            .left-column {
+                order: 2;
+            }
+
+            .delivery-card {
+                order: 1;
+            }
+
+            .page {
+                width:
+                    min(
+                        720px,
+                        calc(100% - 28px)
+                    );
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+           Home / Cart / My Orders remain visible
+        ===================================================== */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                min-height: 58px;
+
+                padding:
+                    0
+                    15px;
+
+                gap: 10px;
+            }
+
+            .navbar-logo {
+                font-size: 19px;
+            }
+
+            .nav-links {
+                display: flex;
+
+                gap: 8px;
+
+                margin-left: auto;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+
+                gap: 3px;
+
+                padding:
+                    7px
+                    2px;
+
+                white-space: nowrap;
+            }
+
+            .page {
+                width:
+                    calc(100% - 20px);
+
+                margin:
+                    22px
+                    auto
+                    40px;
+            }
+
+            .page-title-wrap {
+                margin-bottom: 18px;
+            }
+
+            .page-title {
+                font-size: 27px;
+            }
+
+            .checkout-grid {
+                display: flex;
+
+                flex-direction: column;
+
+                gap: 13px;
+            }
+
+            .left-column,
+            .delivery-card {
+                width: 100%;
+            }
+
+            .card {
+                padding: 15px;
+
+                border-radius: 13px;
+            }
+
+            .delivery-card {
+                padding: 16px;
+            }
+
+            .card-header {
+                margin-bottom: 15px;
+            }
+
+            .header-icon {
+                width: 38px;
+                height: 38px;
+
+                flex-basis: 38px;
+
+                font-size: 18px;
+            }
+
+            .card-header h2 {
+                font-size: 16px;
+            }
+
+            .product-item {
+                gap: 11px;
+
+                padding: 9px;
+            }
+
+            .product-link {
+                width: 72px;
+                height: 92px;
+
+                flex-basis: 72px;
+            }
+
+            .product-name {
+                font-size: 13px;
+            }
+
+            .product-meta {
+                font-size: 11px;
+            }
+
+            .product-price {
+                font-size: 13px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+
+                gap: 0;
+            }
+
+            .form-group {
+                margin-bottom: 14px;
+            }
+
+            .form-control {
+                min-height: 44px;
+
+                font-size: 13px;
+            }
+
+            textarea.form-control {
+                min-height: 78px;
+            }
+
+            .saved-message {
+                padding:
+                    10px
+                    11px;
+
+                font-size: 11px;
+            }
+
+            .payment-btn {
+                min-height: 50px;
+            }
+        }
+
+
+        /* =====================================================
+           VERY SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 380px) {
+
+            .navbar {
+                padding:
+                    0
+                    10px;
+            }
+
+            .navbar-logo {
+                font-size: 17px;
+            }
+
+            .nav-links {
+                gap: 5px;
+            }
+
+            .nav-links a {
+                font-size: 10px;
+            }
+
+            .page {
+                width:
+                    calc(100% - 14px);
+
+                margin-top: 17px;
+            }
+
+            .card {
+                padding: 12px;
+            }
+
+            .delivery-card {
+                padding: 13px;
+            }
+
+            .product-link {
+                width: 64px;
+                height: 82px;
+
+                flex-basis: 64px;
+            }
+
+            .product-item {
+                gap: 9px;
+            }
+
+            .product-name {
+                font-size: 12px;
+            }
+
+            .product-meta {
+                font-size: 10px;
+            }
+
+            .summary-row {
+                font-size: 12px;
+            }
+        }
+
+
+        /* =====================================================
+           REDUCED MOTION
+        ===================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+
+                transition: none !important;
+
+                animation: none !important;
+            }
         }
 
     </style>
-
 </head>
 
 
 <body>
 
 
-<!-- NAVBAR -->
+    <!-- =====================================================
+         NAVBAR
+    ===================================================== -->
 
-<nav class="navbar">
+    <nav class="navbar">
 
-    <div class="logo">
-        TuviWear
-    </div>
+        <a
+            href="{% url 'home' %}"
+            class="navbar-logo"
+        >
+            TuviWear
+        </a>
 
 
-    <a
-        href="{% url 'cart' %}"
-        class="back"
-    >
-        ← Back to Cart
-    </a>
+        <div class="nav-links">
 
-</nav>
+            <a href="{% url 'home' %}">
+                🏠 Home
+            </a>
 
+            <a href="{% url 'cart' %}">
+                🛒 Cart
+            </a>
 
+            <a href="{% url 'my_orders' %}">
+                📦 My Orders
+            </a>
 
-<div class="container">
+        </div>
 
+    </nav>
 
-    <h1>
-        Checkout
-    </h1>
 
+    <!-- =====================================================
+         PAGE
+    ===================================================== -->
 
-    <div class="checkout-box">
+    <main class="page">
 
 
-        <!-- CUSTOMER INFORMATION -->
+        <div class="page-title-wrap">
 
-        <div class="box">
+            <h1 class="page-title">
+                Checkout
+            </h1>
 
-            <h2>
-                Delivery Information
-            </h2>
-
-
-            <form
-                method="POST"
-            >
-
-                {% csrf_token %}
-
-
-                {% if form.non_field_errors %}
-
-                    <div class="form-errors">
-
-                        {{ form.non_field_errors }}
-
-                    </div>
-
-                {% endif %}
-
-
-
-                <!-- FULL NAME -->
-
-                <div class="form-group">
-
-                    <label>
-                        Full Name
-                    </label>
-
-                    {{ form.full_name }}
-
-                    {% for error in form.full_name.errors %}
-
-                        <div class="error">
-                            {{ error }}
-                        </div>
-
-                    {% endfor %}
-
-                </div>
-
-
-
-                <!-- EMAIL -->
-
-                <div class="form-group">
-
-                    <label>
-                        Email
-                    </label>
-
-                    {{ form.email }}
-
-                    {% for error in form.email.errors %}
-
-                        <div class="error">
-                            {{ error }}
-                        </div>
-
-                    {% endfor %}
-
-                </div>
-
-
-
-                <!-- PHONE -->
-
-                <div class="form-group">
-
-                    <label>
-                        Phone Number
-                    </label>
-
-                    {{ form.phone }}
-
-                    {% for error in form.phone.errors %}
-
-                        <div class="error">
-                            {{ error }}
-                        </div>
-
-                    {% endfor %}
-
-                </div>
-
-
-
-                <!-- ADDRESS -->
-
-                <div class="form-group">
-
-                    <label>
-                        Address
-                    </label>
-
-                    {{ form.address }}
-
-                    {% for error in form.address.errors %}
-
-                        <div class="error">
-                            {{ error }}
-                        </div>
-
-                    {% endfor %}
-
-                </div>
-
-
-
-                <!-- CITY -->
-
-                <div class="form-group">
-
-                    <label>
-                        City
-                    </label>
-
-                    {{ form.city }}
-
-                    {% for error in form.city.errors %}
-
-                        <div class="error">
-                            {{ error }}
-                        </div>
-
-                    {% endfor %}
-
-                </div>
-
-
-
-                <!-- STATE -->
-
-                <div class="form-group">
-
-                    <label>
-                        State
-                    </label>
-
-                    {{ form.state }}
-
-                    {% for error in form.state.errors %}
-
-                        <div class="error">
-                            {{ error }}
-                        </div>
-
-                    {% endfor %}
-
-                </div>
-
-
-
-                <!-- PINCODE -->
-
-                <div class="form-group">
-
-                    <label>
-                        Pincode
-                    </label>
-
-                    {{ form.pincode }}
-
-                    {% for error in form.pincode.errors %}
-
-                        <div class="error">
-                            {{ error }}
-                        </div>
-
-                    {% endfor %}
-
-                </div>
-
-
-
-                <button
-                    type="submit"
-                    class="place-order"
-                >
-                    Place Order
-                </button>
-
-
-            </form>
+            <div class="title-line"></div>
 
         </div>
 
 
+        <!-- =================================================
+             MAIN GRID
+        ================================================= -->
 
-        <!-- ORDER SUMMARY -->
-
-        <div class="box">
-
-            <h2>
-                Order Summary
-            </h2>
+        <div class="checkout-grid">
 
 
-            {% for item in items %}
+            <!-- =================================================
+                 LEFT COLUMN
+            ================================================= -->
 
-                <div class="order-item">
-
-
-                    <div class="item-name">
-
-                        {{ item.variant.product.name }}
-
-                    </div>
+            <div class="left-column">
 
 
-                    <div class="item-details">
+                <!-- =================================================
+                     ORDER SUMMARY
+                ================================================= -->
 
-                        Size:
-                        {{ item.variant.size.name }}
+                <section class="card">
 
-                        <br>
+                    <div class="card-header">
 
-                        Color:
-                        {{ item.variant.color.name }}
+                        <div class="header-icon">
+                            🛍️
+                        </div>
 
-                        <br>
-
-                        Quantity:
-                        {{ item.quantity }}
-
-                        <br>
-
-                        Price:
-                        ₹{{ item.variant.price }}
+                        <h2>
+                            Order Summary
+                        </h2>
 
                     </div>
 
 
-                    <div class="item-total">
+                    {% if buy_now_variant %}
 
-                        ₹{% widthratio item.variant.price 1 item.quantity %}
+                        <div class="product-item">
+
+                            <a
+                                href="{% url 'product_detail' buy_now_variant.product.slug %}"
+                                class="product-link"
+                                aria-label="View {{ buy_now_variant.product.name }}"
+                            >
+
+                                {% with buy_now_variant.product.images.all|first as product_image %}
+
+                                    {% if product_image %}
+
+                                        <img
+                                            src="{{ product_image.image.url }}"
+                                            alt="{{ product_image.alt_text|default:buy_now_variant.product.name }}"
+                                        >
+
+                                    {% else %}
+
+                                        <span class="no-image">
+                                            No Image
+                                        </span>
+
+                                    {% endif %}
+
+                                {% endwith %}
+
+                            </a>
+
+
+                            <div class="product-info">
+
+                                <div class="product-name">
+                                    {{ buy_now_variant.product.name }}
+                                </div>
+
+
+                                <div class="product-meta">
+
+                                    {% if buy_now_variant.size %}
+
+                                        Size:
+                                        {{ buy_now_variant.size.name }}
+
+                                    {% endif %}
+
+
+                                    {% if buy_now_variant.size and buy_now_variant.color %}
+
+                                        &nbsp; | &nbsp;
+
+                                    {% endif %}
+
+
+                                    {% if buy_now_variant.color %}
+
+                                        Color:
+                                        {{ buy_now_variant.color.name }}
+
+                                    {% endif %}
+
+
+                                    <br>
+
+                                    Quantity:
+                                    {{ buy_now_quantity }}
+
+                                </div>
+
+
+                                <div class="product-price">
+                                    ₹{{ buy_now_variant.price|floatformat:2 }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    {% elif items %}
+
+
+                        {% for item in items %}
+
+                            <div
+                                class="product-item{% if not forloop.last %} product-item-spaced{% endif %}"
+                            >
+
+                                <a
+                                    href="{% url 'product_detail' item.variant.product.slug %}"
+                                    class="product-link"
+                                    aria-label="View {{ item.variant.product.name }}"
+                                >
+
+                                    {% with item.variant.product.images.all|first as product_image %}
+
+                                        {% if product_image %}
+
+                                            <img
+                                                src="{{ product_image.image.url }}"
+                                                alt="{{ product_image.alt_text|default:item.variant.product.name }}"
+                                            >
+
+                                        {% else %}
+
+                                            <span class="no-image">
+                                                No Image
+                                            </span>
+
+                                        {% endif %}
+
+                                    {% endwith %}
+
+                                </a>
+
+
+                                <div class="product-info">
+
+                                    <div class="product-name">
+                                        {{ item.variant.product.name }}
+                                    </div>
+
+
+                                    <div class="product-meta">
+
+                                        {% if item.variant.size %}
+
+                                            Size:
+                                            {{ item.variant.size.name }}
+
+                                        {% endif %}
+
+
+                                        {% if item.variant.size and item.variant.color %}
+
+                                            &nbsp; | &nbsp;
+
+                                        {% endif %}
+
+
+                                        {% if item.variant.color %}
+
+                                            Color:
+                                            {{ item.variant.color.name }}
+
+                                        {% endif %}
+
+
+                                        <br>
+
+                                        Quantity:
+                                        {{ item.quantity }}
+
+                                    </div>
+
+
+                                    <div class="product-price">
+                                        ₹{{ item.variant.price|floatformat:2 }}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+
+                    {% else %}
+
+                        <div class="empty-order">
+                            No items in your order.
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- =================================================
+                         SUMMARY
+                    ================================================= -->
+
+                    <div class="summary">
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <span>
+                                ₹{{ total|floatformat:2 }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Shipping
+                            </span>
+
+                            <span>
+                                ₹0.00
+                            </span>
+
+                        </div>
+
+
+                        <div class="summary-row discount-row">
+
+                            <span>
+                                Discount
+                            </span>
+
+                            <span>
+                                ₹0.00
+                            </span>
+
+                        </div>
+
+
+                        <div class="summary-row total-row">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <span>
+                                ₹{{ total|floatformat:2 }}
+                            </span>
+
+                        </div>
+
 
                     </div>
 
-
-                </div>
-
-            {% endfor %}
+                </section>
 
 
+                <!-- =================================================
+                     SECURE CHECKOUT
+                ================================================= -->
 
-            <div class="total">
+                <section class="card secure-card">
 
-                <span>
-                    Total
-                </span>
+                    <div class="secure-content">
+
+                        <div class="secure-icon">
+                            ✓
+                        </div>
 
 
-                <span>
-                    ₹{{ total }}
-                </span>
+                        <div class="secure-text">
+
+                            <strong>
+                                Secure Checkout
+                            </strong>
+
+                            <span>
+                                Your information is protected
+                                with industry-leading security.
+                            </span>
+
+                        </div>
+
+
+                        <div class="secure-lock">
+                            🔒
+                        </div>
+
+                    </div>
+
+                </section>
 
             </div>
 
 
+            <!-- =================================================
+                 DELIVERY DETAILS
+            ================================================= -->
+
+            <section class="card delivery-card">
+
+
+                <div class="card-header">
+
+                    <div class="header-icon">
+                        📍
+                    </div>
+
+                    <h2>
+                        Delivery Details
+                    </h2>
+
+                </div>
+
+
+                <div class="saved-message">
+
+                    <div class="saved-check">
+                        ✓
+                    </div>
+
+                    <div>
+                        Your delivery details are saved from
+                        your TuviWear account and have been
+                        filled automatically.
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     FORM
+                ================================================= -->
+
+                <form
+                    method="POST"
+                    action=""
+                >
+
+                    {% csrf_token %}
+
+
+                    {% if form.non_field_errors %}
+
+                        <div class="non-field-errors">
+                            {{ form.non_field_errors }}
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- FULL NAME -->
+
+                    <div class="form-group">
+
+                        <label
+                            class="form-label"
+                            for="{{ form.full_name.id_for_label }}"
+                        >
+                            Full Name
+                        </label>
+
+
+                        <div class="input-wrap">
+
+                            <span class="field-icon">
+                                👤
+                            </span>
+
+
+                            <input
+                                type="text"
+                                name="full_name"
+                                id="{{ form.full_name.id_for_label }}"
+                                class="form-control"
+                                maxlength="100"
+                                value="{{ form.full_name.value|default_if_none:'' }}"
+                                placeholder="Enter your full name"
+                                required
+                            >
+
+                        </div>
+
+
+                        {% for error in form.full_name.errors %}
+
+                            <div class="field-error">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label
+                            class="form-label"
+                            for="{{ form.email.id_for_label }}"
+                        >
+                            Email
+                        </label>
+
+
+                        <div class="input-wrap">
+
+                            <span class="field-icon">
+                                ✉
+                            </span>
+
+
+                            <input
+                                type="email"
+                                name="email"
+                                id="{{ form.email.id_for_label }}"
+                                class="form-control"
+                                value="{{ form.email.value|default_if_none:'' }}"
+                                placeholder="Enter your email"
+                                required
+                            >
+
+                        </div>
+
+
+                        {% for error in form.email.errors %}
+
+                            <div class="field-error">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label
+                            class="form-label"
+                            for="{{ form.phone.id_for_label }}"
+                        >
+                            Phone Number
+                        </label>
+
+
+                        <div class="input-wrap">
+
+                            <span class="field-icon">
+                                ☎
+                            </span>
+
+
+                            <input
+                                type="text"
+                                name="phone"
+                                id="{{ form.phone.id_for_label }}"
+                                class="form-control"
+                                maxlength="15"
+                                value="{{ form.phone.value|default_if_none:'' }}"
+                                placeholder="Enter your phone number"
+                                required
+                            >
+
+                        </div>
+
+
+                        {% for error in form.phone.errors %}
+
+                            <div class="field-error">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- ADDRESS -->
+
+                    <div class="form-group">
+
+                        <label
+                            class="form-label"
+                            for="{{ form.address.id_for_label }}"
+                        >
+                            Delivery Address
+                        </label>
+
+
+                        <div class="input-wrap">
+
+                            <span class="field-icon textarea-icon">
+                                🏠
+                            </span>
+
+
+                            <textarea
+                                name="address"
+                                id="{{ form.address.id_for_label }}"
+                                class="form-control"
+                                placeholder="Enter your full address"
+                                rows="3"
+                                required
+                            >{{ form.address.value|default_if_none:'' }}</textarea>
+
+                        </div>
+
+
+                        {% for error in form.address.errors %}
+
+                            <div class="field-error">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- CITY + STATE -->
+
+                    <div class="form-row">
+
+
+                        <!-- CITY -->
+
+                        <div class="form-group">
+
+                            <label
+                                class="form-label"
+                                for="{{ form.city.id_for_label }}"
+                            >
+                                City
+                            </label>
+
+
+                            <div class="input-wrap">
+
+                                <span class="field-icon">
+                                    🏙️
+                                </span>
+
+
+                                <input
+                                    type="text"
+                                    name="city"
+                                    id="{{ form.city.id_for_label }}"
+                                    class="form-control"
+                                    maxlength="100"
+                                    value="{{ form.city.value|default_if_none:'' }}"
+                                    placeholder="Enter your city"
+                                    required
+                                >
+
+                            </div>
+
+
+                            {% for error in form.city.errors %}
+
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- STATE -->
+
+                        <div class="form-group">
+
+                            <label
+                                class="form-label"
+                                for="{{ form.state.id_for_label }}"
+                            >
+                                State
+                            </label>
+
+
+                            <div class="input-wrap">
+
+                                <span class="field-icon">
+                                    🚩
+                                </span>
+
+
+                                <input
+                                    type="text"
+                                    name="state"
+                                    id="{{ form.state.id_for_label }}"
+                                    class="form-control"
+                                    maxlength="100"
+                                    value="{{ form.state.value|default_if_none:'' }}"
+                                    placeholder="Enter your state"
+                                    required
+                                >
+
+                            </div>
+
+
+                            {% for error in form.state.errors %}
+
+                                <div class="field-error">
+                                    {{ error }}
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PIN -->
+
+                    <div class="form-group">
+
+                        <label
+                            class="form-label"
+                            for="{{ form.pincode.id_for_label }}"
+                        >
+                            PIN Code
+                        </label>
+
+
+                        <div class="input-wrap">
+
+                            <span class="field-icon">
+                                🛡️
+                            </span>
+
+
+                            <input
+                                type="text"
+                                name="pincode"
+                                id="{{ form.pincode.id_for_label }}"
+                                class="form-control"
+                                maxlength="10"
+                                value="{{ form.pincode.value|default_if_none:'' }}"
+                                placeholder="Enter your PIN code"
+                                required
+                            >
+
+                        </div>
+
+
+                        {% for error in form.pincode.errors %}
+
+                            <div class="field-error">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- =================================================
+                         PROCEED TO PAYMENT
+                    ================================================= -->
+
+                    <button
+                        type="submit"
+                        class="payment-btn touch-target"
+                    >
+
+                        <span class="payment-icon">
+                            🔒
+                        </span>
+
+                        <span>
+                            Proceed to Payment
+                        </span>
+
+                        <span class="payment-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                    <div class="payment-note">
+                        🛡️ You will be able to review your
+                        order before payment
+                    </div>
+
+                </form>
+
+            </section>
+
         </div>
 
+    </main>
 
-    </div>
+
+    <!-- =====================================================
+         TOUCH EFFECT
+    ===================================================== -->
+
+    <script>
+
+        (function () {
+
+            const elements =
+                document.querySelectorAll(
+                    ".card, .product-item, .payment-btn"
+                );
 
 
-</div>
+            elements.forEach(function (element) {
+
+
+                element.addEventListener(
+                    "touchstart",
+                    function () {
+
+                        element.classList.add(
+                            "touch-active"
+                        );
+
+                    },
+                    {
+                        passive: true
+                    }
+                );
+
+
+                element.addEventListener(
+                    "touchend",
+                    function () {
+
+                        setTimeout(
+                            function () {
+
+                                element.classList.remove(
+                                    "touch-active"
+                                );
+
+                            },
+                            120
+                        );
+
+                    },
+                    {
+                        passive: true
+                    }
+                );
+
+
+                element.addEventListener(
+                    "touchcancel",
+                    function () {
+
+                        element.classList.remove(
+                            "touch-active"
+                        );
+
+                    },
+                    {
+                        passive: true
+                    }
+                );
+
+            });
+
+        })();
+
+    </script>
 
 
 </body>
 
 </html>
-

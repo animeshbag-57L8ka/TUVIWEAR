@@ -18,7 +18,9 @@ def register(request):
 
         if form.is_valid():
 
-            user = form.save(commit=False)
+            user = form.save(
+                commit=False
+            )
 
             user.set_password(
                 form.cleaned_data['password']
@@ -26,13 +28,53 @@ def register(request):
 
             user.save()
 
+            # =====================================================
+            # CREATE PROFILE
+            # =====================================================
+
             Profile.objects.create(
+
                 user=user,
-                real_name=form.cleaned_data['real_name'],
-                mobile=form.cleaned_data['mobile'],
-                age=form.cleaned_data['age'],
-                gender=form.cleaned_data['gender'],
-                location=form.cleaned_data['location']
+
+                real_name=form.cleaned_data[
+                    'real_name'
+                ],
+
+                mobile=form.cleaned_data[
+                    'mobile'
+                ],
+
+                age=form.cleaned_data[
+                    'age'
+                ],
+
+                gender=form.cleaned_data[
+                    'gender'
+                ],
+
+                location=form.cleaned_data[
+                    'location'
+                ],
+
+                # =================================================
+                # DELIVERY INFORMATION
+                # =================================================
+
+                address=form.cleaned_data[
+                    'address'
+                ],
+
+                city=form.cleaned_data[
+                    'city'
+                ],
+
+                state=form.cleaned_data[
+                    'state'
+                ],
+
+                pincode=form.cleaned_data[
+                    'pincode'
+                ]
             )
 
             messages.success(
@@ -55,6 +97,10 @@ def register(request):
     )
 
 
+# =============================================================
+# LOGIN
+# =============================================================
+
 def user_login(request):
 
     if request.user.is_authenticated:
@@ -62,8 +108,13 @@ def user_login(request):
 
     if request.method == 'POST':
 
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get(
+            'username'
+        )
+
+        password = request.POST.get(
+            'password'
+        )
 
         user = authenticate(
             request,
@@ -73,7 +124,10 @@ def user_login(request):
 
         if user is not None:
 
-            login(request, user)
+            login(
+                request,
+                user
+            )
 
             messages.success(
                 request,
@@ -94,6 +148,10 @@ def user_login(request):
         'accounts/login.html'
     )
 
+
+# =============================================================
+# LOGOUT
+# =============================================================
 
 def user_logout(request):
 

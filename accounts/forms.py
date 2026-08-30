@@ -1,4 +1,3 @@
-
 from django import forms
 from django.contrib.auth.models import User
 
@@ -6,6 +5,10 @@ from .models import Profile
 
 
 class RegisterForm(forms.ModelForm):
+
+    # =========================================================
+    # PERSONAL INFORMATION
+    # =========================================================
 
     real_name = forms.CharField(
         max_length=150,
@@ -22,7 +25,8 @@ class RegisterForm(forms.ModelForm):
         label="Mobile Number",
         widget=forms.TextInput(
             attrs={
-                "placeholder": "Enter your mobile number"
+                "placeholder": "Enter your mobile number",
+                "inputmode": "numeric"
             }
         )
     )
@@ -58,6 +62,55 @@ class RegisterForm(forms.ModelForm):
         )
     )
 
+    # =========================================================
+    # DELIVERY INFORMATION
+    # =========================================================
+
+    address = forms.CharField(
+        label="Delivery Address",
+        widget=forms.Textarea(
+            attrs={
+                "placeholder": "Enter your full delivery address",
+                "rows": 3
+            }
+        )
+    )
+
+    city = forms.CharField(
+        max_length=100,
+        label="City",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Enter your city"
+            }
+        )
+    )
+
+    state = forms.CharField(
+        max_length=100,
+        label="State",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Enter your state"
+            }
+        )
+    )
+
+    pincode = forms.CharField(
+        max_length=10,
+        label="PIN Code",
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Enter your PIN code",
+                "inputmode": "numeric"
+            }
+        )
+    )
+
+    # =========================================================
+    # PASSWORD
+    # =========================================================
+
     password = forms.CharField(
         label="Password",
         widget=forms.PasswordInput(
@@ -77,6 +130,7 @@ class RegisterForm(forms.ModelForm):
     )
 
     class Meta:
+
         model = User
 
         fields = [
@@ -85,6 +139,7 @@ class RegisterForm(forms.ModelForm):
         ]
 
         widgets = {
+
             "username": forms.TextInput(
                 attrs={
                     "placeholder": "Choose a username"
@@ -96,7 +151,12 @@ class RegisterForm(forms.ModelForm):
                     "placeholder": "Enter your email address"
                 }
             ),
+
         }
+
+    # =========================================================
+    # USERNAME VALIDATION
+    # =========================================================
 
     def clean_username(self):
 
@@ -112,6 +172,10 @@ class RegisterForm(forms.ModelForm):
 
         return username
 
+    # =========================================================
+    # EMAIL VALIDATION
+    # =========================================================
+
     def clean_email(self):
 
         email = self.cleaned_data["email"]
@@ -125,6 +189,10 @@ class RegisterForm(forms.ModelForm):
             )
 
         return email
+
+    # =========================================================
+    # MOBILE VALIDATION
+    # =========================================================
 
     def clean_mobile(self):
 
@@ -146,6 +214,32 @@ class RegisterForm(forms.ModelForm):
 
         return mobile
 
+    # =========================================================
+    # PINCODE VALIDATION
+    # =========================================================
+
+    def clean_pincode(self):
+
+        pincode = self.cleaned_data["pincode"].strip()
+
+        if not pincode.isdigit():
+
+            raise forms.ValidationError(
+                "PIN code must contain only digits."
+            )
+
+        if len(pincode) != 6:
+
+            raise forms.ValidationError(
+                "Enter a valid 6-digit PIN code."
+            )
+
+        return pincode
+
+    # =========================================================
+    # PASSWORD VALIDATION
+    # =========================================================
+
     def clean(self):
 
         cleaned_data = super().clean()
@@ -166,4 +260,3 @@ class RegisterForm(forms.ModelForm):
                 )
 
         return cleaned_data
-

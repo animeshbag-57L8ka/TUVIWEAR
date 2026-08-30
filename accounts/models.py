@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -37,6 +36,33 @@ class Profile(models.Model):
         max_length=200
     )
 
+    # =========================================================
+    # DELIVERY INFORMATION
+    # =========================================================
+
+    address = models.TextField(
+        blank=True,
+        default=''
+    )
+
+    city = models.CharField(
+        max_length=100,
+        blank=True,
+        default=''
+    )
+
+    state = models.CharField(
+        max_length=100,
+        blank=True,
+        default=''
+    )
+
+    pincode = models.CharField(
+        max_length=10,
+        blank=True,
+        default=''
+    )
+
     created_at = models.DateTimeField(
         auto_now_add=True
     )
@@ -47,4 +73,3 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.real_name}"
-
