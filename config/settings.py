@@ -66,7 +66,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
+    'cloudinary',
     'django.contrib.staticfiles',
+    
 
     'products',
     'store',
@@ -81,6 +84,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -120,6 +124,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # DATABASE
 # ============================================================
 
+DB_SSL_CA = os.getenv("DB_SSL_CA")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -130,6 +136,13 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT', '3306'),
     }
 }
+
+if DB_SSL_CA:
+    DATABASES['default']['OPTIONS'] = {
+        'ssl': {
+            'ca': DB_SSL_CA
+        }
+    }
 
 
 # ============================================================
@@ -168,14 +181,26 @@ USE_TZ = True
 # ============================================================
 # STATIC & MEDIA FILES
 # ============================================================
-
 STATIC_URL = 'static/'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_URL = '/media/'
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+}
 
-MEDIA_ROOT = BASE_DIR / 'media'
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
+
+MEDIA_URL = '/media/'
 
 
 # ============================================================
