@@ -1,3 +1,4 @@
+
 from django.db import models
 from django.contrib.auth.models import User
 from products.models import ProductVariant
@@ -8,9 +9,17 @@ class Order(models.Model):
     STATUS_CHOICES = [
         ('pending', 'Pending'),
         ('confirmed', 'Confirmed'),
+        ('processing', 'Processing'),
         ('shipped', 'Shipped'),
+        ('out_for_delivery', 'Out for Delivery'),
         ('delivered', 'Delivered'),
         ('cancelled', 'Cancelled'),
+    ]
+
+    PAYMENT_METHOD_CHOICES = [
+        ('upi', 'UPI'),
+        ('card', 'Card'),
+        ('cod', 'Cash on Delivery'),
     ]
 
     user = models.ForeignKey(
@@ -41,6 +50,19 @@ class Order(models.Model):
         default='pending'
     )
 
+    payment_method = models.CharField(
+        max_length=20,
+        choices=PAYMENT_METHOD_CHOICES,
+        blank=True,
+        default=''
+    )
+
+    # Estimated delivery date
+    delivery_date = models.DateField(
+        null=True,
+        blank=True
+    )
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -62,7 +84,6 @@ class OrderItem(models.Model):
     )
 
     product_name = models.CharField(max_length=200)
-
     size = models.CharField(max_length=50)
     color = models.CharField(max_length=50)
 
