@@ -1,5 +1,7 @@
+
 from django.urls import path
 from . import views
+from orders import views as order_views
 
 
 urlpatterns = [
@@ -39,7 +41,7 @@ urlpatterns = [
         name='add_to_cart'
     ),
 
-    # BUY NOW
+    # Buy Now
     path(
         'buy-now/<int:variant_id>/',
         views.buy_now,
@@ -77,7 +79,7 @@ urlpatterns = [
     # Checkout
     path(
         'checkout/',
-        views.checkout,
+        order_views.checkout,
         name='checkout'
     ),
 
@@ -88,11 +90,24 @@ urlpatterns = [
         name='place_order'
     ),
 
+    # Demo Payment
+    path(
+        'demo-payment/<int:order_id>/',
+        order_views.demo_payment,
+        name='demo_payment'
+    ),
+
     # Order Success
     path(
         'order-success/<int:order_id>/',
-        views.order_success,
+        order_views.order_success,
         name='order_success'
     ),
 
+    # My Orders
+    path(
+        'my-orders/',
+        order_views.my_orders,
+        name='my_orders'
+    ),
 ]

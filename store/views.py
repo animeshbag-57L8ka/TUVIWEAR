@@ -6,6 +6,7 @@ from django.http import JsonResponse
 
 from products.models import Product, ProductVariant
 from .models import Cart, CartItem, Order, OrderItem
+from .recommendations import get_recommended_products
 
 
 # ==========================================
@@ -22,11 +23,17 @@ def home(request):
         'variants__color'
     )
 
+    recommended_products = get_recommended_products(
+        request,
+        limit=8
+    )
+
     return render(
         request,
         'store/home.html',
         {
-            'products': products
+            'products': products,
+            'recommended_products': recommended_products,
         }
     )
 
@@ -45,6 +52,23 @@ def product_detail(request, slug):
         ),
         slug=slug,
         is_active=True
+    )
+
+        # AI Recommendation: Recently Viewed Products
+    recently_viewed = request.session.get(
+        'recently_viewed_products',
+        []
+    )
+
+    recently_viewed = [
+        pid for pid in recently_viewed
+        if str(pid) != str(product.id)
+    ]
+
+    recently_viewed.insert(0, product.id)
+
+    request.session['recently_viewed_products'] = (
+        recently_viewed[:10]
     )
 
     variants = product.variants.filter(

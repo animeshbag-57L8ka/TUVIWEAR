@@ -3,98 +3,578 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Order Successful - TuviWear</title>
+    <title>Order Details - TuviWear</title>
 
     <style>
-
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
             font-family: Arial, Helvetica, sans-serif;
-            background: #f6f6f6;
+            background: #f5f6f8;
             color: #222;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
         .navbar {
             background: #111;
             color: white;
-            padding: 18px 7%;
+            padding: 17px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            color: #ddd;
         }
 
         .container {
-            max-width: 750px;
-            margin: 60px auto;
-            padding: 20px;
+            width: 92%;
+            max-width: 1050px;
+            margin: 35px auto 60px;
         }
 
-        .success-box {
+        .success-header {
             background: white;
-            padding: 45px 35px;
-            border-radius: 16px;
+            padding: 35px 20px;
+            border-radius: 15px;
             text-align: center;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            margin-bottom: 22px;
         }
 
-        .icon {
-            font-size: 60px;
-            margin-bottom: 15px;
+        .success-icon {
+            width: 65px;
+            height: 65px;
+            background: #e8f8ee;
+            color: #159447;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 34px;
+            margin: 0 auto 15px;
         }
 
-        h1 {
+        .success-header h1 {
+            font-size: 27px;
             margin-bottom: 10px;
         }
 
-        .message {
-            color: #666;
-            margin-bottom: 30px;
+        .success-header p {
+            color: #777;
+            line-height: 1.6;
+            font-size: 14px;
         }
 
-        .order-info {
-            text-align: left;
-            background: #f8f8f8;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-        }
-
-        .order-info p {
-            margin: 10px 0;
-        }
-
-        .total {
-            font-size: 20px;
+        .demo-label {
+            display: inline-block;
+            margin-top: 13px;
+            padding: 7px 13px;
+            background: #fff4dc;
+            color: #936000;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: bold;
         }
 
-        .button {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 14px 25px;
-            background: #111;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
         }
 
-        .button:hover {
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .order-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .info-item {
+            background: #f7f8fa;
+            padding: 14px;
+            border-radius: 9px;
+            min-width: 0;
+        }
+
+        .info-item span {
+            display: block;
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .info-item strong {
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .total-box {
+            margin-top: 18px;
+            padding: 17px;
+            background: #111;
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .total-box strong {
+            font-size: 21px;
+        }
+
+        .delivery-date {
+            margin-top: 15px;
+            color: #159447;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* TRACKING */
+
+        .tracking-note {
+            color: #888;
+            font-size: 12px;
+            margin-top: -10px;
+            margin-bottom: 25px;
+        }
+
+        .tracking {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            gap: 5px;
+            padding: 10px 0;
+        }
+
+        .tracking::before {
+            content: "";
+            position: absolute;
+            height: 4px;
+            background: #e6e6e6;
+            top: 27px;
+            left: 7%;
+            right: 7%;
+            z-index: 0;
+        }
+
+        .track-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            min-width: 0;
+        }
+
+        .track-circle {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #e5e5e5;
+            color: #888;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .track-step.completed .track-circle {
+            background: #159447;
+            color: white;
+        }
+
+        .track-step p {
+            font-size: 11px;
+            color: #777;
+            line-height: 1.4;
+        }
+
+        .track-step.completed p {
+            color: #159447;
+            font-weight: bold;
+        }
+
+        .cancelled-box {
+            background: #fff0f0;
+            color: #c62828;
+            padding: 17px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .pending-box {
+            background: #fff7e6;
+            color: #936000;
+            padding: 17px;
+            border-radius: 9px;
+        }
+
+        /* PRODUCTS */
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+            padding: 16px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-image {
+            width: 85px;
+            height: 95px;
+            object-fit: cover;
+            border-radius: 9px;
+            background: #f2f2f2;
+            flex-shrink: 0;
+        }
+
+        .product-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-details h3 {
+            font-size: 15px;
+            margin-bottom: 8px;
+        }
+
+        .product-details p {
+            font-size: 13px;
+            color: #777;
+            margin: 5px 0;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: #111 !important;
+        }
+
+        .product-link {
+            display: inline-block;
+            color: #111;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 8px;
+            border-bottom: 1px solid #111;
+        }
+
+        /* HELP */
+
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .help-box {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 18px;
+            min-width: 0;
+        }
+
+        .help-box h3 {
+            font-size: 15px;
+            margin-bottom: 9px;
+        }
+
+        .help-box p {
+            font-size: 13px;
+            color: #777;
+            line-height: 1.6;
+            margin-bottom: 13px;
+        }
+
+        .help-box input[type="date"] {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .help-link {
+            display: inline-block;
+            color: #111;
+            font-size: 14px;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        .primary-btn,
+        .danger-btn {
+            border: none;
+            padding: 12px 17px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .primary-btn {
+            background: #111;
+            color: white;
+        }
+
+        .primary-btn:hover {
             background: #333;
         }
+
+        .danger-btn {
+            background: #fff0f0;
+            color: #c62828;
+            border: 1px solid #ffd5d5;
+        }
+
+        .danger-btn:hover {
+            background: #ffe1e1;
+        }
+
+        .unavailable {
+            color: #999;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        /* MESSAGES */
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message-item {
+            padding: 13px 16px;
+            margin-bottom: 9px;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #eaf7ee;
+            color: #18743a;
+        }
+
+        .message-item.error {
+            background: #fff0f0;
+            color: #c62828;
+        }
+
+        /* BUTTONS */
+
+        .bottom-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .bottom-btn {
+            display: inline-block;
+            padding: 14px 22px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            background: #111;
+            color: white;
+            text-align: center;
+        }
+
+        .bottom-btn.secondary {
+            background: white;
+            color: #111;
+            border: 1px solid #ddd;
+        }
+
+        .footer {
+            text-align: center;
+            color: #888;
+            padding: 25px 15px;
+            font-size: 12px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 16px 5%;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 20px;
+            }
+
+            .success-header {
+                padding: 27px 16px;
+            }
+
+            .success-header h1 {
+                font-size: 22px;
+            }
+
+            .card {
+                padding: 19px 15px;
+            }
+
+            .section-title {
+                font-size: 18px;
+            }
+
+            .order-grid,
+            .help-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .total-box strong {
+                font-size: 18px;
+            }
+
+            .tracking {
+                gap: 0;
+            }
+
+            .tracking::before {
+                left: 7%;
+                right: 7%;
+                top: 22px;
+            }
+
+            .track-circle {
+                width: 27px;
+                height: 27px;
+                font-size: 11px;
+                margin-bottom: 8px;
+            }
+
+            .track-step p {
+                font-size: 9px;
+                overflow-wrap: anywhere;
+            }
+
+            .product-image {
+                width: 72px;
+                height: 85px;
+            }
+
+            .product-details h3 {
+                font-size: 14px;
+            }
+
+            .bottom-actions {
+                flex-direction: column;
+            }
+
+            .bottom-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 360px) {
+
+            .tracking-step p {
+                font-size: 8px;
+            }
+
+            .total-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        
+/* HELP ACCORDION */
+
+.help-accordion {
+    background: white;
+    border-radius: 14px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    overflow: hidden;
+}
+
+.help-accordion summary {
+    padding: 23px 25px;
+    cursor: pointer;
+    font-size: 19px;
+    font-weight: bold;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.help-accordion summary::-webkit-details-marker {
+    display: none;
+}
+
+.help-accordion summary::after {
+    content: "+";
+    font-size: 26px;
+    font-weight: normal;
+    color: #555;
+}
+
+.help-accordion[open] summary::after {
+    content: "−";
+}
+
+.help-accordion summary:hover {
+    background: #fafafa;
+}
+
+.help-accordion-content {
+    padding: 0 25px 25px;
+}
+
+@media (max-width: 650px) {
+    .help-accordion summary {
+        padding: 19px 16px;
+        font-size: 16px;
+    }
+
+    .help-accordion-content {
+        padding: 0 15px 18px;
+    }
+}
 
     </style>
 
@@ -104,78 +584,433 @@
 
 <nav class="navbar">
 
-    <div class="logo">
+    <a href="{% url 'home' %}" class="logo">
         TuviWear
-    </div>
+    </a>
+
+    <a href="{% url 'my_orders' %}" class="nav-link">
+        My Orders
+    </a>
 
 </nav>
 
 
-<div class="container">
+<main class="container">
 
-    <div class="success-box">
+    <!-- DJANGO MESSAGES -->
 
-        <div class="icon">
-            ✅
+    {% if messages %}
+        <div class="messages">
+
+            {% for message in messages %}
+                <div class="message-item {% if message.tags == 'error' %}error{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+        </div>
+    {% endif %}
+
+
+    <!-- SUCCESS HEADER -->
+
+    <section class="success-header">
+
+        {% if order.status == "cancelled" %}
+
+            <div class="success-icon">
+                ✕
+            </div>
+
+            <h1>Order Cancelled</h1>
+
+            <p>
+                This order has been cancelled.
+                Thank you for considering TuviWear.
+            </p>
+
+        {% else %}
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h1>Order Confirmed!</h1>
+
+            <p>
+                Thank you for shopping with TuviWear.
+                Your order details are shown below.
+            </p>
+
+        {% endif %}
+
+        <span class="demo-label">
+            DEMO ORDER TRACKING
+        </span>
+
+    </section>
+
+
+    <!-- ORDER INFORMATION -->
+
+    <section class="card">
+
+        <h2 class="section-title">
+            Order Information
+        </h2>
+
+        <div class="order-grid">
+
+            <div class="info-item">
+                <span>Order ID</span>
+                <strong>#{{ order.id }}</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Customer Name</span>
+                <strong>{{ order.customer_name }}</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Email Address</span>
+                <strong>{{ order.email|default:"Not provided" }}</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Phone Number</span>
+                <strong>{{ order.phone }}</strong>
+            </div>
+
+            <div class="info-item">
+                <span>Payment Method</span>
+                <strong>
+                    {{ order.get_payment_method_display|default:"Not selected" }}
+                </strong>
+            </div>
+
+            <div class="info-item">
+                <span>Order Status</span>
+                <strong>{{ order.get_status_display }}</strong>
+            </div>
+
         </div>
 
-        <h1>
-            Order Placed Successfully!
-        </h1>
+        <div class="total-box">
+            <span>Total Amount</span>
+            <strong>₹{{ order.total_amount }}</strong>
+        </div>
 
-        <p class="message">
-            Thank you for shopping with TuviWear.
-            Your order has been received successfully.
+        {% if order.status != "cancelled" %}
+            <p class="delivery-date">
+                Estimated Delivery: {{ delivery_date|date:"d M Y" }}
+            </p>
+        {% endif %}
+
+    </section>
+
+
+    <!-- ORDER TRACKING -->
+
+    <section class="card">
+
+        <h2 class="section-title">
+            Track Your Order
+        </h2>
+
+        <p class="tracking-note">
+            Demo tracking — order progress is updated by the store administrator.
         </p>
 
+        {% if order.status == "cancelled" %}
 
-        <div class="order-info">
+            <div class="cancelled-box">
+                This order has been cancelled. Tracking is no longer available.
+            </div>
 
-            <p>
-                <strong>Order ID:</strong>
-                #{{ order.id }}
-            </p>
+        {% elif order.status == "pending" %}
 
-            <p>
-                <strong>Name:</strong>
-                {{ order.customer_name }}
-            </p>
+            <div class="pending-box">
+                Your order is waiting for payment confirmation.
+            </div>
 
-            <p>
-                <strong>Email:</strong>
-                {{ order.email }}
-            </p>
+        {% else %}
 
-            <p>
-                <strong>Phone:</strong>
-                {{ order.phone }}
-            </p>
+            <div class="tracking">
 
-            <p>
-                <strong>Status:</strong>
-                {{ order.get_status_display }}
-            </p>
+                <div class="track-step completed">
+                    <div class="track-circle">✓</div>
+                    <p>Confirmed</p>
+                </div>
 
-            <p class="total">
-                Total Amount:
-                ₹{{ order.total_amount }}
-            </p>
+                <div class="track-step {% if order.status in 'processing shipped out_for_delivery delivered' %}completed{% endif %}">
+                    <div class="track-circle">
+                        {% if order.status in "processing shipped out_for_delivery delivered" %}✓{% else %}2{% endif %}
+                    </div>
+                    <p>Processing</p>
+                </div>
+
+                <div class="track-step {% if order.status in 'shipped out_for_delivery delivered' %}completed{% endif %}">
+                    <div class="track-circle">
+                        {% if order.status in "shipped out_for_delivery delivered" %}✓{% else %}3{% endif %}
+                    </div>
+                    <p>Shipped</p>
+                </div>
+
+                <div class="track-step {% if order.status in 'out_for_delivery delivered' %}completed{% endif %}">
+                    <div class="track-circle">
+                        {% if order.status in "out_for_delivery delivered" %}✓{% else %}4{% endif %}
+                    </div>
+                    <p>Out for Delivery</p>
+                </div>
+
+                <div class="track-step {% if order.status == 'delivered' %}completed{% endif %}">
+                    <div class="track-circle">
+                        {% if order.status == "delivered" %}✓{% else %}5{% endif %}
+                    </div>
+                    <p>Delivered</p>
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- ORDERED PRODUCTS -->
+
+    <section class="card">
+
+        <h2 class="section-title">
+            Your Ordered Products
+        </h2>
+
+        {% for item in order.items.all %}
+
+            <div class="product-item">
+
+                {% with images=item.variant.product.images.all %}
+
+                    {% if images %}
+                        {% for image in images %}
+                            {% if forloop.first %}
+                                <img
+                                    src="{{ image.image.url }}"
+                                    alt="{{ item.product_name }}"
+                                    class="product-image"
+                                >
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="product-image"></div>
+                    {% endif %}
+
+                {% endwith %}
+
+                <div class="product-details">
+
+                    <h3>{{ item.product_name }}</h3>
+
+                    <p>
+                        Size: {{ item.size|default:"N/A" }}
+                    </p>
+
+                    <p>
+                        Color: {{ item.color|default:"N/A" }}
+                    </p>
+
+                    <p>
+                        Quantity: {{ item.quantity }}
+                    </p>
+
+                    <p class="product-price">
+                        ₹{{ item.subtotal }}
+                    </p>
+
+                    <a
+                        href="{% url 'product_detail' item.variant.product.slug %}"
+                        class="product-link"
+                    >
+                        View Product →
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <p>No products found for this order.</p>
+
+        {% endfor %}
+
+    </section>
+
+    
+<!-- CUSTOMER HELP ACCORDION -->
+
+<details class="help-accordion">
+
+    <summary>
+        <span>🛟 Need Help With Your Order?</span>
+    </summary>
+
+    <div class="help-accordion-content">
+
+        <div class="help-grid">
+
+            <!-- RESCHEDULE -->
+
+            <div class="help-box">
+
+                <h3>📅 Reschedule Delivery</h3>
+
+                {% if can_manage_order %}
+
+                    <p>
+                        Choose a new delivery date for your order.
+                    </p>
+
+                    <form method="POST">
+
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="action"
+                            value="reschedule"
+                        >
+
+                        <input
+                            type="date"
+                            name="delivery_date"
+                            min="{{ today }}"
+                            value="{{ delivery_date|date:'Y-m-d' }}"
+                            required
+                        >
+
+                        <button type="submit" class="primary-btn">
+                            Update Delivery Date
+                        </button>
+
+                    </form>
+
+                {% else %}
+
+                    <p>
+                        Delivery rescheduling is unavailable for the current order status.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- CANCEL ORDER -->
+
+            <div class="help-box">
+
+                <h3>✕ Cancel Order</h3>
+
+                {% if can_manage_order %}
+
+                    <p>
+                        You can cancel your order before it is shipped.
+                    </p>
+
+                    <form
+                        method="POST"
+                        onsubmit="return confirm('Are you sure you want to cancel this order?');"
+                    >
+
+                        {% csrf_token %}
+
+                        <input
+                            type="hidden"
+                            name="action"
+                            value="cancel_order"
+                        >
+
+                        <button type="submit" class="danger-btn">
+                            Cancel This Order
+                        </button>
+
+                    </form>
+
+                {% else %}
+
+                    <p>
+                        This order cannot be cancelled at its current stage.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- CUSTOMER CARE -->
+
+            <div class="help-box">
+
+                <h3>📞 Customer Care</h3>
+
+                <p>
+                    Contact our customer support team for order assistance.
+                </p>
+
+                <a href="tel:8100656167" class="help-link">
+                    8100656167
+                </a>
+
+            </div>
+
+
+            <!-- EMAIL SUPPORT -->
+
+            <div class="help-box">
+
+                <h3>✉ Email Support</h3>
+
+                <p>
+                    Send us an email for any order-related questions.
+                </p>
+
+                <a href="mailto:tuviwear@gmail.com" class="help-link">
+                    tuviwear@gmail.com
+                </a>
+
+            </div>
 
         </div>
 
+    </div>
 
-        <a
-            href="{% url 'home' %}"
-            class="button"
-        >
+</details>
+
+   
+
+
+    <!-- BOTTOM BUTTONS -->
+
+    <div class="bottom-actions">
+
+        <a href="{% url 'home' %}" class="bottom-btn">
             Continue Shopping
+        </a>
+
+        <a href="{% url 'my_orders' %}" class="bottom-btn secondary">
+            View My Orders
         </a>
 
     </div>
 
-</div>
+</main>
+
+
+<footer class="footer">
+    © {% now "Y" %} TuviWear. All Rights Reserved.
+</footer>
+
 
 </body>
-
 </html>
-

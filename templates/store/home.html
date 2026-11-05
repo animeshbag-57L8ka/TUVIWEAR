@@ -2424,6 +2424,31 @@
 
         }
 
+                    /* AI PERSONALIZED RECOMMENDATIONS */
+
+            .ai-recommendations {
+            background: #ffffff;
+        }
+
+        .ai-subtitle {
+     color: #777;
+     font-size: 14px;
+     margin: 8px 0 16px;
+        line-height: 1.5;
+    }
+
+    .ai-recommendations .product-card {
+    border: 1px solid #eeeeee;
+    }
+
+    @media (max-width: 650px) {
+    .ai-subtitle {
+        font-size: 12px;
+        padding: 0 10px;
+    }
+            
+        }
+
     </style>
 
 
@@ -3296,6 +3321,107 @@
         </div>
 
     </section>
+
+    <!-- ==========================================
+     AI PERSONALIZED RECOMMENDATIONS
+========================================== -->
+
+{% if recommended_products %}
+
+<section class="products ai-recommendations">
+
+    <div class="section-heading">
+
+        <h2>✨ PICKED FOR YOU</h2>
+
+        <p class="ai-subtitle">
+            Smart recommendations based on your interests
+        </p>
+
+        <div class="section-line"></div>
+
+    </div>
+
+    <div class="product-container">
+
+        {% for product in recommended_products %}
+
+        <div class="product-card">
+
+            <a href="{% url 'product_detail' product.slug %}"
+               class="product-link">
+
+                <div class="product-image">
+
+                    {% with product.images.all|first as product_image %}
+
+                        {% if product_image %}
+
+                            <img
+                                src="{{ product_image.image.url }}"
+                                alt="{{ product_image.alt_text|default:product.name }}"
+                                loading="lazy"
+                            >
+
+                        {% else %}
+
+                            <span class="no-image">No Image</span>
+
+                        {% endif %}
+
+                    {% endwith %}
+
+                </div>
+
+            </a>
+
+            <div class="product-info">
+
+                <a href="{% url 'product_detail' product.slug %}"
+                   class="product-link">
+
+                    <h3>{{ product.name }}</h3>
+
+                </a>
+
+                {% if product.brand %}
+                    <p>{{ product.brand.name }}</p>
+                {% endif %}
+
+                {% if product.discount_price %}
+
+                    <div class="price">
+                        ₹{{ product.discount_price }}
+                    </div>
+
+                    <div class="discount-price">
+                        ₹{{ product.base_price }}
+                    </div>
+
+                {% else %}
+
+                    <div class="price">
+                        ₹{{ product.base_price }}
+                    </div>
+
+                {% endif %}
+
+                <a href="{% url 'product_detail' product.slug %}"
+                   class="view-btn">
+                    View Product
+                </a>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endif %}
 
 
     <!-- =====================================================
